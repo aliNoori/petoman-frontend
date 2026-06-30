@@ -1,0 +1,7 @@
+export default defineNuxtRouteMiddleware((to, from) => {
+  // Ensure pharmacy panel pages don't use default layout
+  if (to.path.startsWith('/panel/pharmacies')) {
+    // Force layout to be false
+    to.meta.layout = false
+  }
+})

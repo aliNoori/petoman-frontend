@@ -1,0 +1,246 @@
+/* Local Persian fonts & Tabler Icons */
+/*@import '@shared/assets/icon/tabler-icons.css';
+
+/* Optimized Vazirmatn local font faces with better font-display */
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 100; src: url('@shared/assets/fonts/vazir/Vazirmatn-Thin.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 200; src: url('@shared/assets/fonts/vazir/Vazirmatn-ExtraLight.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 300; src: url('@shared/assets/fonts/vazir/Vazirmatn-Light.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 400; src: url('@shared/assets/fonts/vazir/Vazirmatn-Regular.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 500; src: url('@shared/assets/fonts/vazir/Vazirmatn-Medium.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 600; src: url('@shared/assets/fonts/vazir/Vazirmatn-SemiBold.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 700; src: url('@shared/assets/fonts/vazir/Vazirmatn-Bold.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 800; src: url('@shared/assets/fonts/vazir/Vazirmatn-ExtraBold.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Vazirmatn'; font-style: normal; font-weight: 900; src: url('@shared/assets/fonts/vazir/Vazirmatn-Black.woff2') format('woff2'); font-display: swap; }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif;
+    direction: rtl;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+    text-align: right;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Performance optimizations */
+  * {
+    box-sizing: border-box;
+  }
+
+  img {
+    height: auto;
+    max-width: 100%;
+  }
+
+  /* Focus management for accessibility */
+  :focus-visible {
+    outline: 2px solid #f97316;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-orange-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-orange-600 border border-orange-600 px-6 py-3 rounded-lg font-medium hover:bg-orange-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-shadow duration-200 hover:shadow-md;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .auth-btn {
+    @apply bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-200;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent;
+  }
+  
+  .icon { 
+    @apply inline-block align-middle; 
+  }
+  
+  .icon-sm { 
+    font-size: 1rem; 
+    line-height: 1;
+  }
+  
+  .icon-md { 
+    font-size: 1.25rem; 
+    line-height: 1;
+  }
+  
+  .icon-lg { 
+    font-size: 1.75rem; 
+    line-height: 1;
+  }
+  
+  .icon-xl { 
+    font-size: 2.5rem; 
+    line-height: 1;
+  }
+
+  /* Performance-focused animation utilities */
+  .animate-fade-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+  }
+
+  .animate-bounce-gentle {
+    animation: bounceGentle 2s ease-in-out infinite;
+  }
+
+  /* Skeleton loading animations */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounceGentle {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+}
+
+/* Accessibility and performance improvements */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-bounce-gentle {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .transition-all,
+  .transition-colors,
+  .transition-transform,
+  .transition-shadow {
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bg-orange-50 {
+    background-color: #fff;
+  }
+  
+  .text-gray-600 {
+    color: #000;
+  }
+  
+  .border-orange-100 {
+    border-color: #000;
+  }
+}
+
+/* Print styles */
+@media print {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-bounce-gentle {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .bg-gradient-to-br,
+  .bg-gradient-to-r {
+    background: #f97316 !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .shadow-sm,
+  .shadow-md,
+  .shadow-lg {
+    box-shadow: none !important;
+  }
+}
+
+/* Dark mode preparation (future enhancement) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #f9fafb;
+    --bg-primary: #111827;
+    --border-primary: #374151;
+  }
+}
+
+/* Loading state utilities */
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

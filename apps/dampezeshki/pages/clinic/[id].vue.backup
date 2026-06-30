@@ -1,0 +1,1161 @@
+<template>
+  <div class="min-h-screen bg-gray-50 font-vazir">
+    <!-- Breadcrumb - خارج از هدر -->
+    <div class="container mx-auto px-4 pt-6">
+      <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+        <NuxtLink to="/" class="hover:text-sky-600 transition-colors">خانه</NuxtLink>
+        <i class="ti ti-chevron-left text-xs"></i>
+        <NuxtLink to="/vets" class="hover:text-sky-600 transition-colors">دامپزشکان</NuxtLink>
+        <i class="ti ti-chevron-left text-xs"></i>
+        <span class="text-sky-600 font-medium">{{ vet.name }}</span>
+      </nav>
+    </div>
+
+    <!-- Hero Header - با رادیوس و عرض container -->
+    <div class="container mx-auto px-4 pb-6">
+      <div class="relative bg-gradient-to-br from-sky-500 via-sky-600 to-blue-600 rounded-2xl overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="absolute top-10 right-20 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+        <div class="absolute bottom-20 left-32 w-24 h-24 bg-white/5 rounded-full blur-lg"></div>
+        
+        <div class="relative z-10">
+          <div class="px-6 py-4">
+            <nav class="flex items-center justify-between text-white">
+              <button @click="$router.back()" class="flex items-center gap-2 hover:bg-white/10 px-3 py-2 rounded-lg transition-colors">
+                <i class="ti ti-arrow-right text-lg"></i>
+                <span class="font-medium">بازگشت</span>
+              </button>
+              <div class="flex items-center gap-3">
+                <button @click="shareVet" class="hover:bg-white/10 p-2 rounded-lg transition-colors" title="اشتراک‌گذاری"><i class="ti ti-share text-lg"></i></button>
+                <button @click="showReviewModal = true" class="hover:bg-white/10 p-2 rounded-lg transition-colors" title="ثبت نظر"><i class="ti ti-message-circle text-lg"></i></button>
+              </div>
+            </nav>
+          </div>
+
+          <div class="px-6 pb-8 pt-4">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div class="relative">
+                <div class="w-28 h-28 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center overflow-hidden">
+                  <span class="text-4xl font-bold text-white">{{ vet.avatar }}</span>
+                </div>
+                <div v-if="vet.isOnline" class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+              </div>
+              <div class="flex-1 text-center md:text-right">
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">{{ vet.name }}</h1>
+                <p class="text-sky-100 mb-3">{{ vet.specialty }}</p>
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                  <div class="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full text-sm">
+                    <i class="ti ti-star-filled text-yellow-400"></i>
+                    <span class="text-white font-semibold">{{ vet.rating }}</span>
+                    <span class="text-white/70">({{ vet.reviewCount }} نظر)</span>
+                  </div>
+                  <div :class="vet.isOnline ? 'bg-green-500' : 'bg-gray-500'" class="px-3 py-1 rounded-full text-white text-sm font-medium">
+                    {{ vet.isOnline ? 'آنلاین' : 'آفلاین' }}
+                  </div>
+                  <div class="flex items-center gap-2 text-white/90 text-sm">
+                    <i class="ti ti-certificate"></i>
+                    <span>{{ vet.experience }} سال تجربه</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- تب‌ها - درباره دکتر / خدمات / نظرات کاربران -->
+    <div class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div class="container mx-auto px-4">
+        <div class="flex gap-1">
+          <button 
+            v-for="tab in tabs" 
+            :key="tab.id"
+            @click="scrollToSection(tab.id)"
+            :class="[
+              'px-6 py-4 font-medium text-sm border-b-2 transition-all',
+              activeTab === tab.id 
+                ? 'border-sky-500 text-sky-600' 
+                : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
+            ]"
+          >
+            <i :class="['ml-2', tab.icon]"></i>
+            {{ tab.name }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-6">
+      <!-- انتخاب نوع خدمات - مثل پنل ادمین -->
+      <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6">
+        <h2 class="text-lg font-bold text-gray-900 mb-4">انتخاب نوع خدمات</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div 
+            v-for="service in services"
+            :key="service.id"
+            @click="selectService(service)"
+            :class="[
+              'relative cursor-pointer rounded-xl border-2 p-4 transition-all duration-200',
+              selectedService?.id === service.id 
+                ? `${service.borderColor} ${service.bgColor}` 
+                : 'border-gray-200 hover:border-gray-300 bg-white'
+            ]"
+          >
+            <div class="flex items-start gap-3">
+              <div :class="[
+                'w-12 h-12 rounded-xl flex items-center justify-center',
+                selectedService?.id === service.id ? 'bg-white/50' : service.iconBg
+              ]">
+                <i :class="['text-2xl', service.icon, selectedService?.id === service.id ? service.iconColorActive : service.iconColor]"></i>
+              </div>
+              <div class="flex-1">
+                <h3 :class="['font-bold', selectedService?.id === service.id ? service.textColorActive : 'text-gray-900']">
+                  {{ service.name }}
+                </h3>
+                <p :class="['text-sm mt-1', selectedService?.id === service.id ? 'text-white/80' : 'text-gray-500']">
+                  {{ service.description }}
+                </p>
+                <p :class="['font-bold mt-2', selectedService?.id === service.id ? 'text-white' : service.priceColor]">
+                  {{ service.price }} تومان
+                </p>
+              </div>
+            </div>
+            <!-- نشانه‌گر فوری -->
+            <div v-if="service.isInstant" class="absolute top-2 left-2">
+              <span class="px-2 py-1 bg-orange-500 text-white text-xs rounded-full">فوری</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- ستون اصلی -->
+        <div class="lg:col-span-2 space-y-6">
+          
+          <!-- انتخاب تاریخ و ساعت - فقط برای خدمات نوبت‌دار -->
+          <div v-if="selectedService && !selectedService.isInstant" class="bg-white rounded-xl border border-gray-200 p-6">
+            <h2 class="text-lg font-bold text-gray-900 mb-6">انتخاب تاریخ و زمان</h2>
+            
+            <!-- انتخاب تاریخ -->
+            <div class="mb-6">
+              <h3 class="font-medium text-gray-700 mb-3 flex items-center gap-2">
+                <i class="ti ti-calendar text-sky-500"></i>
+                تاریخ مراجعه
+              </h3>
+              <div class="grid grid-cols-4 md:grid-cols-7 gap-2">
+                <button 
+                  v-for="(date, index) in availableDates" 
+                  :key="index"
+                  @click="selectDate(date)"
+                  :disabled="date.isFriday || !date.hasSlots"
+                  :class="[
+                    'p-3 rounded-xl text-center transition-all relative',
+                    date.isFriday || !date.hasSlots
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                      : selectedDate?.fullDate === date.fullDate 
+                        ? 'bg-sky-500 text-white'
+                        : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
+                  ]"
+                >
+                  <div class="text-xs mb-1">{{ date.dayName }}</div>
+                  <div class="font-bold text-lg">{{ date.jalaliDay }}</div>
+                  <div class="text-xs mt-1">{{ date.monthName }}</div>
+                  <span v-if="date.isToday" class="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full"></span>
+                  <span v-if="date.isFriday" class="text-[10px] text-red-400 block mt-1">تعطیل</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- نمایش تاریخ انتخاب شده -->
+            <div v-if="selectedDate" class="bg-sky-50 rounded-xl p-3 flex items-center gap-3 mb-6">
+              <i class="ti ti-calendar-check text-sky-500 text-xl"></i>
+              <div>
+                <span class="text-sm text-gray-600">تاریخ انتخاب شده:</span>
+                <span class="font-bold text-sky-700 mr-2">{{ selectedDateDisplay }}</span>
+              </div>
+            </div>
+
+            <!-- انتخاب ساعت -->
+            <div v-if="selectedDate && !selectedDate.isFriday">
+              <h3 class="font-medium text-gray-700 mb-3 flex items-center gap-2">
+                <i class="ti ti-clock text-sky-500"></i>
+                ساعت مراجعه
+                <span v-if="selectedDate.dayNameFull === 'پنج‌شنبه'" class="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">(نیم‌روز)</span>
+              </h3>
+              
+              <!-- تب‌های صبح/عصر -->
+              <div class="flex gap-2 mb-4">
+                <button 
+                  @click="timePeriod = 'morning'"
+                  :class="['px-4 py-2 rounded-lg font-medium transition-all', timePeriod === 'morning' ? 'bg-sky-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']"
+                >
+                  صبح
+                </button>
+                <button 
+                  v-if="selectedDate.dayNameFull !== 'پنج‌شنبه'"
+                  @click="timePeriod = 'afternoon'"
+                  :class="['px-4 py-2 rounded-lg font-medium transition-all', timePeriod === 'afternoon' ? 'bg-sky-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200']"
+                >
+                  عصر
+                </button>
+              </div>
+              
+              <div class="grid grid-cols-4 md:grid-cols-6 gap-2">
+                <button 
+                  v-for="time in filteredTimes" 
+                  :key="time.value"
+                  @click="selectedTime = time.value"
+                  :disabled="!time.available"
+                  :class="[
+                    'p-3 rounded-xl text-center transition-all font-medium',
+                    !time.available
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed line-through'
+                      : selectedTime === time.value 
+                        ? 'bg-sky-500 text-white'
+                        : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
+                  ]"
+                >
+                  {{ time.label }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- درباره دکتر -->
+          <div id="about" ref="aboutSection" class="bg-white rounded-xl border border-gray-200 p-6 scroll-mt-20">
+            <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <i class="ti ti-user text-sky-500"></i>
+              درباره دکتر
+            </h2>
+            <p class="text-gray-700 leading-relaxed mb-4">{{ vet.about }}</p>
+            
+            <!-- تحصیلات و سوابق -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="font-medium text-gray-900 mb-2 flex items-center gap-2">
+                  <i class="ti ti-school text-sky-500"></i>
+                  تحصیلات
+                </h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                  <li v-for="edu in vet.education" :key="edu">• {{ edu }}</li>
+                </ul>
+              </div>
+              <div class="bg-gray-50 rounded-lg p-4">
+                <h4 class="font-medium text-gray-900 mb-2 flex items-center gap-2">
+                  <i class="ti ti-certificate text-sky-500"></i>
+                  تخصص‌ها
+                </h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                  <li v-for="spec in vet.specialties" :key="spec">• {{ spec }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- خدمات دکتر -->
+          <div id="services" ref="servicesSection" class="bg-white rounded-xl border border-gray-200 p-6 scroll-mt-20">
+            <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <i class="ti ti-medical-cross text-sky-500"></i>
+              خدمات قابل ارائه
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div v-for="service in vet.availableServices" :key="service" class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg text-sm">
+                <i class="ti ti-check text-green-500"></i>
+                <span>{{ service }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- نقشه و آدرس -->
+          <div id="location" class="bg-white rounded-xl border border-gray-200 p-6 scroll-mt-20">
+            <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <i class="ti ti-map-pin text-sky-500"></i>
+              موقعیت مکانی
+            </h2>
+            
+            <!-- نقشه Leaflet -->
+            <div class="h-64 bg-gray-200 rounded-xl mb-4 overflow-hidden relative">
+              <div ref="mapContainer" class="w-full h-full"></div>
+              <!-- مارکر مرکز -->
+              <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full z-[1000] pointer-events-none">
+                <div class="flex flex-col items-center">
+                  <i class="ti ti-map-pin-filled text-4xl text-red-500 drop-shadow-lg"></i>
+                </div>
+              </div>
+              <!-- دکمه‌های زوم -->
+              <div class="absolute top-3 left-3 z-[1000] flex flex-col gap-1">
+                <button @click="zoomIn" class="w-8 h-8 bg-white rounded-lg shadow-md flex items-center justify-center hover:bg-gray-50">
+                  <i class="ti ti-plus text-gray-700"></i>
+                </button>
+                <button @click="zoomOut" class="w-8 h-8 bg-white rounded-lg shadow-md flex items-center justify-center hover:bg-gray-50">
+                  <i class="ti ti-minus text-gray-700"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- آدرس و ساعت کاری -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- آدرس -->
+              <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                <i class="ti ti-map-pin text-sky-500 text-xl mt-0.5"></i>
+                <div class="flex-1">
+                  <p class="font-medium text-gray-900 mb-1">آدرس</p>
+                  <p class="text-gray-600 text-sm">{{ vet.address }}</p>
+                  <a 
+                    :href="`https://maps.google.com/?q=${vet.lat},${vet.lng}`" 
+                    target="_blank"
+                    class="text-sky-600 text-sm mt-2 inline-flex items-center gap-1 hover:underline"
+                  >
+                    <i class="ti ti-external-link"></i>
+                    مسیریابی
+                  </a>
+                </div>
+              </div>
+              
+              <!-- ساعات کاری -->
+              <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+                <i class="ti ti-clock text-sky-500 text-xl mt-0.5"></i>
+                <div class="flex-1">
+                  <p class="font-medium text-gray-900 mb-2">ساعات کاری</p>
+                  <div class="space-y-1 text-sm">
+                    <div v-for="schedule in vet.workingHours" :key="schedule.day" class="flex justify-between">
+                      <span class="text-gray-600">{{ schedule.day }}</span>
+                      <span :class="schedule.hours === 'تعطیل' ? 'text-red-500' : 'text-gray-900'">{{ schedule.hours }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- نظرات کاربران -->
+          <div id="reviews" ref="reviewsSection" class="bg-white rounded-xl border border-gray-200 p-6 scroll-mt-20">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <i class="ti ti-message-circle text-sky-500"></i>
+                نظرات کاربران
+                <span class="text-sm font-normal text-gray-500">({{ reviews.length }} نظر)</span>
+              </h2>
+              <div class="flex items-center gap-2 bg-yellow-50 px-3 py-1 rounded-full">
+                <i class="ti ti-star-filled text-yellow-400"></i>
+                <span class="font-bold text-yellow-700">{{ vet.rating }}</span>
+              </div>
+            </div>
+            
+            <!-- لیست نظرات -->
+            <div class="space-y-4">
+              <div v-for="review in paginatedReviews" :key="review.id" class="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="font-bold text-sky-600">{{ review.userName.charAt(0) }}</span>
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between mb-1">
+                      <h4 class="font-medium text-gray-900">{{ review.userName }}</h4>
+                      <span class="text-xs text-gray-500">{{ review.date }}</span>
+                    </div>
+                    <div class="flex items-center gap-1 mb-2">
+                      <i v-for="i in 5" :key="i" :class="['ti ti-star-filled text-sm', i <= review.rating ? 'text-yellow-400' : 'text-gray-300']"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">{{ review.comment }}</p>
+                    
+                    <!-- پاسخ دکتر -->
+                    <div v-if="review.doctorReply" class="mt-3 mr-4 p-3 bg-sky-50 rounded-lg border-r-2 border-sky-400">
+                      <div class="flex items-center gap-2 mb-1">
+                        <i class="ti ti-stethoscope text-sky-600"></i>
+                        <span class="text-sm font-medium text-sky-700">پاسخ دکتر</span>
+                      </div>
+                      <p class="text-sm text-gray-600">{{ review.doctorReply }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- دکمه نمایش بیشتر -->
+            <div v-if="reviews.length > reviewsPerPage && !showAllReviews" class="mt-4 text-center">
+              <button 
+                @click="showAllReviews = true"
+                class="text-sky-600 hover:text-sky-700 font-medium text-sm inline-flex items-center gap-1"
+              >
+                مشاهده همه نظرات
+                <i class="ti ti-chevron-down"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ستون کناری - خلاصه رزرو -->
+        <div class="space-y-6">
+          <div class="bg-white rounded-xl border border-gray-200 p-6 sticky top-24">
+            <h3 class="font-bold text-gray-900 mb-4">خلاصه رزرو</h3>
+            
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">دکتر:</span>
+                <span class="font-medium text-gray-900">{{ vet.name }}</span>
+              </div>
+              
+              <div v-if="selectedService" class="flex justify-between text-sm">
+                <span class="text-gray-600">نوع خدمت:</span>
+                <span class="font-medium text-gray-900">{{ selectedService.name }}</span>
+              </div>
+              
+              <div v-if="selectedDate && !selectedService?.isInstant" class="flex justify-between text-sm">
+                <span class="text-gray-600">تاریخ:</span>
+                <span class="font-medium text-gray-900">{{ selectedDateDisplay }}</span>
+              </div>
+              
+              <div v-if="selectedTime && !selectedService?.isInstant" class="flex justify-between text-sm">
+                <span class="text-gray-600">ساعت:</span>
+                <span class="font-medium text-gray-900">{{ selectedTime }}</span>
+              </div>
+
+              <div v-if="selectedService?.isInstant" class="bg-orange-50 rounded-lg p-3 text-sm text-orange-800">
+                <i class="ti ti-bolt ml-2"></i>
+                این خدمت فوری است و نیاز به انتخاب زمان ندارد
+              </div>
+              
+              <div v-if="selectedService" class="flex justify-between text-sm border-t pt-3">
+                <span class="text-gray-600">هزینه:</span>
+                <span class="font-bold text-sky-600 text-lg">{{ selectedService.price }} تومان</span>
+              </div>
+            </div>
+            
+            <button
+              @click="proceedToPayment"
+              :disabled="!canProceed"
+              class="w-full py-3 px-4 rounded-xl font-medium transition-colors bg-sky-600 text-white hover:bg-sky-700 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+            >
+              {{ selectedService?.isInstant ? 'پرداخت و شروع' : 'ادامه و پرداخت' }}
+            </button>
+
+            <p class="text-xs text-gray-500 text-center mt-3">
+              <i class="ti ti-lock ml-1"></i>
+              برای پرداخت باید وارد حساب کاربری شوید
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- مدال ورود -->
+    <Teleport to="body">
+      <div v-if="showLoginModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative">
+          <button @click="showLoginModal = false" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600">
+            <i class="ti ti-x text-xl"></i>
+          </button>
+          
+          <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="ti ti-user-circle text-3xl text-sky-600"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900">ورود به حساب کاربری</h3>
+            <p class="text-gray-600 mt-2">برای ادامه و پرداخت باید وارد حساب کاربری خود شوید</p>
+          </div>
+
+          <div class="space-y-4">
+            <NuxtLink 
+              :to="`/auth/login?redirect=/vet/${route.params.id}`"
+              class="w-full py-3 px-4 bg-sky-600 text-white rounded-xl font-medium hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
+            >
+              <i class="ti ti-login"></i>
+              ورود به حساب
+            </NuxtLink>
+            <NuxtLink 
+              :to="`/auth/register?redirect=/vet/${route.params.id}`"
+              class="w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+            >
+              <i class="ti ti-user-plus"></i>
+              ثبت‌نام
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
+    <!-- مدال پرداخت فوری -->
+    <Teleport to="body">
+      <div v-if="showPaymentModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">
+          <button @click="showPaymentModal = false" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600">
+            <i class="ti ti-x text-xl"></i>
+          </button>
+          
+          <!-- هدر -->
+          <div :class="[selectedService?.headerBg, 'rounded-xl p-4 text-white mb-6 -mx-2 -mt-2']">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                <i :class="['text-2xl', selectedService?.icon]"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold">{{ selectedService?.name }}</h3>
+                <p class="text-white/80 text-sm">{{ selectedService?.description }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- توضیحات مشکل -->
+          <div class="space-y-4 mb-6">
+            <h4 class="font-bold text-gray-900">توضیحات مشکل (اختیاری)</h4>
+            <textarea 
+              v-model="problemDescription"
+              rows="3"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-sky-500 focus:ring-2 focus:ring-sky-100 outline-none resize-none"
+              placeholder="توضیح کوتاهی از مشکل حیوان خود بنویسید..."
+            ></textarea>
+          </div>
+
+          <!-- خلاصه پرداخت -->
+          <div class="bg-gray-50 rounded-xl p-4 mb-6">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">مبلغ قابل پرداخت</span>
+              <span class="text-xl font-bold text-sky-600">{{ selectedService?.price }} تومان</span>
+            </div>
+          </div>
+
+          <!-- اطلاعیه -->
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+            <i class="ti ti-info-circle text-blue-500 text-xl mt-0.5"></i>
+            <div class="text-sm text-blue-800">
+              <p class="font-bold mb-1">توجه:</p>
+              <p v-if="selectedService?.id === 'text'">بعد از پرداخت به صفحه گفتگو با دکتر منتقل می‌شوید.</p>
+              <p v-else-if="selectedService?.id === 'phone'">بعد از پرداخت، دکتر در اولین فرصت با شما تماس می‌گیرد.</p>
+              <p v-else>پاسخ شما در کمتر از ۱۰ دقیقه ارسال می‌شود.</p>
+            </div>
+          </div>
+
+          <!-- دکمه پرداخت -->
+          <button
+            @click="processPayment"
+            :disabled="isProcessing"
+            class="w-full py-3 px-4 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            <i v-if="isProcessing" class="ti ti-loader animate-spin"></i>
+            <i v-else class="ti ti-credit-card"></i>
+            {{ isProcessing ? 'در حال پردازش...' : 'پرداخت و شروع' }}
+          </button>
+        </div>
+      </div>
+    </Teleport>
+
+    <!-- مدال موفقیت -->
+    <Teleport to="body">
+      <div v-if="showSuccessModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center">
+          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="ti ti-check text-4xl text-green-500"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">پرداخت موفق!</h3>
+          <p class="text-gray-600 mb-2">کد رهگیری: <span class="font-bold text-sky-600 font-english">{{ trackingCode }}</span></p>
+          
+          <div v-if="selectedService?.id === 'text'" class="my-6">
+            <p class="text-sm text-gray-600 mb-4">در حال انتقال به صفحه گفتگو...</p>
+            <div class="flex items-center justify-center gap-2 text-sky-600">
+              <i class="ti ti-loader animate-spin"></i>
+              <span>لطفاً صبر کنید...</span>
+            </div>
+          </div>
+          <div v-else class="my-6">
+            <p class="text-sm text-gray-600">دکتر به زودی با شما تماس خواهد گرفت</p>
+          </div>
+
+          <div class="flex gap-3">
+            <NuxtLink to="/panel/users/consultations" class="flex-1 py-3 px-4 bg-sky-500 text-white rounded-xl font-medium">
+              مشاوره‌های من
+            </NuxtLink>
+            <button @click="closeSuccessModal" class="flex-1 py-3 px-4 bg-gray-100 text-gray-700 rounded-xl font-medium">
+              بستن
+            </button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
+    <!-- Review Modal -->
+    <Teleport to="body">
+      <div v-if="showReviewModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" @click.self="showReviewModal = false">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-gray-900">ثبت نظر برای {{ vet.name }}</h3>
+            <button @click="showReviewModal = false" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+              <i class="ti ti-x text-xl text-gray-500"></i>
+            </button>
+          </div>
+
+          <!-- Rating -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-3">امتیاز شما</label>
+            <div class="flex items-center gap-2">
+              <button 
+                v-for="star in 5" 
+                :key="star"
+                @click="reviewForm.rating = star"
+                class="text-3xl transition-transform hover:scale-110"
+              >
+                <i :class="star <= reviewForm.rating ? 'ti ti-star-filled text-yellow-400' : 'ti ti-star text-gray-300'"></i>
+              </button>
+              <span class="text-sm text-gray-500 mr-2">{{ reviewForm.rating > 0 ? reviewForm.rating + ' از 5' : '' }}</span>
+            </div>
+          </div>
+
+          <!-- Name -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">نام شما</label>
+            <input 
+              v-model="reviewForm.name"
+              type="text"
+              class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-sky-500 focus:ring-2 focus:ring-sky-100 outline-none transition-all"
+              placeholder="نام خود را وارد کنید"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">شماره موبایل</label>
+            <input 
+              v-model="reviewForm.phone"
+              type="tel"
+              class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-sky-500 focus:ring-2 focus:ring-sky-100 outline-none transition-all"
+              placeholder="09xxxxxxxxx"
+              maxlength="11"
+            />
+          </div>
+
+          <!-- Comment -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">نظر شما</label>
+            <textarea 
+              v-model="reviewForm.comment"
+              rows="4"
+              class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-sky-500 focus:ring-2 focus:ring-sky-100 outline-none transition-all resize-none"
+              placeholder="نظر خود را درباره این دامپزشک بنویسید..."
+            ></textarea>
+          </div>
+
+          <!-- Submit -->
+          <button 
+            @click="submitReview"
+            :disabled="!reviewForm.rating || !reviewForm.name || !reviewForm.comment"
+            class="w-full py-3 bg-sky-500 text-white rounded-lg font-medium hover:bg-sky-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            ثبت نظر
+          </button>
+        </div>
+      </div>
+    </Teleport>
+  </div>
+</template>
+
+<script setup lang="ts">
+const route = useRoute()
+const router = useRouter()
+
+// Refs for sections
+const aboutSection = ref<HTMLElement | null>(null)
+const servicesSection = ref<HTMLElement | null>(null)
+const reviewsSection = ref<HTMLElement | null>(null)
+
+// Map refs
+const mapContainer = ref<HTMLDivElement | null>(null)
+let map: any = null
+let L: any = null
+
+// State
+const selectedService = ref<any>(null)
+const selectedDate = ref<any>(null)
+const selectedTime = ref('')
+const timePeriod = ref('morning')
+const showLoginModal = ref(false)
+const showPaymentModal = ref(false)
+const showSuccessModal = ref(false)
+const isProcessing = ref(false)
+const trackingCode = ref('')
+const problemDescription = ref('')
+const activeTab = ref('about')
+const showAllReviews = ref(false)
+const reviewsPerPage = 5
+
+// فرض کنید این از استور یا کوکی میاد
+const isLoggedIn = ref(false)
+
+// Review Modal
+const showReviewModal = ref(false)
+const reviewForm = ref({
+  rating: 0,
+  name: '',
+  phone: '',
+  comment: ''
+})
+
+// تب‌ها
+const tabs = [
+  { id: 'about', name: 'درباره دکتر', icon: 'ti ti-user' },
+  { id: 'services', name: 'خدمات', icon: 'ti ti-medical-cross' },
+  { id: 'reviews', name: 'نظرات کاربران', icon: 'ti ti-message-circle' }
+]
+
+// خدمات - مثل پنل ادمین - پیش‌فرض ویزیت حضوری
+const services = ref([
+  {
+    id: 'in-person',
+    name: 'ویزیت حضوری',
+    description: 'مراجعه به کلینیک',
+    price: '۱۵۰,۰۰۰',
+    icon: 'ti ti-building-hospital',
+    iconBg: 'bg-emerald-100',
+    iconColor: 'text-emerald-600',
+    iconColorActive: 'text-emerald-600',
+    borderColor: 'border-emerald-500',
+    bgColor: 'bg-emerald-500',
+    textColorActive: 'text-white',
+    priceColor: 'text-emerald-600',
+    headerBg: 'bg-emerald-600',
+    isInstant: false
+  },
+  {
+    id: 'home',
+    name: 'ویزیت در منزل',
+    description: 'دکتر به منزل می‌آید',
+    price: '۳۰۰,۰۰۰',
+    icon: 'ti ti-home-heart',
+    iconBg: 'bg-amber-100',
+    iconColor: 'text-amber-600',
+    iconColorActive: 'text-amber-600',
+    borderColor: 'border-amber-500',
+    bgColor: 'bg-amber-500',
+    textColorActive: 'text-white',
+    priceColor: 'text-amber-600',
+    headerBg: 'bg-amber-600',
+    isInstant: false
+  },
+  {
+    id: 'phone',
+    name: 'مشاوره تلفنی',
+    description: 'تماس تلفنی با دکتر',
+    price: '۱۰۰,۰۰۰',
+    icon: 'ti ti-phone-call',
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-600',
+    iconColorActive: 'text-purple-600',
+    borderColor: 'border-purple-500',
+    bgColor: 'bg-purple-500',
+    textColorActive: 'text-white',
+    priceColor: 'text-purple-600',
+    headerBg: 'bg-purple-600',
+    isInstant: true
+  },
+  {
+    id: 'text',
+    name: 'گفتگوی آنلاین',
+    description: 'چت با دکتر',
+    price: '۸۰,۰۰۰',
+    icon: 'ti ti-message-circle',
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-600',
+    iconColorActive: 'text-blue-600',
+    borderColor: 'border-blue-500',
+    bgColor: 'bg-blue-500',
+    textColorActive: 'text-white',
+    priceColor: 'text-blue-600',
+    headerBg: 'bg-blue-600',
+    isInstant: true
+  }
+])
+
+// نظرات کاربران
+const reviews = ref([
+  {
+    id: 1,
+    userName: 'علی محمدی',
+    rating: 5,
+    date: '۳ روز پیش',
+    comment: 'دکتر خیلی حرفه‌ای و دلسوز بودن. گربه‌ام که مشکل گوارشی داشت رو خیلی خوب معاینه کردن و درمان شد.',
+    doctorReply: 'ممنون از اعتماد شما. خوشحالم که گربه‌تون حالش بهتر شده.'
+  },
+  {
+    id: 2,
+    userName: 'سارا احمدی',
+    rating: 5,
+    date: '۱ هفته پیش',
+    comment: 'واقعاً راضی بودم. دکتر صبور هستن و همه چیز رو کامل توضیح میدن. قیمت‌ها هم مناسبه.',
+    doctorReply: null
+  },
+  {
+    id: 3,
+    userName: 'رضا کریمی',
+    rating: 4,
+    date: '۲ هفته پیش',
+    comment: 'سگم رو برای واکسیناسیون بردم. دکتر خیلی با حیوانات مهربونه و کارش رو خوب بلده.',
+    doctorReply: null
+  },
+  {
+    id: 4,
+    userName: 'مریم حسینی',
+    rating: 5,
+    date: '۳ هفته پیش',
+    comment: 'مشاوره آنلاین گرفتم و خیلی راضی بودم. سریع جواب دادن و راهنمایی کردن.',
+    doctorReply: 'ممنون از نظر مثبتتون. در خدمتم.'
+  },
+  {
+    id: 5,
+    userName: 'حسین رضایی',
+    rating: 4,
+    date: '۱ ماه پیش',
+    comment: 'تجربه خوبی بود. فقط زمان انتظار یکم طولانی بود ولی در کل راضی هستم.',
+    doctorReply: null
+  },
+  {
+    id: 6,
+    userName: 'فاطمه علوی',
+    rating: 5,
+    date: '۱ ماه پیش',
+    comment: 'بهترین دامپزشکی که تاکنون رفتم. خیلی دقیق و حرفه‌ای.',
+    doctorReply: null
+  }
+])
+
+const paginatedReviews = computed(() => {
+  if (showAllReviews.value) return reviews.value
+  return reviews.value.slice(0, reviewsPerPage)
+})
+
+// تبدیل میلادی به شمسی
+const toJalali = (gy: number, gm: number, gd: number) => {
+  const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
+  let jy = (gy <= 1600) ? 0 : 979
+  gy -= (gy <= 1600) ? 621 : 1600
+  const gy2 = (gm > 2) ? (gy + 1) : gy
+  let days = (365 * gy) + (Math.floor((gy2 + 3) / 4)) - (Math.floor((gy2 + 99) / 100)) + (Math.floor((gy2 + 399) / 400)) - 80 + gd + g_d_m[gm - 1]
+  jy += 33 * (Math.floor(days / 12053))
+  days %= 12053
+  jy += 4 * (Math.floor(days / 1461))
+  days %= 1461
+  jy += Math.floor((days - 1) / 365)
+  if (days > 365) days = (days - 1) % 365
+  const jm = (days < 186) ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30)
+  const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30))
+  return { year: jy, month: jm, day: jd }
+}
+
+const jalaliMonthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']
+const persianDayNames = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه']
+const persianDayNamesShort = ['یک', 'دو', 'سه', 'چهار', 'پنج', 'جمعه', 'شنبه']
+
+// تاریخ‌های در دسترس
+const availableDates = computed(() => {
+  const dates = []
+  for (let i = 0; i < 7; i++) {
+    const date = new Date()
+    date.setDate(date.getDate() + i)
+    const jalali = toJalali(date.getFullYear(), date.getMonth() + 1, date.getDate())
+    const dayOfWeek = date.getDay()
+    const isFriday = dayOfWeek === 5
+    
+    dates.push({
+      gregorianDate: new Date(date),
+      jalaliYear: jalali.year,
+      jalaliMonth: jalali.month,
+      jalaliDay: jalali.day,
+      dayName: persianDayNamesShort[dayOfWeek],
+      dayNameFull: persianDayNames[dayOfWeek],
+      monthName: jalaliMonthNames[jalali.month - 1],
+      fullDate: `${jalali.year}/${jalali.month}/${jalali.day}`,
+      isFriday,
+      isToday: i === 0,
+      hasSlots: !isFriday && Math.random() > 0.2
+    })
+  }
+  return dates
+})
+
+// ساعات در دسترس
+const allTimes = computed(() => {
+  const morningTimes = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30']
+  const afternoonTimes = ['14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30']
+  
+  return {
+    morning: morningTimes.map(t => ({ value: t, label: t, available: Math.random() > 0.3 })),
+    afternoon: afternoonTimes.map(t => ({ value: t, label: t, available: Math.random() > 0.3 }))
+  }
+})
+
+const filteredTimes = computed(() => {
+  if (selectedDate.value?.dayNameFull === 'پنج‌شنبه') {
+    return allTimes.value.morning
+  }
+  return allTimes.value[timePeriod.value as keyof typeof allTimes.value] || []
+})
+
+const selectedDateDisplay = computed(() => {
+  if (!selectedDate.value) return ''
+  return `${selectedDate.value.dayNameFull} ${selectedDate.value.jalaliDay} ${selectedDate.value.monthName} ${selectedDate.value.jalaliYear}`
+})
+
+// آیا میتونه ادامه بده
+const canProceed = computed(() => {
+  if (!selectedService.value) return false
+  if (selectedService.value.isInstant) return true
+  return selectedDate.value && selectedTime.value
+})
+
+// اطلاعات دکتر
+const vet = ref({
+  id: Number(route.params.id),
+  name: 'دکتر احمد صادقی',
+  avatar: 'ا.ص',
+  specialty: 'متخصص جراحی حیوانات',
+  city: 'تهران',
+  address: 'تهران، خیابان ولیعصر، نرسیده به میدان ونک، پلاک ۱۲۳، طبقه دوم',
+  lat: 35.7155,
+  lng: 51.4085,
+  experience: 12,
+  rating: 4.9,
+  reviewCount: 246,
+  isOnline: true,
+  about: 'دکتر احمد صادقی با بیش از ۱۲ سال تجربه در زمینه جراحی حیوانات خانگی، یکی از برترین متخصصین این حوزه است. ایشان فارغ‌التحصیل دانشگاه تهران بوده و دوره‌های تخصصی متعددی را در کشورهای مختلف گذرانده‌اند. تمرکز اصلی ایشان بر جراحی‌های پیچیده ارتوپدی و بافت نرم است.',
+  education: [
+    'دکترای دامپزشکی - دانشگاه تهران',
+    'فوق تخصص جراحی - دانشگاه وین',
+    'دوره تخصصی ارتوپدی - انگلستان'
+  ],
+  specialties: [
+    'جراحی ارتوپدی',
+    'جراحی بافت نرم',
+    'جراحی اورژانسی',
+    'تشخیص تصویربرداری'
+  ],
+  availableServices: ['جراحی عمومی', 'ارتوپدی', 'جراحی چشم', 'جراحی گوارش', 'واکسیناسیون', 'معاینه کامل', 'مشاوره تغذیه', 'دندانپزشکی'],
+  workingHours: [
+    { day: 'شنبه تا چهارشنبه', hours: '9:00 - 18:00' },
+    { day: 'پنج‌شنبه', hours: '9:00 - 13:00' },
+    { day: 'جمعه', hours: 'تعطیل' }
+  ]
+})
+
+// اسکرول به بخش مورد نظر
+const scrollToSection = (sectionId: string) => {
+  activeTab.value = sectionId
+  const element = document.getElementById(sectionId)
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
+// تشخیص بخش فعال بر اساس اسکرول
+const handleScroll = () => {
+  const sections = ['about', 'services', 'reviews']
+  for (const sectionId of sections) {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const rect = element.getBoundingClientRect()
+      if (rect.top <= 150 && rect.bottom >= 150) {
+        activeTab.value = sectionId
+        break
+      }
+    }
+  }
+}
+
+// متدها
+const selectService = (service: any) => {
+  selectedService.value = service
+  selectedDate.value = null
+  selectedTime.value = ''
+  timePeriod.value = 'morning'
+}
+
+const selectDate = (date: any) => {
+  if (date.isFriday || !date.hasSlots) return
+  selectedDate.value = date
+  selectedTime.value = ''
+  timePeriod.value = 'morning'
+}
+
+const proceedToPayment = () => {
+  // TODO: فعلاً برای تست کامنت شده - بعداً فعال شود
+  // if (!isLoggedIn.value) {
+  //   showLoginModal.value = true
+  //   return
+  // }
+  
+  if (selectedService.value?.isInstant) {
+    showPaymentModal.value = true
+  } else {
+    router.push({
+      path: '/checkout',
+      query: {
+        vet: String(vet.value.id),
+        service: selectedService.value?.id,
+        date: selectedDate.value?.fullDate,
+        time: selectedTime.value
+      }
+    })
+  }
+}
+
+const processPayment = async () => {
+  isProcessing.value = true
+  await new Promise(r => setTimeout(r, 2000))
+  
+  trackingCode.value = `PT-${Date.now().toString().slice(-8)}`
+  isProcessing.value = false
+  showPaymentModal.value = false
+  showSuccessModal.value = true
+  
+  if (selectedService.value?.id === 'text') {
+    setTimeout(() => {
+      router.push(`/panel/users/consultations/${trackingCode.value}`)
+    }, 3000)
+  }
+}
+
+const closeSuccessModal = () => {
+  showSuccessModal.value = false
+  resetForm()
+}
+
+const resetForm = () => {
+  selectedService.value = services.value[0] // برگشت به پیش‌فرض ویزیت حضوری
+  selectedDate.value = null
+  selectedTime.value = ''
+  problemDescription.value = ''
+}
+
+// Load Leaflet from CDN
+const loadLeaflet = (): Promise<void> => {
+  return new Promise((resolve) => {
+    if ((window as any).L) {
+      L = (window as any).L
+      resolve()
+      return
+    }
+    
+    // Load CSS
+    if (!document.querySelector('link[href*="leaflet"]')) {
+      const css = document.createElement('link')
+      css.rel = 'stylesheet'
+      css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+      document.head.appendChild(css)
+    }
+    
+    // Load JS
+    if (!document.querySelector('script[src*="leaflet"]')) {
+      const script = document.createElement('script')
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+      script.onload = () => {
+        L = (window as any).L
+        resolve()
+      }
+      document.head.appendChild(script)
+    } else {
+      L = (window as any).L
+      resolve()
+    }
+  })
+}
+
+const initMap = async () => {
+  if (!mapContainer.value || map) return
+  
+  await loadLeaflet()
+  if (!L) return
+  
+  map = L.map(mapContainer.value, {
+    center: [vet.value.lat, vet.value.lng],
+    zoom: 16,
+    zoomControl: false,
+    scrollWheelZoom: false
+  })
+  
+  // Use OpenStreetMap tiles (works in Iran)
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map)
+}
+
+const destroyMap = () => {
+  if (map) {
+    map.remove()
+    map = null
+  }
+}
+
+const zoomIn = () => {
+  if (map) map.zoomIn()
+}
+
+const zoomOut = () => {
+  if (map) map.zoomOut()
+}
+
+// پیش‌فرض ویزیت حضوری
+onMounted(() => {
+  selectedService.value = services.value[0]
+  window.addEventListener('scroll', handleScroll)
+  
+  // Initialize map after a small delay
+  setTimeout(() => {
+    initMap()
+  }, 100)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  destroyMap()
+})
+
+// Share vet profile
+const shareVet = async () => {
+  const shareData = {
+    title: vet.value.name,
+    text: `${vet.value.name} - ${vet.value.specialty}`,
+    url: window.location.href
+  }
+  
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData)
+    } catch (err) {
+      console.log('Share cancelled')
+    }
+  } else {
+    // Fallback: copy to clipboard
+    await navigator.clipboard.writeText(window.location.href)
+    alert('لینک کپی شد!')
+  }
+}
+
+// Scroll to reviews section
+const scrollToReviews = () => {
+  const reviewsSection = document.getElementById('reviews')
+  if (reviewsSection) {
+    reviewsSection.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+// Submit review
+const submitReview = () => {
+  if (!reviewForm.value.rating || !reviewForm.value.name || !reviewForm.value.comment) return
+  
+  // Here you would send to API
+  console.log('Review submitted:', reviewForm.value)
+  
+  // Update vet review count
+  vet.value.reviewCount++
+  
+  // Reset form and close modal
+  reviewForm.value = { rating: 0, name: '', phone: '', comment: '' }
+  showReviewModal.value = false
+  
+  alert('نظر شما با موفقیت ثبت شد!')
+}
+
+// SEO
+useHead({
+  title: `${vet.value.name} - رزرو نوبت | پتومن`,
+  meta: [{ name: 'description', content: `رزرو نوبت از ${vet.value.name}` }]
+})
+</script>

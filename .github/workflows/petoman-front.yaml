@@ -1,0 +1,100 @@
+name: PetomanFront Deploy (Nuxt/Workspace + PM2)
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Sync code to server
+        run: |
+          sudo rsync -avz --delete --exclude='.git' ./ /var/www/petoman.com/petomanfront
+          sudo chmod -R 770 /var/www/petoman.com/petomanfront
+          sudo chown -R www-data:www-data /var/www/petoman.com/petomanfront
+
+
+
+      - name: Install dependencies
+        run: |
+          cd /var/www/petoman.com/petomanfront
+          pnpm install --no-frozen-lockfile
+
+
+      - name: Build projects
+        run: |
+          cd /var/www/petoman.com/petomanfront    
+          pnpm -r run build
+          #pnpm --filter @petoman/auth-app run build
+          #pnpm --filter @petoman/danim-new run build
+          #pnpm --filter @petoman/film run build
+
+
+      - name: Run with PM2
+        run: |
+          cd /var/www/petoman.com/petomanfront
+          pm2 delete auth-app || true
+          pm2 delete danim-new || true
+          pm2 delete hamian || true
+          pm2 delete film || true
+
+          
+          pm2 serve apps/auth/dist 3001 --name auth-app          
+          PORT=3002 HOST=0.0.0.0 pm2 start apps/danim/.output/server/index.mjs --name danim-new         
+          PORT=6505 HOST=0.0.0.0 pm2 start apps/film/.output/server/index.mjs --name film
+          PORT=3005 HOST=0.0.0.0 pm2 start apps/hamian/.output/server/index.mjs --name hamian
+  
+  
+          pm2 save
+          #pm2 startup
+
+
+      - name: Check auth-app health
+        run: |
+          URL="https://petoman.com/auth"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || echo "000")
+          if [[ "$STATUS" == "200" ]] || [[ "$STATUS" =~ ^3 ]]; then
+            echo "✅ auth-app health check passed"
+          else
+            echo "❌ auth-app health check failed"
+            exit 1
+          fi
+
+      - name: Check danim health
+        run: |
+          URL="https://petoman.com/danim"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || echo "000")
+          if [[ "$STATUS" == "200" ]] || [[ "$STATUS" =~ ^3 ]]; then
+            echo "✅ danim health check passed"
+          else
+            echo "❌ danim health check failed"
+            exit 1
+          fi
+
+      - name: Check hamian health
+        run: |
+          URL="https://petoman.com/hamian"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || echo "000")
+          if [[ "$STATUS" == "200" ]] || [[ "$STATUS" =~ ^3 ]]; then
+            echo "✅ hamian health check passed"
+          else
+            echo "❌ hamian health check failed"
+            exit 1
+          fi
+
+      - name: Check film health
+        run: |
+          URL="https://petoman.com/film"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || echo "000")
+          if [[ "$STATUS" == "200" ]] || [[ "$STATUS" =~ ^3 ]]; then
+            echo "✅ film health check passed"
+          else
+            echo "❌ film health check failed"
+            exit 1
+          fi

@@ -1,0 +1,35 @@
+{
+  "name": "@petoman/market",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@nuxt/devtools": "latest",
+    "@pinia/nuxt": "^0.11.3",
+    "@tabler/icons-vue": "^3.36.1",
+    "axios": "^1.13.2",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.3",
+    "leaflet": "^1.9.4",
+    "moment-jalaali": "^0.10.4",
+    "nuxt": "^3.17.7",
+    "pinia": "^3.0.4",
+    "socket.io-client": "^4.8.3",
+    "swiper": "^11.2.10",
+    "vue": "latest",
+    "vue3-persian-datetime-picker": "^1.2.2"
+  },
+  "devDependencies": {
+    "@nuxt/kit": "^3.17.7",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.19",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "3.4.17"
+  }
+}

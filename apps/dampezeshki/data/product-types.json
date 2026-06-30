@@ -1,0 +1,186 @@
+{
+  "shopProducts": [
+    {
+      "id": "food-dry",
+      "name": "غذای خشک",
+      "category": "غذا",
+      "code": "FD",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster"]
+    },
+    {
+      "id": "food-wet",
+      "name": "غذای مرطوب",
+      "category": "غذا",
+      "code": "FW",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "food-canned",
+      "name": "کنسرو",
+      "category": "غذا",
+      "code": "FC",
+      "animals": ["cat", "dog", "fish"]
+    },
+    {
+      "id": "food-pate",
+      "name": "پته",
+      "category": "غذا",
+      "code": "FP",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "food-treat",
+      "name": "تشویقی",
+      "category": "غذا",
+      "code": "FT",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster"]
+    },
+    {
+      "id": "food-supplement",
+      "name": "مکمل غذایی",
+      "category": "غذا",
+      "code": "FS",
+      "animals": ["cat", "dog", "bird", "parrot", "fish", "rabbit", "hamster", "turtle", "reptile"]
+    },
+    {
+      "id": "food-snack",
+      "name": "اسنک",
+      "category": "غذا",
+      "code": "FK",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster"]
+    },
+    {
+      "id": "hygiene-shampoo",
+      "name": "شامپو",
+      "category": "بهداشت",
+      "code": "HS",
+      "animals": ["cat", "dog", "rabbit", "hamster"]
+    },
+    {
+      "id": "hygiene-toothpaste",
+      "name": "خمیر دندان",
+      "category": "بهداشت",
+      "code": "HT",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "hygiene-wipes",
+      "name": "دستمال مرطوب",
+      "category": "بهداشت",
+      "code": "HW",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster"]
+    },
+    {
+      "id": "hygiene-spray",
+      "name": "اسپری بهداشتی",
+      "category": "بهداشت",
+      "code": "HZ",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster"]
+    },
+    {
+      "id": "toy-ball",
+      "name": "توپ بازی",
+      "category": "اسباب‌بازی",
+      "code": "TB",
+      "animals": ["cat", "dog", "bird", "parrot"]
+    },
+    {
+      "id": "toy-rope",
+      "name": "طناب بازی",
+      "category": "اسباب‌بازی",
+      "code": "TR",
+      "animals": ["cat", "dog", "bird", "parrot"]
+    },
+    {
+      "id": "toy-plush",
+      "name": "عروسک پولیشی",
+      "category": "اسباب‌بازی",
+      "code": "TP",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "toy-interactive",
+      "name": "بازی تعاملی",
+      "category": "اسباب‌بازی",
+      "code": "TI",
+      "animals": ["cat", "dog", "bird", "parrot"]
+    },
+    {
+      "id": "accessory-collar",
+      "name": "قلاده",
+      "category": "لوازم جانبی",
+      "code": "AC",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "accessory-leash",
+      "name": "ریسمان",
+      "category": "لوازم جانبی",
+      "code": "AL",
+      "animals": ["cat", "dog", "rabbit"]
+    },
+    {
+      "id": "accessory-harness",
+      "name": "هارنس",
+      "category": "لوازم جانبی",
+      "code": "AH",
+      "animals": ["cat", "dog", "rabbit", "bird", "parrot"]
+    },
+    {
+      "id": "accessory-bowl",
+      "name": "ظرف غذا",
+      "category": "لوازم جانبی",
+      "code": "AB",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster", "fish"]
+    },
+    {
+      "id": "accessory-waterbowl",
+      "name": "ظرف آب",
+      "category": "لوازم جانبی",
+      "code": "AW",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster"]
+    },
+    {
+      "id": "bed-cushion",
+      "name": "تشک",
+      "category": "خانه و لانه",
+      "code": "BC",
+      "animals": ["cat", "dog", "rabbit", "hamster"]
+    },
+    {
+      "id": "bed-house",
+      "name": "خانه حیوانات",
+      "category": "خانه و لانه",
+      "code": "BH",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster", "turtle", "reptile"]
+    },
+    {
+      "id": "bed-carrier",
+      "name": "کیف حمل",
+      "category": "خانه و لانه",
+      "code": "BR",
+      "animals": ["cat", "dog", "bird", "parrot", "rabbit", "hamster", "turtle", "reptile"]
+    },
+    {
+      "id": "clothing-coat",
+      "name": "لباس زمستانی",
+      "category": "پوشاک",
+      "code": "CC",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "clothing-raincoat",
+      "name": "بارانی",
+      "category": "پوشاک",
+      "code": "CR",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "clothing-boots",
+      "name": "کفش حیوانات",
+      "category": "پوشاک",
+      "code": "CB",
+      "animals": ["dog"]
+    }
+  ]
+}

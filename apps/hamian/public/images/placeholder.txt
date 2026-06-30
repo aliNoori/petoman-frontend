@@ -1,0 +1,9 @@
+# Placeholder Images
+این پوشه حاوی تصاویر پروژه است.
+
+فایل‌های مورد نیاز:
+- about-video-poster.jpg
+- video1-thumb.jpg تا video6-thumb.jpg  
+- supporter1.jpg تا supporter3.jpg
+
+لطفاً تصاویر واقعی را در این پوشه قرار دهید.

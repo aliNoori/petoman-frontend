@@ -1,0 +1,7 @@
+<!-- SVG Placeholder for Pharmacy -->
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" fill="#DBEAFE"/>
+  <path d="M20 8L32 14v18L20 32L8 26V14L20 8z" fill="#3B82F6"/>
+  <rect x="16" y="12" width="8" height="3" fill="white"/>
+  <rect x="18.5" y="10" width="3" height="8" fill="white"/>
+</svg>

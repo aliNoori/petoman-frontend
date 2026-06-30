@@ -1,0 +1,161 @@
+{
+  "categories": [
+    {
+      "id": "petshop",
+      "name": "پت شاپ",
+      "children": [
+        {
+          "id": "food",
+          "name": "غذا",
+          "children": [
+            {
+              "id": "dog-food",
+              "name": "غذای سگ",
+              "children": [
+                { "id": "dog-dry", "name": "غذای خشک" },
+                { "id": "dog-wet", "name": "غذای مرطوب" },
+                { "id": "dog-canned", "name": "کنسرو" },
+                { "id": "dog-treat", "name": "تشویقی" },
+                { "id": "dog-supplement", "name": "مکمل" }
+              ]
+            },
+            {
+              "id": "cat-food",
+              "name": "غذای گربه",
+              "children": [
+                { "id": "cat-dry", "name": "غذای خشک" },
+                { "id": "cat-wet", "name": "غذای مرطوب" },
+                { "id": "cat-canned", "name": "کنسرو" },
+                { "id": "cat-pate", "name": "پته" },
+                { "id": "cat-treat", "name": "تشویقی" },
+                { "id": "cat-supplement", "name": "مکمل" }
+              ]
+            },
+            {
+              "id": "bird-food",
+              "name": "غذای پرنده",
+              "children": [
+                { "id": "bird-seed", "name": "دانه" },
+                { "id": "bird-pellet", "name": "پلت" },
+                { "id": "bird-treat", "name": "تشویقی" }
+              ]
+            },
+            {
+              "id": "fish-food",
+              "name": "غذای ماهی",
+              "children": [
+                { "id": "fish-flake", "name": "ورقه‌ای" },
+                { "id": "fish-pellet", "name": "پلت" },
+                { "id": "fish-frozen", "name": "فریز شده" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "hygiene",
+          "name": "بهداشت",
+          "children": [
+            {
+              "id": "dog-hygiene",
+              "name": "بهداشت سگ",
+              "children": [
+                { "id": "dog-shampoo", "name": "شامپو" },
+                { "id": "dog-wipes", "name": "دستمال مرطوب" },
+                { "id": "dog-toothpaste", "name": "خمیر دندان" },
+                { "id": "dog-perfume", "name": "عطر و ادکلن" }
+              ]
+            },
+            {
+              "id": "cat-hygiene",
+              "name": "بهداشت گربه",
+              "children": [
+                { "id": "cat-shampoo", "name": "شامپو" },
+                { "id": "cat-wipes", "name": "دستمال مرطوب" },
+                { "id": "cat-litter", "name": "خاک گربه" },
+                { "id": "cat-spray", "name": "اسپری بو بر" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "toys",
+          "name": "اسباب‌بازی",
+          "children": [
+            {
+              "id": "dog-toys",
+              "name": "اسباب‌بازی سگ",
+              "children": [
+                { "id": "dog-ball", "name": "توپ" },
+                { "id": "dog-rope", "name": "طناب" },
+                { "id": "dog-plush", "name": "عروسک" },
+                { "id": "dog-frisbee", "name": "فریزبی" }
+              ]
+            },
+            {
+              "id": "cat-toys",
+              "name": "اسباب‌بازی گربه",
+              "children": [
+                { "id": "cat-ball", "name": "توپ" },
+                { "id": "cat-mouse", "name": "موش بازی" },
+                { "id": "cat-feather", "name": "پر بازی" },
+                { "id": "cat-tunnel", "name": "تونل" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "accessories",
+          "name": "لوازم جانبی",
+          "children": [
+            {
+              "id": "dog-accessories",
+              "name": "لوازم سگ",
+              "children": [
+                { "id": "dog-collar", "name": "قلاده" },
+                { "id": "dog-leash", "name": "ریسمان" },
+                { "id": "dog-harness", "name": "هارنس" },
+                { "id": "dog-bowl", "name": "ظرف غذا" },
+                { "id": "dog-bed", "name": "تشک و جایگاه" }
+              ]
+            },
+            {
+              "id": "cat-accessories",
+              "name": "لوازم گربه",
+              "children": [
+                { "id": "cat-collar", "name": "قلاده" },
+                { "id": "cat-bowl", "name": "ظرف غذا" },
+                { "id": "cat-bed", "name": "تشک و جایگاه" },
+                { "id": "cat-tree", "name": "درخت گربه" },
+                { "id": "cat-carrier", "name": "کیف حمل" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "clothing",
+          "name": "پوشاک",
+          "children": [
+            {
+              "id": "dog-clothing",
+              "name": "لباس سگ",
+              "children": [
+                { "id": "dog-coat", "name": "کت و ژاکت" },
+                { "id": "dog-raincoat", "name": "بارانی" },
+                { "id": "dog-boots", "name": "کفش" },
+                { "id": "dog-sweater", "name": "سوئیشرت" }
+              ]
+            },
+            {
+              "id": "cat-clothing",
+              "name": "لباس گربه",
+              "children": [
+                { "id": "cat-coat", "name": "کت و ژاکت" },
+                { "id": "cat-sweater", "name": "سوئیشرت" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

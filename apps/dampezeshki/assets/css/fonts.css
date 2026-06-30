@@ -1,0 +1,69 @@
+/* Import Vazir Font from CDN */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+
+/* Create alias for Vazir font */
+:root {
+  --font-vazir: 'Vazirmatn', 'Vazir', sans-serif;
+}
+
+/* Import Shabnam Font Family */
+@font-face {
+  font-family: 'Shabnam';
+  src: url('../../../../shared/assets/fonts/Shabnam/Shabnam.woff2') format('woff2'),
+       url('../../../../shared/assets/fonts/Shabnam/Shabnam.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Shabnam';
+  src: url('../../../../shared/assets/fonts/Shabnam/Shabnam-Bold.woff2') format('woff2'),
+       url('../../../../shared/assets/fonts/Shabnam/Shabnam-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Shabnam';
+  src: url('../../../../shared/assets/fonts/Shabnam/Shabnam-Medium.woff2') format('woff2'),
+       url('../../../../shared/assets/fonts/Shabnam/Shabnam-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Shabnam';
+  src: url('../../../../shared/assets/fonts/Shabnam/Shabnam-Light.woff2') format('woff2'),
+       url('../../../../shared/assets/fonts/Shabnam/Shabnam-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Set Persian fonts as primary */
+body {
+  font-family: 'Vazirmatn', 'Shabnam', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+/* Ensure Persian text uses Persian fonts */
+[dir="rtl"], 
+.font-vazir,
+.font-shabnam,
+.persian-text {
+  font-family: 'Vazirmatn', 'Shabnam', sans-serif;
+}
+
+/* Heading fonts */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Shabnam', 'Vazirmatn', sans-serif;
+  font-weight: 700;
+}
+
+/* Button fonts */
+button, .btn {
+  font-family: 'Vazirmatn', 'Shabnam', sans-serif;
+}

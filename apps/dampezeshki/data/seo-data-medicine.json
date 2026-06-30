@@ -1,0 +1,411 @@
+{
+  "animals": [
+    {
+      "id": "cat",
+      "name": "گربه",
+      "icon": "🐱"
+    },
+    {
+      "id": "dog",
+      "name": "سگ",
+      "icon": "🐶"
+    },
+    {
+      "id": "bird",
+      "name": "پرنده",
+      "icon": "🦜"
+    },
+    {
+      "id": "fish",
+      "name": "ماهی",
+      "icon": "🐠"
+    },
+    {
+      "id": "rabbit",
+      "name": "خرگوش",
+      "icon": "🐰"
+    },
+    {
+      "id": "hamster",
+      "name": "همستر",
+      "icon": "🐹"
+    },
+    {
+      "id": "cattle",
+      "name": "گاو",
+      "icon": "🐄"
+    },
+    {
+      "id": "sheep",
+      "name": "گوسفند",
+      "icon": "🐑"
+    },
+    {
+      "id": "horse",
+      "name": "اسب",
+      "icon": "🐴"
+    },
+    {
+      "id": "chicken",
+      "name": "مرغ",
+      "icon": "🐔"
+    }
+  ],
+  "brands": {
+    "cat": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "zoetis", "name": "زوئتیس" },
+      { "id": "merial", "name": "مریال" },
+      { "id": "virbac", "name": "ویرباک" },
+      { "id": "boehringer", "name": "بورینگر" },
+      { "id": "ceva", "name": "سوا" },
+      { "id": "vetoquinol", "name": "وتوکینول" },
+      { "id": "elanco", "name": "الانکو" }
+    ],
+    "dog": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "zoetis", "name": "زوئتیس" },
+      { "id": "merial", "name": "مریال" },
+      { "id": "virbac", "name": "ویرباک" },
+      { "id": "boehringer", "name": "بورینگر" },
+      { "id": "ceva", "name": "سوا" },
+      { "id": "vetoquinol", "name": "وتوکینول" },
+      { "id": "elanco", "name": "الانکو" },
+      { "id": "merck", "name": "مرک" }
+    ],
+    "bird": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "zoetis", "name": "زوئتیس" },
+      { "id": "ceva", "name": "سوا" },
+      { "id": "vetoquinol", "name": "وتوکینول" }
+    ],
+    "fish": [
+      { "id": "sera", "name": "سرا" },
+      { "id": "tetra", "name": "تترا" },
+      { "id": "api", "name": "API" },
+      { "id": "aquarium", "name": "آکواریوم منوفکچر" }
+    ],
+    "rabbit": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "vetoquinol", "name": "وتوکینول" },
+      { "id": "ceva", "name": "سوا" }
+    ],
+    "hamster": [
+      { "id": "vetoquinol", "name": "وتوکینول" },
+      { "id": "beaphar", "name": "بیفار" }
+    ],
+    "cattle": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "zoetis", "name": "زوئتیس" },
+      { "id": "merial", "name": "مریال" },
+      { "id": "boehringer", "name": "بورینگر" },
+      { "id": "ceva", "name": "سوا" },
+      { "id": "merck", "name": "مرک" },
+      { "id": "elanco", "name": "الانکو" }
+    ],
+    "sheep": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "zoetis", "name": "زوئتیس" },
+      { "id": "merial", "name": "مریال" },
+      { "id": "ceva", "name": "سوا" },
+      { "id": "merck", "name": "مرک" }
+    ],
+    "horse": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "zoetis", "name": "زوئتیس" },
+      { "id": "merial", "name": "مریال" },
+      { "id": "boehringer", "name": "بورینگر" },
+      { "id": "virbac", "name": "ویرباک" }
+    ],
+    "chicken": [
+      { "id": "bayer", "name": "بایر" },
+      { "id": "zoetis", "name": "زوئتیس" },
+      { "id": "ceva", "name": "سوا" },
+      { "id": "merial", "name": "مریال" }
+    ]
+  },
+  "attributes": {
+    "cat": {
+      "dosage": [
+        { "id": "50mg", "name": "50mg" },
+        { "id": "100mg", "name": "100mg" },
+        { "id": "250mg", "name": "250mg" },
+        { "id": "500mg", "name": "500mg" },
+        { "id": "1ml", "name": "1ml" },
+        { "id": "2ml", "name": "2ml" },
+        { "id": "5ml", "name": "5ml" }
+      ],
+      "form": [
+        { "id": "tablet", "name": "قرص" },
+        { "id": "capsule", "name": "کپسول" },
+        { "id": "injection", "name": "آمپول" },
+        { "id": "syrup", "name": "شربت" },
+        { "id": "ointment", "name": "پماد" },
+        { "id": "drops", "name": "قطره" },
+        { "id": "spray", "name": "اسپری" }
+      ],
+      "packageSize": [
+        { "id": "single", "name": "تک عددی" },
+        { "id": "box-10", "name": "بسته 10 عددی" },
+        { "id": "box-20", "name": "بسته 20 عددی" },
+        { "id": "box-30", "name": "بسته 30 عددی" },
+        { "id": "bottle-30ml", "name": "شیشه 30ml" },
+        { "id": "bottle-50ml", "name": "شیشه 50ml" },
+        { "id": "bottle-100ml", "name": "شیشه 100ml" }
+      ],
+      "special": [
+        { "id": "refrigerated", "name": "نگهداری در یخچال" },
+        { "id": "controlled", "name": "دارو کنترل شده" },
+        { "id": "imported", "name": "وارداتی" },
+        { "id": "domestic", "name": "داخلی" }
+      ]
+    },
+    "dog": {
+      "dosage": [
+        { "id": "50mg", "name": "50mg" },
+        { "id": "100mg", "name": "100mg" },
+        { "id": "250mg", "name": "250mg" },
+        { "id": "500mg", "name": "500mg" },
+        { "id": "1g", "name": "1g" },
+        { "id": "1ml", "name": "1ml" },
+        { "id": "2ml", "name": "2ml" },
+        { "id": "5ml", "name": "5ml" },
+        { "id": "10ml", "name": "10ml" }
+      ],
+      "form": [
+        { "id": "tablet", "name": "قرص" },
+        { "id": "capsule", "name": "کپسول" },
+        { "id": "injection", "name": "آمپول" },
+        { "id": "syrup", "name": "شربت" },
+        { "id": "ointment", "name": "پماد" },
+        { "id": "drops", "name": "قطره" },
+        { "id": "spray", "name": "اسپری" },
+        { "id": "powder", "name": "پودر" }
+      ],
+      "packageSize": [
+        { "id": "single", "name": "تک عددی" },
+        { "id": "box-10", "name": "بسته 10 عددی" },
+        { "id": "box-20", "name": "بسته 20 عددی" },
+        { "id": "box-30", "name": "بسته 30 عددی" },
+        { "id": "box-50", "name": "بسته 50 عددی" },
+        { "id": "bottle-50ml", "name": "شیشه 50ml" },
+        { "id": "bottle-100ml", "name": "شیشه 100ml" },
+        { "id": "bottle-250ml", "name": "شیشه 250ml" }
+      ],
+      "special": [
+        { "id": "refrigerated", "name": "نگهداری در یخچال" },
+        { "id": "controlled", "name": "دارو کنترل شده" },
+        { "id": "imported", "name": "وارداتی" },
+        { "id": "domestic", "name": "داخلی" },
+        { "id": "large-breed", "name": "مخصوص نژاد بزرگ" },
+        { "id": "small-breed", "name": "مخصوص نژاد کوچک" }
+      ]
+    },
+    "bird": {
+      "dosage": [
+        { "id": "10mg", "name": "10mg" },
+        { "id": "25mg", "name": "25mg" },
+        { "id": "50mg", "name": "50mg" },
+        { "id": "0.5ml", "name": "0.5ml" },
+        { "id": "1ml", "name": "1ml" }
+      ],
+      "form": [
+        { "id": "drops", "name": "قطره" },
+        { "id": "powder", "name": "پودر" },
+        { "id": "syrup", "name": "شربت" },
+        { "id": "spray", "name": "اسپری" }
+      ],
+      "packageSize": [
+        { "id": "bottle-10ml", "name": "شیشه 10ml" },
+        { "id": "bottle-20ml", "name": "شیشه 20ml" },
+        { "id": "bottle-30ml", "name": "شیشه 30ml" },
+        { "id": "sachet-5g", "name": "ساشه 5 گرم" }
+      ],
+      "special": [
+        { "id": "water-soluble", "name": "محلول در آب" },
+        { "id": "food-mix", "name": "مخلوط با غذا" },
+        { "id": "imported", "name": "وارداتی" }
+      ]
+    },
+    "fish": {
+      "dosage": [
+        { "id": "5ml", "name": "5ml" },
+        { "id": "10ml", "name": "10ml" },
+        { "id": "20ml", "name": "20ml" },
+        { "id": "50ml", "name": "50ml" }
+      ],
+      "form": [
+        { "id": "liquid", "name": "مایع" },
+        { "id": "drops", "name": "قطره" },
+        { "id": "powder", "name": "پودر" },
+        { "id": "tablet", "name": "قرص" }
+      ],
+      "packageSize": [
+        { "id": "bottle-50ml", "name": "شیشه 50ml" },
+        { "id": "bottle-100ml", "name": "شیشه 100ml" },
+        { "id": "bottle-250ml", "name": "شیشه 250ml" }
+      ],
+      "special": [
+        { "id": "freshwater", "name": "آب شیرین" },
+        { "id": "saltwater", "name": "آب شور" },
+        { "id": "antibacterial", "name": "ضد باکتری" },
+        { "id": "antifungal", "name": "ضد قارچ" }
+      ]
+    },
+    "rabbit": {
+      "dosage": [
+        { "id": "25mg", "name": "25mg" },
+        { "id": "50mg", "name": "50mg" },
+        { "id": "100mg", "name": "100mg" },
+        { "id": "1ml", "name": "1ml" },
+        { "id": "2ml", "name": "2ml" }
+      ],
+      "form": [
+        { "id": "tablet", "name": "قرص" },
+        { "id": "syrup", "name": "شربت" },
+        { "id": "injection", "name": "آمپول" },
+        { "id": "drops", "name": "قطره" }
+      ],
+      "packageSize": [
+        { "id": "box-10", "name": "بسته 10 عددی" },
+        { "id": "bottle-30ml", "name": "شیشه 30ml" },
+        { "id": "bottle-50ml", "name": "شیشه 50ml" }
+      ],
+      "special": [
+        { "id": "imported", "name": "وارداتی" }
+      ]
+    },
+    "hamster": {
+      "dosage": [
+        { "id": "10mg", "name": "10mg" },
+        { "id": "25mg", "name": "25mg" },
+        { "id": "0.5ml", "name": "0.5ml" },
+        { "id": "1ml", "name": "1ml" }
+      ],
+      "form": [
+        { "id": "drops", "name": "قطره" },
+        { "id": "syrup", "name": "شربت" },
+        { "id": "powder", "name": "پودر" }
+      ],
+      "packageSize": [
+        { "id": "bottle-10ml", "name": "شیشه 10ml" },
+        { "id": "bottle-20ml", "name": "شیشه 20ml" }
+      ],
+      "special": [
+        { "id": "water-soluble", "name": "محلول در آب" },
+        { "id": "food-mix", "name": "مخلوط با غذا" }
+      ]
+    },
+    "cattle": {
+      "dosage": [
+        { "id": "1g", "name": "1g" },
+        { "id": "2g", "name": "2g" },
+        { "id": "5g", "name": "5g" },
+        { "id": "10ml", "name": "10ml" },
+        { "id": "20ml", "name": "20ml" },
+        { "id": "50ml", "name": "50ml" },
+        { "id": "100ml", "name": "100ml" }
+      ],
+      "form": [
+        { "id": "injection", "name": "آمپول" },
+        { "id": "powder", "name": "پودر" },
+        { "id": "bolus", "name": "بلوس" },
+        { "id": "pour-on", "name": "پورآن" }
+      ],
+      "packageSize": [
+        { "id": "bottle-50ml", "name": "ویال 50ml" },
+        { "id": "bottle-100ml", "name": "ویال 100ml" },
+        { "id": "bottle-250ml", "name": "ویال 250ml" },
+        { "id": "bottle-500ml", "name": "ویال 500ml" },
+        { "id": "sachet-100g", "name": "بسته 100 گرم" },
+        { "id": "sachet-500g", "name": "بسته 500 گرم" }
+      ],
+      "special": [
+        { "id": "refrigerated", "name": "نگهداری در یخچال" },
+        { "id": "withdrawal", "name": "دارای زمان قطع" },
+        { "id": "imported", "name": "وارداتی" }
+      ]
+    },
+    "sheep": {
+      "dosage": [
+        { "id": "500mg", "name": "500mg" },
+        { "id": "1g", "name": "1g" },
+        { "id": "2g", "name": "2g" },
+        { "id": "10ml", "name": "10ml" },
+        { "id": "20ml", "name": "20ml" },
+        { "id": "50ml", "name": "50ml" }
+      ],
+      "form": [
+        { "id": "injection", "name": "آمپول" },
+        { "id": "powder", "name": "پودر" },
+        { "id": "bolus", "name": "بلوس" },
+        { "id": "pour-on", "name": "پورآن" }
+      ],
+      "packageSize": [
+        { "id": "bottle-50ml", "name": "ویال 50ml" },
+        { "id": "bottle-100ml", "name": "ویال 100ml" },
+        { "id": "bottle-250ml", "name": "ویال 250ml" },
+        { "id": "sachet-100g", "name": "بسته 100 گرم" }
+      ],
+      "special": [
+        { "id": "withdrawal", "name": "دارای زمان قطع" },
+        { "id": "imported", "name": "وارداتی" }
+      ]
+    },
+    "horse": {
+      "dosage": [
+        { "id": "1g", "name": "1g" },
+        { "id": "2g", "name": "2g" },
+        { "id": "5g", "name": "5g" },
+        { "id": "20ml", "name": "20ml" },
+        { "id": "50ml", "name": "50ml" },
+        { "id": "100ml", "name": "100ml" }
+      ],
+      "form": [
+        { "id": "injection", "name": "آمپول" },
+        { "id": "paste", "name": "خمیر" },
+        { "id": "powder", "name": "پودر" },
+        { "id": "ointment", "name": "پماد" }
+      ],
+      "packageSize": [
+        { "id": "bottle-50ml", "name": "ویال 50ml" },
+        { "id": "bottle-100ml", "name": "ویال 100ml" },
+        { "id": "tube-30g", "name": "تیوب 30 گرم" },
+        { "id": "tube-50g", "name": "تیوب 50 گرم" }
+      ],
+      "special": [
+        { "id": "performance", "name": "بهبود عملکرد" },
+        { "id": "imported", "name": "وارداتی" }
+      ]
+    },
+    "chicken": {
+      "dosage": [
+        { "id": "100g", "name": "100g" },
+        { "id": "500g", "name": "500g" },
+        { "id": "1kg", "name": "1kg" },
+        { "id": "100ml", "name": "100ml" },
+        { "id": "500ml", "name": "500ml" },
+        { "id": "1liter", "name": "1 لیتر" }
+      ],
+      "form": [
+        { "id": "powder", "name": "پودر" },
+        { "id": "liquid", "name": "مایع" },
+        { "id": "injection", "name": "آمپول" },
+        { "id": "vaccine", "name": "واکسن" }
+      ],
+      "packageSize": [
+        { "id": "sachet-100g", "name": "بسته 100 گرم" },
+        { "id": "sachet-500g", "name": "بسته 500 گرم" },
+        { "id": "sachet-1kg", "name": "بسته 1 کیلو" },
+        { "id": "bottle-500ml", "name": "بطری 500ml" },
+        { "id": "bottle-1liter", "name": "بطری 1 لیتر" }
+      ],
+      "special": [
+        { "id": "water-soluble", "name": "محلول در آب" },
+        { "id": "food-mix", "name": "مخلوط با غذا" },
+        { "id": "withdrawal", "name": "دارای زمان قطع" },
+        { "id": "imported", "name": "وارداتی" }
+      ]
+    }
+  }
+}

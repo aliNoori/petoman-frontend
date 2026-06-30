@@ -1,0 +1,235 @@
+{
+  "animals": [
+    { "id": "dog", "name": "سگ", "icon": "🐕", "code": "D" },
+    { "id": "cat", "name": "گربه", "icon": "🐱", "code": "C" },
+    { "id": "bird", "name": "پرنده", "icon": "🦜", "code": "B" },
+    { "id": "fish", "name": "ماهی", "icon": "🐠", "code": "F" },
+    { "id": "rabbit", "name": "خرگوش", "icon": "🐰", "code": "R" },
+    { "id": "hamster", "name": "همستر", "icon": "🐹", "code": "H" },
+    { "id": "turtle", "name": "لاک‌پشت", "icon": "🐢", "code": "T" },
+    { "id": "parrot", "name": "طوطی", "icon": "🦜", "code": "P" },
+    { "id": "reptile", "name": "خزنده", "icon": "🦎", "code": "X" }
+  ],
+  "brands": {
+    "cat": [
+      { "id": "royal-canin", "name": "رویال کنین", "code": "RC" },
+      { "id": "reflex", "name": "رفلکس", "code": "RF" },
+      { "id": "whiskas", "name": "ویسکاس", "code": "WS" },
+      { "id": "proplan", "name": "پروپلن", "code": "PP" },
+      { "id": "brit", "name": "بریت", "code": "BR" },
+      { "id": "monge", "name": "مونژه", "code": "MG" },
+      { "id": "farmina", "name": "فارمینا", "code": "FM" },
+      { "id": "gourmet", "name": "گورمت", "code": "GM" },
+      { "id": "sheba", "name": "شبا", "code": "SH" },
+      { "id": "felix", "name": "فلیکس", "code": "FX" },
+      { "id": "persian", "name": "پرشین", "code": "PR" }
+    ],
+    "dog": [
+      { "id": "royal-canin", "name": "رویال کنین", "code": "RC" },
+      { "id": "reflex", "name": "رفلکس", "code": "RF" },
+      { "id": "pedigree", "name": "پدیگری", "code": "PD" },
+      { "id": "proplan", "name": "پروپلن", "code": "PP" },
+      { "id": "equilibrio", "name": "اکولیبریو", "code": "EQ" },
+      { "id": "brit", "name": "بریت", "code": "BR" },
+      { "id": "monge", "name": "مونژه", "code": "MG" },
+      { "id": "farmina", "name": "فارمینا", "code": "FM" },
+      { "id": "acana", "name": "آکانا", "code": "AC" },
+      { "id": "orijen", "name": "اوریجن", "code": "OR" },
+      { "id": "taste-wild", "name": "تیست آف وایلد", "code": "TW" },
+      { "id": "hill", "name": "هیلز", "code": "HL" }
+    ],
+    "bird": [
+      { "id": "natures", "name": "نیچرز", "code": "NT" },
+      { "id": "reflex", "name": "رفلکس", "code": "RF" }
+    ],
+    "parrot": [
+      { "id": "natures", "name": "نیچرز", "code": "NT" },
+      { "id": "reflex", "name": "رفلکس", "code": "RF" }
+    ],
+    "fish": [
+      { "id": "natures", "name": "نیچرز", "code": "NT" }
+    ],
+    "rabbit": [
+      { "id": "natures", "name": "نیچرز", "code": "NT" },
+      { "id": "reflex", "name": "رفلکس", "code": "RF" }
+    ],
+    "hamster": [
+      { "id": "natures", "name": "نیچرز", "code": "NT" },
+      { "id": "reflex", "name": "رفلکس", "code": "RF" }
+    ],
+    "turtle": [
+      { "id": "natures", "name": "نیچرز", "code": "NT" }
+    ],
+    "reptile": [
+      { "id": "natures", "name": "نیچرز", "code": "NT" }
+    ]
+  },
+  "attributes": {
+    "cat": {
+      "taste": [
+        { "id": "chicken", "name": "طعم مرغ" },
+        { "id": "beef", "name": "طعم گوشت گاو" },
+        { "id": "fish", "name": "طعم ماهی" },
+        { "id": "salmon", "name": "طعم سالمون" },
+        { "id": "tuna", "name": "طعم تن‌ماهی" },
+        { "id": "liver", "name": "طعم جگر" },
+        { "id": "ocean-fish", "name": "طعم ماهی اقیانوسی" }
+      ],
+      "age": [
+        { "id": "kitten", "name": "بچه گربه" },
+        { "id": "junior", "name": "جوان" },
+        { "id": "adult", "name": "بالغ" },
+        { "id": "senior", "name": "مسن" }
+      ],
+      "weight": [
+        { "id": "85g", "name": "85 گرم" },
+        { "id": "100g", "name": "100 گرم" },
+        { "id": "150g", "name": "150 گرم" },
+        { "id": "200g", "name": "200 گرم" },
+        { "id": "400g", "name": "400 گرم" },
+        { "id": "500g", "name": "500 گرم" },
+        { "id": "1kg", "name": "1 کیلوگرم" },
+        { "id": "2kg", "name": "2 کیلوگرم" },
+        { "id": "3kg", "name": "3 کیلوگرم" },
+        { "id": "4kg", "name": "4 کیلوگرم" },
+        { "id": "10kg", "name": "10 کیلوگرم" }
+      ],
+      "packaging": [
+        { "id": "pouch", "name": "پوچ" },
+        { "id": "can", "name": "قوطی" },
+        { "id": "bag", "name": "کیسه" },
+        { "id": "pack-6", "name": "بسته 6 عددی" },
+        { "id": "pack-12", "name": "بسته 12 عددی" }
+      ],
+      "special": [
+        { "id": "sterilized", "name": "عقیم شده" },
+        { "id": "indoor", "name": "آپارتمانی" },
+        { "id": "hairball", "name": "ضد گلوله مو" },
+        { "id": "sensitive", "name": "حساس" },
+        { "id": "dental", "name": "سلامت دندان" },
+        { "id": "skin-coat", "name": "سلامت پوست و مو" },
+        { "id": "light", "name": "کم کالری" },
+        { "id": "grain-free", "name": "بدون غلات" },
+        { "id": "natural", "name": "طبیعی" }
+      ]
+    },
+    "dog": {
+      "taste": [
+        { "id": "chicken", "name": "طعم مرغ" },
+        { "id": "beef", "name": "طعم گوشت گاو" },
+        { "id": "lamb", "name": "طعم گوسفند" },
+        { "id": "turkey", "name": "طعم بوقلمون" },
+        { "id": "salmon", "name": "طعم سالمون" },
+        { "id": "duck", "name": "طعم اردک" },
+        { "id": "liver", "name": "طعم جگر" }
+      ],
+      "size": [
+        { "id": "mini", "name": "مینی" },
+        { "id": "small-breed", "name": "نژاد کوچک" },
+        { "id": "medium-breed", "name": "نژاد متوسط" },
+        { "id": "large-breed", "name": "نژاد بزرگ" },
+        { "id": "giant-breed", "name": "نژاد غول‌پیکر" }
+      ],
+      "age": [
+        { "id": "puppy", "name": "توله" },
+        { "id": "junior", "name": "جوان" },
+        { "id": "adult", "name": "بالغ" },
+        { "id": "senior", "name": "مسن" }
+      ],
+      "weight": [
+        { "id": "400g", "name": "400 گرم" },
+        { "id": "1kg", "name": "1 کیلوگرم" },
+        { "id": "3kg", "name": "3 کیلوگرم" },
+        { "id": "5kg", "name": "5 کیلوگرم" },
+        { "id": "10kg", "name": "10 کیلوگرم" },
+        { "id": "15kg", "name": "15 کیلوگرم" },
+        { "id": "20kg", "name": "20 کیلوگرم" }
+      ],
+      "packaging": [
+        { "id": "can", "name": "قوطی" },
+        { "id": "bag", "name": "کیسه" },
+        { "id": "pack-6", "name": "بسته 6 عددی" },
+        { "id": "pack-12", "name": "بسته 12 عددی" }
+      ],
+      "special": [
+        { "id": "light", "name": "کم کالری" },
+        { "id": "sensitive", "name": "حساس" },
+        { "id": "joint", "name": "سلامت مفاصل" },
+        { "id": "digestion", "name": "سلامت گوارش" },
+        { "id": "skin-coat", "name": "سلامت پوست و مو" },
+        { "id": "dental", "name": "سلامت دندان" },
+        { "id": "grain-free", "name": "بدون غلات" },
+        { "id": "hypoallergenic", "name": "ضد حساسیت" },
+        { "id": "natural", "name": "طبیعی" }
+      ]
+    },
+    "bird": {
+      "weight": [
+        { "id": "400g", "name": "400 گرم" },
+        { "id": "500g", "name": "500 گرم" },
+        { "id": "1kg", "name": "1 کیلوگرم" },
+        { "id": "2kg", "name": "2 کیلوگرم" }
+      ],
+      "packaging": [
+        { "id": "bag", "name": "کیسه" },
+        { "id": "box", "name": "جعبه" }
+      ],
+      "special": [
+        { "id": "natural", "name": "طبیعی" },
+        { "id": "organic", "name": "ارگانیک" }
+      ]
+    },
+    "parrot": {
+      "weight": [
+        { "id": "500g", "name": "500 گرم" },
+        { "id": "1kg", "name": "1 کیلوگرم" },
+        { "id": "2kg", "name": "2 کیلوگرم" }
+      ],
+      "packaging": [
+        { "id": "bag", "name": "کیسه" },
+        { "id": "box", "name": "جعبه" }
+      ],
+      "special": [
+        { "id": "natural", "name": "طبیعی" },
+        { "id": "organic", "name": "ارگانیک" }
+      ]
+    },
+    "fish": {
+      "weight": [
+        { "id": "100g", "name": "100 گرم" },
+        { "id": "200g", "name": "200 گرم" },
+        { "id": "500g", "name": "500 گرم" }
+      ],
+      "packaging": [
+        { "id": "can", "name": "قوطی" },
+        { "id": "bag", "name": "کیسه" }
+      ]
+    },
+    "rabbit": {
+      "weight": [
+        { "id": "500g", "name": "500 گرم" },
+        { "id": "1kg", "name": "1 کیلوگرم" },
+        { "id": "3kg", "name": "3 کیلوگرم" }
+      ],
+      "packaging": [
+        { "id": "bag", "name": "کیسه" }
+      ],
+      "special": [
+        { "id": "natural", "name": "طبیعی" }
+      ]
+    },
+    "hamster": {
+      "weight": [
+        { "id": "400g", "name": "400 گرم" },
+        { "id": "500g", "name": "500 گرم" },
+        { "id": "1kg", "name": "1 کیلوگرم" }
+      ],
+      "packaging": [
+        { "id": "bag", "name": "کیسه" }
+      ],
+      "special": [
+        { "id": "natural", "name": "طبیعی" }
+      ]
+    }
+  }
+}

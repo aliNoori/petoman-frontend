@@ -1,0 +1,143 @@
+/* Swiper Custom Styles for Pharmacy */
+
+/* Navigation buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 48px !important;
+  height: 48px !important;
+  background: white !important;
+  border-radius: 50% !important;
+  margin-top: -24px !important;
+  z-index: 10 !important;
+  transition: all 0.3s ease !important;
+  opacity: 0.8 !important;
+  border: 2px solid #e2e8f0 !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.1) !important;
+  opacity: 1 !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 16px !important;
+  font-weight: bold !important;
+  color: #3b82f6 !important;
+}
+
+/* Slide animations */
+.swiper-slide {
+  transition: all 0.3s ease !important;
+}
+
+.swiper-slide:not(.swiper-slide-active) {
+  transform: scale(0.95) !important;
+  opacity: 0.8 !important;
+}
+
+.swiper-slide-active {
+  transform: scale(1) !important;
+  opacity: 1 !important;
+}
+
+/* Pagination */
+.swiper-pagination {
+  bottom: -40px !important;
+  text-align: center !important;
+}
+
+.swiper-pagination-bullet {
+  width: 12px !important;
+  height: 12px !important;
+  opacity: 0.3 !important;
+  transition: all 0.3s ease !important;
+  margin: 0 4px !important;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  transform: scale(1.3) !important;
+}
+
+.swiper-pagination-bullet:hover {
+  opacity: 0.7 !important;
+  transform: scale(1.1) !important;
+}
+
+/* Hover effects for slides */
+.swiper-slide:hover {
+  z-index: 2 !important;
+}
+
+/* Nearby section pagination */
+.nearby-swiper .swiper-pagination-bullet {
+  background: #ef4444 !important;
+}
+
+.nearby-swiper .swiper-pagination-bullet-active {
+  background: #ef4444 !important;
+}
+
+/* Top rated section pagination */
+.top-rated-swiper .swiper-pagination-bullet {
+  background: #f59e0b !important;
+}
+
+.top-rated-swiper .swiper-pagination-bullet-active {
+  background: #f59e0b !important;
+}
+
+/* 24h section pagination */
+.open24-swiper .swiper-pagination-bullet {
+  background: #10b981 !important;
+}
+
+.open24-swiper .swiper-pagination-bullet-active {
+  background: #10b981 !important;
+}
+
+/* Insurance section pagination */
+.insurance-swiper .swiper-pagination-bullet {
+  background: #3b82f6 !important;
+}
+
+.insurance-swiper .swiper-pagination-bullet-active {
+  background: #3b82f6 !important;
+}
+
+/* RTL support */
+[dir="rtl"] .swiper-button-next {
+  left: 10px !important;
+  right: auto !important;
+}
+
+[dir="rtl"] .swiper-button-prev {
+  right: 10px !important;
+  left: auto !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 40px !important;
+    height: 40px !important;
+    margin-top: -20px !important;
+  }
+  
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 14px !important;
+  }
+
+  .swiper-slide:not(.swiper-slide-active) {
+    transform: scale(0.9) !important;
+    opacity: 0.6 !important;
+  }
+  
+  .swiper-pagination {
+    bottom: -30px !important;
+  }
+}

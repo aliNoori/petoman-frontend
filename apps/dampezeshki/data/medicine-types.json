@@ -1,0 +1,221 @@
+{
+  "medicines": [
+    {
+      "id": "antibiotic-amoxicillin",
+      "name": "آموکسی سیلین",
+      "category": "آنتی‌بیوتیک",
+      "type": "قرص",
+      "animals": ["cat", "dog", "rabbit"]
+    },
+    {
+      "id": "antibiotic-cephalexin",
+      "name": "سفالکسین",
+      "category": "آنتی‌بیوتیک",
+      "type": "کپسول",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "antibiotic-metronidazole",
+      "name": "مترونیدازول",
+      "category": "آنتی‌بیوتیک",
+      "type": "قرص",
+      "animals": ["cat", "dog", "bird"]
+    },
+    {
+      "id": "antiparasitic-ivermectin",
+      "name": "ایورمکتین",
+      "category": "ضد انگل",
+      "type": "آمپول",
+      "animals": ["cat", "dog", "cattle", "sheep", "horse"]
+    },
+    {
+      "id": "antiparasitic-fenbendazole",
+      "name": "فن بندازول",
+      "category": "ضد انگل",
+      "type": "شربت",
+      "animals": ["cat", "dog", "rabbit"]
+    },
+    {
+      "id": "antiparasitic-praziquantel",
+      "name": "پرازیکوانتل",
+      "category": "ضد انگل",
+      "type": "قرص",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "vaccine-rabies",
+      "name": "واکسن هاری",
+      "category": "واکسن",
+      "type": "آمپول",
+      "animals": ["cat", "dog", "horse"]
+    },
+    {
+      "id": "vaccine-parvo",
+      "name": "واکسن پاروو",
+      "category": "واکسن",
+      "type": "آمپول",
+      "animals": ["dog"]
+    },
+    {
+      "id": "vaccine-feline",
+      "name": "واکسن گربه چهارگانه",
+      "category": "واکسن",
+      "type": "آمپول",
+      "animals": ["cat"]
+    },
+    {
+      "id": "antiinflammatory-meloxicam",
+      "name": "ملوکسیکام",
+      "category": "ضد التهاب",
+      "type": "آمپول",
+      "animals": ["cat", "dog", "cattle", "horse"]
+    },
+    {
+      "id": "antiinflammatory-prednisolone",
+      "name": "پردنیزولون",
+      "category": "ضد التهاب",
+      "type": "قرص",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "vitamin-b-complex",
+      "name": "ویتامین B کمپلکس",
+      "category": "ویتامین",
+      "type": "آمپول",
+      "animals": ["cat", "dog", "bird", "cattle", "sheep", "horse", "chicken"]
+    },
+    {
+      "id": "vitamin-ad3e",
+      "name": "ویتامین AD3E",
+      "category": "ویتامین",
+      "type": "شربت",
+      "animals": ["cat", "dog", "bird", "chicken"]
+    },
+    {
+      "id": "vitamin-c",
+      "name": "ویتامین C",
+      "category": "ویتامین",
+      "type": "قرص",
+      "animals": ["cat", "dog", "rabbit", "hamster"]
+    },
+    {
+      "id": "supplement-calcium",
+      "name": "مکمل کلسیم",
+      "category": "مکمل",
+      "type": "پودر",
+      "animals": ["cat", "dog", "bird", "cattle", "chicken"]
+    },
+    {
+      "id": "supplement-omega3",
+      "name": "امگا 3",
+      "category": "مکمل",
+      "type": "کپسول",
+      "animals": ["cat", "dog", "horse"]
+    },
+    {
+      "id": "supplement-probiotic",
+      "name": "پروبیوتیک",
+      "category": "مکمل",
+      "type": "پودر",
+      "animals": ["cat", "dog", "bird", "rabbit", "cattle", "chicken"]
+    },
+    {
+      "id": "painkiller-tramadol",
+      "name": "ترامادول",
+      "category": "ضد درد",
+      "type": "آمپول",
+      "animals": ["dog", "cattle", "horse"]
+    },
+    {
+      "id": "painkiller-meloxicam-oral",
+      "name": "ملوکسیکام",
+      "category": "ضد درد",
+      "type": "شربت",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "sedative-acepromazine",
+      "name": "استپرومازین",
+      "category": "آرام‌بخش",
+      "type": "آمپول",
+      "animals": ["cat", "dog", "horse"]
+    },
+    {
+      "id": "sedative-diazepam",
+      "name": "دیازپام",
+      "category": "آرام‌بخش",
+      "type": "قرص",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "cardiac-enalapril",
+      "name": "انالاپریل",
+      "category": "قلب و عروق",
+      "type": "قرص",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "cardiac-furosemide",
+      "name": "فوروزماید",
+      "category": "قلب و عروق",
+      "type": "قرص",
+      "animals": ["cat", "dog", "horse"]
+    },
+    {
+      "id": "digestive-metoclopramide",
+      "name": "متوکلوپرامید",
+      "category": "گوارش",
+      "type": "آمپول",
+      "animals": ["cat", "dog", "cattle"]
+    },
+    {
+      "id": "digestive-ranitidine",
+      "name": "رانیتیدین",
+      "category": "گوارش",
+      "type": "قرص",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "topical-antibiotic-ointment",
+      "name": "پماد آنتی‌بیوتیک",
+      "category": "آنتی‌بیوتیک",
+      "type": "پماد",
+      "animals": ["cat", "dog", "rabbit", "horse"]
+    },
+    {
+      "id": "eye-drops-antibiotic",
+      "name": "قطره چشمی آنتی‌بیوتیک",
+      "category": "آنتی‌بیوتیک",
+      "type": "قطره",
+      "animals": ["cat", "dog", "rabbit"]
+    },
+    {
+      "id": "ear-drops",
+      "name": "قطره گوش",
+      "category": "ضد التهاب",
+      "type": "قطره",
+      "animals": ["cat", "dog"]
+    },
+    {
+      "id": "flea-spray",
+      "name": "اسپری ضد کک",
+      "category": "ضد انگل",
+      "type": "اسپری",
+      "animals": ["cat", "dog", "bird"]
+    },
+    {
+      "id": "fish-antibiotic",
+      "name": "آنتی‌بیوتیک ماهی",
+      "category": "آنتی‌بیوتیک",
+      "type": "مایع",
+      "animals": ["fish"]
+    },
+    {
+      "id": "fish-antifungal",
+      "name": "ضد قارچ ماهی",
+      "category": "ضد قارچ",
+      "type": "قطره",
+      "animals": ["fish"]
+    }
+  ]
+}

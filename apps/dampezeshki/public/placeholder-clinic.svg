@@ -1,0 +1,8 @@
+<!-- SVG Placeholder for Clinic -->
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="40" height="40" fill="#FEE2E2"/>
+  <rect x="6" y="10" width="28" height="24" fill="#EF4444"/>
+  <rect x="14" y="6" width="12" height="8" fill="#DC2626"/>
+  <rect x="16" y="16" width="8" height="2" fill="white"/>
+  <rect x="19" y="14" width="2" height="6" fill="white"/>
+</svg>

@@ -1,0 +1,106 @@
+# compiled output
+/node_modules
+/apps/auth/dist
+/apps/auth/node_modules
+/apps/auth/build
+/apps/auth/uploads
+
+/apps/danim/dist
+/apps/danim/.nuxt
+/apps/danim/node_modules
+/apps/danim/build
+/apps/danim/uploads
+
+/apps/film/dist
+/apps/film/.nuxt
+/apps/film/node_modules
+/apps/film/build
+/apps/film/uploads
+
+/apps/hamian/dist
+/apps/hamian/.nuxt
+/apps/hamian/node_modules
+/apps/hamian/build
+/apps/hamian/uploads
+
+/packages/auth/dist
+/packages/auth/node_modules
+/packages/auth/build
+/packages/auth/uploads
+
+/packages/ui/dist
+/packages/ui/node_modules
+/packages/ui/build
+/packages/ui/uploads
+
+
+/packages/utils/dist
+/packages/utils/node_modules
+/packages/utils/build
+/packages/utils/uploads
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# dotenv environment variable files
+/auth/.env
+/auth/.env.development.local
+/auth/.env.test.local
+/auth/.env.production.local
+/auth/.env.local
+
+/film/.env
+/film/.env.development.local
+/film/.env.test.local
+/film/.env.production.local
+/film/.env.local
+
+
+/danim/.env
+/danim/.env.development.local
+/danim/.env.test.local
+/danim/.env.production.local
+/danim/.env.local
+
+
+/hamian/.env
+/hamian/.env.development.local
+/hamian/.env.test.local
+/hamian/.env.production.local
+/hamian/.env.local
+
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

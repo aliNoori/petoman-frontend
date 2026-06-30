@@ -23,6 +23,12 @@
 /apps/hamian/build
 /apps/hamian/uploads
 
+/apps/dampezeshki/.nuxt
+/apps/dampezeshki/node_modules
+
+/apps/market/.nuxt
+/apps/market/node_modules
+
 /packages/auth/dist
 /packages/auth/node_modules
 /packages/auth/build
@@ -65,31 +71,38 @@ lerna-debug.log*
 *.sublime-workspace
 
 # dotenv environment variable files
-/auth/.env
-/auth/.env.development.local
-/auth/.env.test.local
-/auth/.env.production.local
-/auth/.env.local
+/apps/auth/.env
+/apps/auth/.env.development.local
+/apps/auth/.env.test.local
+/apps/auth/.env.production.local
+/apps/auth/.env.local
 
-/film/.env
-/film/.env.development.local
-/film/.env.test.local
-/film/.env.production.local
-/film/.env.local
-
-
-/danim/.env
-/danim/.env.development.local
-/danim/.env.test.local
-/danim/.env.production.local
-/danim/.env.local
+/apps/film/.env
+/apps/film/.env.development.local
+/apps/film/.env.test.local
+/apps/film/.env.production.local
+/apps/film/.env.local
 
 
-/hamian/.env
-/hamian/.env.development.local
-/hamian/.env.test.local
-/hamian/.env.production.local
-/hamian/.env.local
+/apps/danim/.env
+/apps/danim/.env.development.local
+/apps/danim/.env.test.local
+/apps/danim/.env.production.local
+/apps/danim/.env.local
+
+
+/apps/hamian/.env
+/apps/hamian/.env.development.local
+/apps/hamian/.env.test.local
+/apps/hamian/.env.production.local
+/apps/hamian/.env.local
+
+/apps/dampezeshki/.env
+/apps/dampezeshki/.env.example
+
+/apps/market/.env
+/apps/market/.env.example
+
 
 
 # temp directory

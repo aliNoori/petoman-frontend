@@ -7,11 +7,6 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "db:migrate": "prisma migrate dev",
-    "db:generate": "prisma generate",
-    "db:seed": "tsx prisma/seed.ts",
-    "db:studio": "prisma studio",
-    "db:reset": "prisma migrate reset",
     "socket": "node socket-server.js",
     "dev:chat": "concurrently \"npm run dev\" \"npm run socket\""
   },
@@ -26,15 +21,12 @@
     "@types/node": "^20.19.0",
     "concurrently": "^8.2.2",
     "nuxt": "^3.7.4",
-    "prisma": "^5.22.0",
-    "tsx": "^4.8.1",
     "typescript": "^5.9.2",
     "vue-tsc": "^2.2.12"
   },
   "dependencies": {
     "@persian-tools/persian-tools": "^4.0.3",
     "@pinia/nuxt": "^0.5.1",
-    "@prisma/client": "^5.22.0",
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.22.0",
     "@types/bcryptjs": "^3.0.0",

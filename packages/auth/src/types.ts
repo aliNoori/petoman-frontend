@@ -43,3 +43,7 @@ export interface AuthState {
   isLoading: boolean;
   error: AuthError | null;
 }
+export interface SendOTPResponse {
+  success: boolean;
+  message: string;
+}

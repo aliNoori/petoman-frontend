@@ -8,6 +8,10 @@ import type {
   AuthError 
 } from './types';
 
+interface SendOTPResponse {
+  success: boolean;
+  message: string;
+}
 class AuthAPI {
   private api: AxiosInstance;
   private useMock = false; // Set to false when API is ready
@@ -92,7 +96,7 @@ class AuthAPI {
     return response.data;
   }
 
-  async sendOTP(phoneNumber: string): Promise<{ data: any }> {
+  async sendOTP(phoneNumber: string): Promise<SendOTPResponse> {
     // if (this.useMock) {
     //   // Mock mode - no API call
     //   console.log('Mock: OTP sent to:', phoneNumber);

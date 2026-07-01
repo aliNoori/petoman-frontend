@@ -2,7 +2,10 @@ import {computed, reactive} from 'vue';
 import {jwtDecode} from 'jwt-decode';
 import {AuthAPI} from './api';
 import type {AuthError, AuthState, RegisterRequest, User, VerifyCodeRequest} from './types';
-
+interface SendOTPResponse {
+  success: boolean;
+  message: string;
+}
 //const authAPI = new AuthAPI();
 
 // Global auth state
@@ -79,7 +82,7 @@ export const useAuth = (baseUrl:string) => {
     }
   };
 
-  const sendOTP = async (phoneNumber: string): Promise<{ data:any }> => {
+  const sendOTP = async (phoneNumber: string): Promise<SendOTPResponse> => {
     try {
       authState.isLoading = true;
       authState.error = null;

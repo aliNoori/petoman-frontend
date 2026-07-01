@@ -18,8 +18,7 @@
     "socket.io-client": "^4.8.3",
     "swiper": "^11.2.10",
     "video.js": "^8.6.1",
-    "videojs-contrib-hls": "^5.15.0",
-    "vue": "latest"
+    "videojs-contrib-hls": "^5.15.0"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.17.7",

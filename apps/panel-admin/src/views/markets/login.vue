@@ -9,7 +9,7 @@
           <!-- Logo -->
           <div class="flex justify-center mb-6">
             <img 
-              src="~/assets/pet.png" 
+              src="/pet.png"
               alt="PetoMan Logo" 
               class="w-24 h-24 md:w-28 md:h-28 object-contain"
             />

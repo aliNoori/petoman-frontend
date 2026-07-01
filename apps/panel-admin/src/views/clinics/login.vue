@@ -300,9 +300,6 @@ const router = useRouter()
 const route = useRoute()
 const petLogo = '/pet.png'
 
-
-const router = useRouter()
-
 // OTP refs and digits
 const otpRefs = ref([])
 const otpDigits = ref(['', '', '', ''])

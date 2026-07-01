@@ -37,7 +37,7 @@
         <div class="flex justify-between items-start">
           <!-- Left: Company Info -->
           <div class="flex items-center gap-4">
-            <img src="/assets/pet.png" alt="لوگو" class="w-20 h-20 object-contain border border-gray-300 rounded-lg p-2">
+            <img src="/pet.png" alt="لوگو" class="w-20 h-20 object-contain border border-gray-300 rounded-lg p-2">
             <div>
               <h2 class="text-2xl font-bold text-gray-900">پت مارکت پتومن</h2>
               <p class="text-sm text-gray-600 mt-1">مارکت‌پلیس حیوانات خانگی</p>

@@ -29,6 +29,9 @@
 /apps/market/.nuxt
 /apps/market/node_modules
 
+/apps/panel-admin/dist
+/apps/panel-admin/node_modules
+
 /packages/auth/dist
 /packages/auth/node_modules
 /packages/auth/build

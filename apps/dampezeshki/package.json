@@ -53,7 +53,7 @@
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.2.10",
-    "vue": "^3.5.20",
+    "vue": "3.5.35",
     "vue3-persian-datetime-picker": "^1.2.2",
     "xlsx": "^0.18.5",
     "zod": "^3.22.4"

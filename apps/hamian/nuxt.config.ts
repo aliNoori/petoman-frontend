@@ -9,7 +9,7 @@ const __dirname = dirname(__filename)
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  
+  ssr: true,
   // Compatibility date
   compatibilityDate: '2025-08-11',
   

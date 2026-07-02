@@ -8,6 +8,7 @@ const __dirname = dirname(__filename)
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: true,
   
   // Development Server
   devServer: {

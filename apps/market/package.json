@@ -21,7 +21,8 @@
     "socket.io-client": "^4.8.3",
     "swiper": "^11.2.10",
     "vue3-persian-datetime-picker": "^1.2.2",
-    "vue": "^3.4.0"
+    "vue": "^3.5.13",
+    "vue-server-renderer": "npm:@vue/server-renderer@^3.5.13"
   },
   "devDependencies": {
     "@nuxt/kit": "^3.17.7",

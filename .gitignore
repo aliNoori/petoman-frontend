@@ -106,7 +106,7 @@ lerna-debug.log*
 /apps/market/.env
 /apps/market/.env.example
 
-
+/apps/panel-admin/.env
 
 # temp directory
 .temp

@@ -351,7 +351,7 @@ const {
   register,
   isLoading,
   clearError
-} = useAuth(import.meta.env.VITE_API_BASE);
+} = useAuth(import.meta.env.VITE_API_URL);
 
 // Timer for resend code
 const timer = createVueTimer(120); // 2 minutes

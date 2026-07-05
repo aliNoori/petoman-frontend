@@ -23,6 +23,7 @@ export default defineNuxtConfig({
 
     // App Configuration
     app: {
+        baseURL: '/market/',
         head: {
             title: 'مارکت پتومن - مارکت‌پلیس کامل حیوانات خانگی',
             charset: 'utf-8',

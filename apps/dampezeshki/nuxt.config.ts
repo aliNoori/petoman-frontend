@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     }
   ],
   app: {
+    baseURL: '/dampezeshki/',
     head: {
       htmlAttrs: {
         dir: 'rtl',

@@ -32,6 +32,9 @@
 /apps/panel-admin/dist
 /apps/panel-admin/node_modules
 
+/apps/landing/dist
+/apps/landing/node_modules
+
 /packages/auth/dist
 /packages/auth/node_modules
 /packages/auth/build

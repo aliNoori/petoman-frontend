@@ -39,11 +39,11 @@ export const useSocketStore = defineStore("socket", {
             // پورت سرور شما ۳۰۰۱ بود، اگر پروکسی ندارید این آدرس صحیح است
             let socketUrl = import.meta.env.VITE_SOCKET_URL;
 
-            if (socketUrl.startsWith('https://')) {
-                socketUrl = socketUrl.replace('https://', 'ws://');
-            } else if (socketUrl.startsWith('http://')) {
-                socketUrl = socketUrl.replace('http://', 'ws://');
-            }
+            // if (socketUrl.startsWith('https://')) {
+            //     socketUrl = socketUrl.replace('https://', 'ws://');
+            // } else if (socketUrl.startsWith('http://')) {
+            //     socketUrl = socketUrl.replace('http://', 'ws://');
+            // }
 
             this.socket = io(socketUrl, {
                 path: "/socket.io",

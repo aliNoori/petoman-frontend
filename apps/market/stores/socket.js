@@ -16,11 +16,11 @@ export const useSocketStore = defineStore("socket", {
 
                 // روش ۱: اجبار به استفاده از ws اگر سرور HTTP است
                 // فرض بر این است که سرور شما روی پورت 3000 و بدون SSL است
-                if (socketUrl.startsWith('https://')) {
-                    socketUrl = socketUrl.replace('https://', 'ws://');
-                } else if (socketUrl.startsWith('http://')) {
-                    socketUrl = socketUrl.replace('http://', 'ws://');
-                }
+                // if (socketUrl.startsWith('https://')) {
+                //     socketUrl = socketUrl.replace('https://', 'ws://');
+                // } else if (socketUrl.startsWith('http://')) {
+                //     socketUrl = socketUrl.replace('http://', 'ws://');
+                // }
 
                 console.log("Connecting to socket:", socketUrl); // برای دیباگ
 

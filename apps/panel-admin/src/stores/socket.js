@@ -108,11 +108,11 @@ export const useSocketStore = defineStore("socket", () => {
 
         let socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
 
-        if (socketUrl.startsWith('https://')) {
-            socketUrl = socketUrl.replace('https://', 'ws://');
-        } else if (socketUrl.startsWith('http://')) {
-            socketUrl = socketUrl.replace('http://', 'ws://');
-        }
+        // if (socketUrl.startsWith('https://')) {
+        //     socketUrl = socketUrl.replace('https://', 'ws://');
+        // } else if (socketUrl.startsWith('http://')) {
+        //     socketUrl = socketUrl.replace('http://', 'ws://');
+        // }
 
         socket.value = io(socketUrl, {
             path: "/socket.io",

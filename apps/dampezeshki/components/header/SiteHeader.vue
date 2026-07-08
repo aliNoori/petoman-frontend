@@ -37,7 +37,7 @@
               داروخانه
             </NuxtLink>
             <a
-                href="http://localhost:6503"
+                :href="`${config.public.marketBaseUrl}`"
                 target="_blank"
                 class="px-4 py-2 text-gray-700 hover:text-amber-600 font-medium rounded-lg hover:bg-white/50 transition-all"
             >

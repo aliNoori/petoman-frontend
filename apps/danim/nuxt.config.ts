@@ -30,6 +30,10 @@ export default defineNuxtConfig(<any>{
     '~/plugins/axios.ts',
       '~/plugins/dayjs.ts'
   ],
+  devServer: {
+    port: 3002,
+    host: '0.0.0.0',
+  },
 
   // Build optimizations
   build: {

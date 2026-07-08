@@ -4,12 +4,7 @@ import axios from "axios";
 
 export default defineNuxtPlugin((nuxtApp) => {
     //const config = useRuntimeConfig()
-    const api = axios.create({
-
-        //baseURL: 'http://127.0.0.1:3000/api/', // Base URL for the local
-        baseURL: 'https://api.petoman.com/api/', // Base URL for the server
-
-    })
+    const api = axios.create({baseURL:import.meta.env.VITE_API_URL})
 
     api.interceptors.request.use(config => {
         const authStore = useAuthStore()

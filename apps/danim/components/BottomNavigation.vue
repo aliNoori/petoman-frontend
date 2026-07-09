@@ -2,10 +2,10 @@
   <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-bottom">
     <div class="flex items-center justify-around h-16 px-2">
       <!-- Home -->
-      <NuxtLink 
-        to="/" 
-        class="nav-item"
-        :class="{ 'active': isActive('/') }"
+      <NuxtLink
+          to="/"
+          class="nav-item"
+          :class="{ 'active': isActive('/') }"
       >
         <svg v-if="isActive('/')" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
           <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
@@ -18,10 +18,10 @@
       </NuxtLink>
 
       <!-- Categories -->
-      <NuxtLink 
-        to="/categories" 
-        class="nav-item"
-        :class="{ 'active': isActive('/categories') }"
+      <NuxtLink
+          to="/categories"
+          class="nav-item"
+          :class="{ 'active': isActive('/categories') }"
       >
         <svg v-if="isActive('/categories')" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
           <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h2.25a3 3 0 013 3v2.25a3 3 0 01-3 3H6a3 3 0 01-3-3V6zm9.75 0a3 3 0 013-3H18a3 3 0 013 3v2.25a3 3 0 01-3 3h-2.25a3 3 0 01-3-3V6zM3 15.75a3 3 0 013-3h2.25a3 3 0 013 3V18a3 3 0 01-3 3H6a3 3 0 01-3-3v-2.25zm9.75 0a3 3 0 013-3H18a3 3 0 013 3V18a3 3 0 01-3 3h-2.25a3 3 0 01-3-3v-2.25z" clip-rule="evenodd" />
@@ -33,10 +33,10 @@
       </NuxtLink>
 
       <!-- Search (Center with FAB style) -->
-      <NuxtLink 
-        to="/search" 
-        class="nav-item-fab"
-        :class="{ 'active': isActive('/search') }"
+      <NuxtLink
+          to="/search"
+          class="nav-item-fab"
+          :class="{ 'active': isActive('/search') }"
       >
         <div class="fab-button">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,10 +46,11 @@
       </NuxtLink>
 
       <!-- Bookmark -->
-      <NuxtLink 
-        to="/profile?tab=bookmarked" 
-        class="nav-item"
-        :class="{ 'active': isActive('/profile?tab=bookmarked') }"
+      <NuxtLink
+          v-if="isAuthenticated"
+          to="/profile?tab=bookmarked"
+          class="nav-item"
+          :class="{ 'active': isActive('/profile?tab=bookmarked') }"
       >
         <svg v-if="isActive('/profile?tab=bookmarked')" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
           <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
@@ -61,10 +62,23 @@
       </NuxtLink>
 
       <!-- Profile -->
-      <NuxtLink 
-        to="/profile" 
-        class="nav-item"
-        :class="{ 'active': isActive('/profile') }"
+      <div
+          v-if="!isAuthenticated"
+          class="nav-item cursor-pointer"
+          @click.prevent="handleProfileClick"
+          :class="{ 'active': isActive('/profile') }"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+        </svg>
+        <span class="nav-label">ورود / ثبت‌نام</span>
+      </div>
+
+      <NuxtLink
+          v-else
+          to="/profile"
+          class="nav-item"
+          :class="{ 'active': isActive('/profile') }"
       >
         <svg v-if="isActive('/profile')" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
           <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
@@ -79,10 +93,16 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import {computed, onMounted, ref} from 'vue'
+import { useRoute,useRouter } from 'vue-router'
+import { useAuthStore} from "~/stores/auth.js";
+import {useRuntimeConfig} from "#app";
 
+const config = useRuntimeConfig()
+const authStore = useAuthStore()
+const isAuthenticated = computed(() => authStore.isAuthenticated)
 const route = useRoute()
+const router = useRouter()
 
 const isActive = (path) => {
   if (path === '/') {
@@ -105,6 +125,16 @@ const isActive = (path) => {
   
   return route.path.startsWith(path)
 }
+const currentUrl = ref('')
+const handleProfileClick = () => {
+
+  window.location.href = `${config.public.authBaseUrl}?redirect=${encodeURIComponent(currentUrl.value)}`;
+}
+
+onMounted(async () => {
+
+  currentUrl.value = window.location.href
+})
 </script>
 
 <style scoped>

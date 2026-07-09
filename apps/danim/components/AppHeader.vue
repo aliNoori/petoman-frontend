@@ -200,18 +200,25 @@
                 <p class="text-sm text-gray-500">به پت دانیم خوش آمدید</p>
               </div>
             </div>
-            <a
+            <NuxtLink
+                v-if="!isAuthenticated"
                 :href="`${config.public.authBaseUrl}?redirect=${encodeURIComponent(currentUrl)}`"
                 class="mt-4 block w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-center py-3 rounded-xl font-medium active:scale-[0.98] transition-transform"
             >
-              ورود / ثبت نام
-            </a>
+              ورود / ثبت‌نام
+            </NuxtLink>
+
+            <!-- اگر کاربر لاگین است، نام و پروفایل او را نشان بده (اختیاری: اگر می‌خواهید پروفایل در هدر باشد) -->
+            <div v-else class="mt-4 text-center">
+              <p class="text-orange-600 font-medium">خوش آمدید!</p>
+            </div>
           </div>
 
           <!-- Navigation Links -->
           <div class="py-2">
             <!-- Profile Link -->
             <NuxtLink
+                v-if="isAuthenticated"
                 to="/profile"
                 class="flex items-center gap-4 px-6 py-4 text-gray-700 active:bg-gray-50 transition-colors border-b border-gray-100"
                 active-class="text-orange-600 bg-orange-50"
@@ -253,10 +260,12 @@ import {usePageStore} from "~/stores/page";
 import Icon from "~/components/Icon.vue";
 import {useSettingStore} from "~/stores/setting";
 import {useRuntimeConfig} from "#app";
+import {useAuthStore} from "~/stores/auth";
 
 const config = useRuntimeConfig()
 const isMenuOpen = ref(false)
 const authStore = useAuthStore()
+const isAuthenticated = computed(() => authStore.isAuthenticated)
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
   // Prevent body scroll when menu is open
@@ -290,6 +299,7 @@ const dynamicNavigation = computed(() => {
 
 // ترکیب آیتم‌ها
 const navigation = computed(() => [...staticNavigation, ...dynamicNavigation.value])
+
 const settingStore = useSettingStore()
 
 const headerSection = computed(() =>
@@ -354,10 +364,4 @@ const mobileHeaderStyle = computed(() => {
     backdropFilter: 'blur(12px)'
   }
 })
-
-
-
-
-
-
 </script>

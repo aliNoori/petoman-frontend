@@ -35,6 +35,9 @@
 /apps/landing/dist
 /apps/landing/node_modules
 
+/packages/crypto/dist
+/packages/crypto/node_modules
+
 /packages/auth/dist
 /packages/auth/node_modules
 /packages/auth/build

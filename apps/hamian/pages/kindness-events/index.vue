@@ -106,7 +106,7 @@
                   <i class="ti ti-calendar text-gray-600"></i>
                   <div>
                     <div class="text-xs text-gray-500">{{ event.type === 'financial' ? 'تاریخ شروع' : 'تاریخ برگزاری' }}</div>
-                    <span class="text-sm font-medium">{{ event.type === 'financial' ? event.date : event.eventDate }}</span>
+                    <span class="text-sm font-medium">{{ event.type === 'financial' ? new Date(event.date).toLocaleDateString('fa-IR') : new Date(event.eventDate).toLocaleDateString('fa-IR') }}</span>
                   </div>
                 </div>
                 
@@ -229,8 +229,6 @@
 import {onMounted} from "vue";
 import {useKindnessEventsStore} from "~/stores/kindness-events.ts";
 const kindnessEventStore=useKindnessEventsStore()
-import dayjs from 'dayjs'
-
 
 const events = computed(() =>
     kindnessEventStore.kindnessEvents.map((item: any) => {
@@ -294,105 +292,10 @@ const events = computed(() =>
     })
 )
 
-
-/*const events = ref([
-  {
-    id: 1,
-    type: 'financial', // قرار مالی
-    title: 'کمک به حیوانات خیابانی',
-    description: 'جمع‌آوری کمک برای تامین غذا و درمان حیوانات بی‌سرپناه در شهر. با کمک شما می‌توانیم به صدها حیوان نیازمند کمک کنیم.',
-    date: '1403/07/01',
-    time: '3 ماه',
-    location: 'سراسر شهر تهران',
-    remainingSlots: 124,
-    status: 'فعال',
-    progress: 85,
-    current: 42500000,
-    goal: 50000000,
-    image: null
-  },
-  {
-    id: 2,
-    type: 'financial', // قرار مالی
-    title: 'درمان حیوانات آسیب‌دیده',
-    description: 'کمپین درمان و مراقبت از حیوانات آسیب‌دیده و بیمار. هر کمک شما می‌تواند جان یک حیوان را نجات دهد.',
-    date: '1403/06/15',
-    time: '6 ماه',
-    location: 'کلینیک‌های دامپزشکی',
-    remainingSlots: 89,
-    status: 'فعال',
-    progress: 65,
-    current: 19500000,
-    goal: 30000000,
-    image: null
-  },
-  {
-    id: 3,
-    type: 'volunteer', // قرار دورهمی
-    title: 'دورهمی مراقبت از گربه‌های ولگرد',
-    description: 'برنامه روزانه تغذیه و مراقبت از گربه‌های ولگرد در محله‌های مختلف. به ما بپیوندید و با حضورتان به این موجودات کوچک کمک کنید.',
-    eventDate: '1403/08/15',
-    eventTime: '10:00',
-    location: 'پارک ملت',
-    remainingSlots: 15,
-    status: 'فعال',
-    image: null
-  },
-  {
-    id: 4,
-    type: 'financial', // قرار مالی
-    title: 'واکسیناسیون حیوانات',
-    description: 'برنامه جامع واکسیناسیون حیوانات خانگی و خیابانی برای پیشگیری از بیماری‌های خطرناک.',
-    date: '1403/09/01',
-    time: '4 ماه',
-    location: 'مراکز بهداشتی',
-    remainingSlots: 0,
-    status: 'در انتظار',
-    progress: 45,
-    current: 13500000,
-    goal: 30000000,
-    image: null
-  },
-  {
-    id: 5,
-    type: 'volunteer', // قرار دورهمی
-    title: 'روز پاکسازی و مراقبت از پناهگاه',
-    description: 'به ما در تمیز کردن و سرو غذا به حیوانات پناهگاه کمک کنید. فقط چند ساعت از وقت شما نیاز است.',
-    eventDate: '1403/08/20',
-    eventTime: '09:00',
-    location: 'پناهگاه حیوانات کرج',
-    remainingSlots: 20,
-    status: 'فعال',
-    image: null
-  },
-  {
-    id: 6,
-    type: 'financial', // قرار مالی
-    title: 'ساخت پناهگاه حیوانات',
-    description: 'احداث پناهگاه حرفه‌ای برای نگهداری و مراقبت طولانی‌مدت از حیوانات بی‌سرپناه. یک سرپناه امن برای حیوانات.',
-    date: '1403/10/01',
-    time: '18 ماه',
-    location: 'حومه شهر',
-    remainingSlots: 78,
-    status: 'فعال',
-    progress: 30,
-    current: 75000000,
-    goal: 250000000,
-    image: null
-  }
-])*/
-
 // Format number with commas
 const formatNumber = (num: number) => {
   return new Intl.NumberFormat('fa-IR').format(num)
 }
-
-// TODO: دریافت داده‌ها از API
-// onMounted(async () => {
-//   const response = await fetch('/api/projects')
-//   events.value = await response.json()
-// })
-
 // SEO Meta
 useSeoMeta({
   title: 'قرارهای مهربانی - پتومن | پروژه‌های حمایتی',

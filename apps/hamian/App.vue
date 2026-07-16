@@ -35,7 +35,6 @@ const settingStore = useSettingStore()
 onMounted(async () => {
   await settingStore.fetchAll()
 
-
   const schemaScripts: any[] = []
 
 // Organization Schema
@@ -128,9 +127,9 @@ onMounted(async () => {
       { property: 'og:url', content: settingStore.seoSetting?.canonicalUrl },
       { name: 'google-site-verification', content: settingStore.seoSetting?.googleSearchConsoleCode },
       // --- Open Graph ---
-      { property: 'og:title', content: settingStore.openGraphSetting?.og.title },
-      { property: 'og:description', content: settingStore.openGraphSetting?.og.description },
-      { property: 'og:image', content: settingStore.openGraphSetting?.og.image },
+      { property: 'og:title', content: settingStore.openGraphSetting?.og?.title },
+      { property: 'og:description', content: settingStore.openGraphSetting?.og?.description },
+      { property: 'og:image', content: settingStore.openGraphSetting?.og?.image },
       { property: 'og:url', content: settingStore.seoSetting?.canonicalUrl || settingStore.generalSetting?.siteUrl },
       { property: 'og:type', content: 'website' },
       { property: 'og:site_name', content: settingStore.openGraphSetting?.project.organization },
@@ -139,7 +138,7 @@ onMounted(async () => {
       { name: 'twitter:card', content: settingStore.openGraphSetting?.twitter.card },
       { name: 'twitter:site', content: settingStore.openGraphSetting?.twitter.site },
       { name: 'twitter:creator', content: settingStore.openGraphSetting?.twitter.creator },
-      { name: 'twitter:title', content: settingStore.openGraphSetting?.og.title },
+      /*{ name: 'twitter:title', content: settingStore.openGraphSetting?.og?.title },*/
       { name: 'twitter:description', content: settingStore.openGraphSetting?.og.description },
       { name: 'twitter:image', content: settingStore.openGraphSetting?.og.image },
 
@@ -185,28 +184,5 @@ onMounted(async () => {
       ]
     })
   }
-
-  // سایر fetch ها
-  await categoryTypeStore.fetchType('document')
-  await categoryTypeStore.fetchType('faq')
-  await faqTypeStore.fetchType('hamian')
-  await documentaryStore.fetchDocumentaries()
-  await kindnessEventStore.fetchKindnessEvents()
-  await supporterStore.fetchSupporters()
-
-  const documentTypeId = categoryTypeStore.idBySlug('document')
-  await categoryStore.fetchCategories({ typeId: String(documentTypeId) })
-  const faqTypeId = categoryTypeStore.idBySlug('faq')
-  await categoryStore.fetchCategories({ typeId: String(faqTypeId), contentType: 'hamian' })
 })
-
-watch(
-    () => faqTypeStore.selectedType,
-    async (type) => {
-      if (type?.id) {
-        await faqStore.fetchFaqs({ typeId: type.id })
-      }
-    },
-    { immediate: true }
-)
 </script>

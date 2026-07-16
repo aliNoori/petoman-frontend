@@ -8,13 +8,15 @@ import jalaali from 'jalaali-js'
  */
 export const toJalaliDate = (isoDate: string): string => {
     const date = new Date(isoDate)
-    const { gy, gm, gd } = {
-        gy: date.getFullYear(),
-        gm: date.getMonth() + 1,
-        gd: date.getDate()
-    }
-    const { jy, jm, jd } = jalaali.toJalaali(gy, gm, gd)
+
+    const { jy, jm, jd } = jalaali.toJalaali(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+    )
+
     return `${jy}/${String(jm).padStart(2, '0')}/${String(jd).padStart(2, '0')}`
+        .replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])
 }
 
 /**

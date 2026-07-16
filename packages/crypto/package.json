@@ -1,0 +1,67 @@
+{
+  "name": "@petoman/crypto",
+  "version": "1.0.0",
+  "description": "Shared end-to-end cryptography SDK for Petoman clients.",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "browser": "./dist/index.js",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+
+  "files": [
+    "dist"
+  ],
+
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --watch --format esm,cjs --dts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+
+  "dependencies": {
+    "@noble/curves": "^2.0.1",
+    "@noble/ed25519": "^3.0.0",
+    "@noble/hashes": "^2.0.1"
+  },
+
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "eslint": "^9.30.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
+    "idb": "^8.x"
+  },
+
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "crypto",
+    "e2ee",
+    "x25519",
+    "hkdf",
+    "aes-gcm",
+    "signal",
+    "petoman",
+    "encryption",
+    "end-to-end-encryption"
+  ],
+  "packageManager": "pnpm@10.25.0"
+}

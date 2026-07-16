@@ -83,7 +83,7 @@
                   <div class="text-sm text-gray-500">تعداد {{ event.type === 'financial' ? 'حامیان' : 'داوطلبان' }}</div>
                   <div class="font-medium text-gray-900">
                     {{ event.remainingSlots?
-                      event.remainingSlots:kindnessEventStore.registrations[0].registrations.length }} نفر</div>
+                      event.remainingSlots:kindnessEventStore.registrations[0]?.registrations?.length }} نفر</div>
                 </div>
               </div>
             </div>

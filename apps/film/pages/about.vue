@@ -81,6 +81,7 @@
   </div>
 </template>
 
+
 <script setup>
 // Page Meta
 const title = 'درباره ما - پتو فیلم'

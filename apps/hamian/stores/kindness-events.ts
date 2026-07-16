@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import {computed, ref} from 'vue'
 import { useRouter } from 'vue-router'
 import type { AxiosInstance } from 'axios'
-import {useNuxtApp} from "#app";
+import {useNuxtApp} from "nuxt/app";
 import {toJalaliDate } from '../utils/date'
 
 
@@ -62,7 +62,6 @@ export const useKindnessEventsStore = defineStore('kindnessEventsStore', () => {
     const axios = $axios as AxiosInstance
 
     const fetchKindnessEvents = async () => {
-        loading.value = true
         try {
             const { data } = await axios.get('/v1/kindness-meetings')
             kindnessEvents.value = data.map((item:any) => {
@@ -91,11 +90,8 @@ export const useKindnessEventsStore = defineStore('kindnessEventsStore', () => {
                     updatedAt: item.updatedAt
                 }
             })
-            fetched.value = true
         } catch (error) {
             console.error('❌ خطا در دریافت لیست قرارهای مهربانی:', error)
-        } finally {
-            loading.value = false
         }
     }
 

@@ -34,11 +34,12 @@
     "axios": "^1.13.2",
     "dayjs": "^1.11.19",
     "dayjs-jalali": "^0.0.2",
+    "jalaali-js": "^1.2.8",
     "moment-jalaali": "^0.10.4",
     "pinia": "^2.3.1",
     "swiper": "^11.2.10",
     "vue": "3.5.35",
-    "vue-server-renderer": "npm:@vue/server-renderer@^3.5.13",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue-server-renderer": "npm:@vue/server-renderer@^3.5.13"
   }
 }

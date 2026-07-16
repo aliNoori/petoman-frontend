@@ -35,6 +35,14 @@
               <i class="ti ti-edit text-lg"></i>
               ویرایش پروفایل
             </button>
+            <button
+                v-if="authStore.token"
+                @click="authStore.logout()"
+                class="px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors flex items-center gap-2"
+            >
+              <i class="ti ti-edit text-lg"></i>
+              خروج
+            </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -195,7 +203,7 @@
 <script setup lang="ts">
 import {ref, reactive, onMounted} from 'vue'
 import {toJalaliDate} from "~/utils/date.ts";
-
+import {useAuthStore} from "~/stores/auth.ts";
 // SEO
 useSeoMeta({
   title: 'پروفایل من - پتومن',

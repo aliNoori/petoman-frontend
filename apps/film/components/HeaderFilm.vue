@@ -343,7 +343,6 @@ const router=useRouter()
 const logout = () => {
   auth.logout()
   showUserMenu.value = false
-  router.push('/')
 }
 
 // Mock notifications data

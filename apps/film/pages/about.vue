@@ -6,7 +6,7 @@
     <section class="relative pt-32 pb-20">
       <div class="max-w-4xl mx-auto px-4 text-center">
         <h1 class="text-4xl md:text-6xl font-bold bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-500 bg-clip-text text-transparent mb-6">
-          درباره  Petofilm
+          درباره  PetoFilm
         </h1>
         <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
           پلتفرم تخصصی پخش مستندات و فیلم‌های آموزشی حیوانات و طبیعت

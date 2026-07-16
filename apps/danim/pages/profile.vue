@@ -56,11 +56,19 @@
             </div>
 
             <!-- Edit Button -->
-            <button 
+            <button
               @click="openEditModal"
               class="px-4 py-2 bg-white text-orange-600 font-bold rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg text-sm"
             >
               ویرایش پروفایل
+            </button>
+
+            <button
+                v-if="authStore.token"
+                @click="authStore.logout()"
+                class="px-4 py-2 bg-white text-orange-600 font-bold rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg text-sm"
+            >
+              خروج
             </button>
           </div>
         </div>
@@ -213,6 +221,14 @@
               class="px-6 py-2.5 bg-white text-orange-600 font-bold rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg"
             >
               ویرایش پروفایل
+            </button>
+
+            <button
+                v-if="authStore.token"
+                @click="authStore.logout()"
+                class="px-4 py-2 bg-white text-orange-600 font-bold rounded-xl hover:scale-105 active:scale-95 transition-all shadow-lg text-sm"
+            >
+              خروج
             </button>
           </div>
         </div>

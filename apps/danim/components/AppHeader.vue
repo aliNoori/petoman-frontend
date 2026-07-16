@@ -84,13 +84,6 @@
             <Icon name="user" size="sm"/>
             <span class="font-medium">پروفایل من</span>
           </NuxtLink>
-          <button
-              v-if="authStore.token"
-              @click="authStore.logout()"
-              class="auth-btn text-red-800 hover:bg-red-50 px-4 py-2 rounded-lg transition-colors"
-          >
-            خروج
-          </button>
           <a
               v-else
               :href="`${config.public.authBaseUrl}?redirect=${encodeURIComponent(currentUrl)}`"
@@ -307,7 +300,6 @@ const headerSection = computed(() =>
 )
 const currentUrl = ref('')
 onMounted(async () => {
-
   await pageStore.fetchPages()
 
   currentUrl.value = window.location.href

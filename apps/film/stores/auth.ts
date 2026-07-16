@@ -1,9 +1,10 @@
 import { defineStore } from "pinia"
 import { safeStorage } from "~/utils/safeStorage"
-import {useNuxtApp} from "#app";
+import {useNuxtApp} from "nuxt/app";
 import type {AxiosInstance} from "axios";
 import {useUploader} from "~/composables/useUploader";
 import {ref, computed} from "vue";
+import {useRouter} from "nuxt/app";
 
 export interface User {
   id: string
@@ -26,7 +27,7 @@ export const useAuthStore = defineStore("auth", () => {
   const user = ref<User | null>(null)
   const token = ref<string | null>(null)
   const loading = ref(false)
-
+  const router=useRouter()
   const isAuthenticated = computed(() => !!token.value)
   const isAdmin = computed(() => user.value?.role === "admin")
   const isModerator = computed(() =>
@@ -87,11 +88,48 @@ export const useAuthStore = defineStore("auth", () => {
     safeStorage.setItem("auth_user", JSON.stringify(res.data))
   }
 
-  const logout = () => {
-    user.value = null
-    token.value = null
-    safeStorage.removeItem("auth_token")
-    safeStorage.removeItem("auth_user")
+  const logout = async () => {
+    try {
+      // ۱. ارسال درخواست به سرور برای باطل کردن نشست در دیتابیس
+      await axios.post('/v1/auth/logout');
+    } catch (error) {
+      console.error('خطا در ارتباط با سرور', error);
+    } finally {
+      // ۲. پاکسازی کامل حافظه مرورگر (صرف‌نظر از نتیجه سرور)
+      // if ($toast) {
+      //   ($toast as any)('شما با موفقیت خارج شدید', 'success', 5000)
+      // }
+      // الف) پاک کردن LocalStorage و SessionStorage
+      // اگر safeStorage یک آبجکت wrapper است، از متدهای خودش استفاده کنید:
+      if (safeStorage && typeof safeStorage.clear === 'function') {
+        safeStorage.clear(); // این روش تمام آیتم‌ها را پاک می‌کند
+      } else {
+        // در غیر این صورت تک‌تک آیتم‌ها را حذف کنید
+        safeStorage.removeItem("auth_token");
+        safeStorage.removeItem("auth_user");
+        // اگر آیتم‌های دیگری دارید اینجا اضافه کنید
+      }
+
+      // ب) پاک کردن تمام کوکی‌ها (Cookies)
+      // جاوااسکریپت به صورت مستقیم متدی برای پاک کردن "همه" کوکی‌ها ندارد
+      // بنابراین باید آن‌ها را پیدا کرده و تاریخ انقضای آن‌ها را به گذشته برگردانیم
+      document.cookie.split(";").forEach((c) => {
+        const cookieParts = c.split("=");
+        const cookieName = cookieParts.shift()?.trim();
+        // تنظیم تاریخ انقضا به گذشته برای حذف کوکی
+        // path=/ ضروری است تا کوکی‌های مسیرهای مختلف هم پاک شوند
+        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      });
+
+      // ج) پاک کردن متغیرهای وضعیت (State)
+      user.value = null;
+      token.value = null;
+
+      window.location.href = '/'
+
+      // د) هدایت کاربر به صفحه ورود (اختیاری)
+      await router.push('/');
+    }
   }
 
   const changePassword = async (payload: ChangePasswordPayload) => {

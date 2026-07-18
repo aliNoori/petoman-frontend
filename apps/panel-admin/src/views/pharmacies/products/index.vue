@@ -301,6 +301,7 @@
                 <button
                     v-if="productTypeFilter !== 'medicine'"
                     @click="openVariantModal(product)"
+                    :disabled="true"
                     class="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
                     title="مدیریت واریانت‌ها"
                 >
@@ -309,6 +310,7 @@
 
                 <button
                     @click="viewProduct(product)"
+                    :disabled="product.status === 'pending'"
                     class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                     title="مشاهده جزئیات"
                 >
@@ -317,6 +319,7 @@
 
                 <button
                     @click="editProduct(product)"
+                    :disabled="product.status === 'pending'"
                     class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                     title="ویرایش"
                 >
@@ -325,6 +328,7 @@
 
                 <button
                     @click="deleteProduct(product)"
+                    :disabled="product.status === 'pending'"
                     class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     title="حذف"
                 >
@@ -453,6 +457,7 @@
             <button
                 v-if="productTypeFilter !== 'medicine'"
                 @click="openVariantModal(product)"
+                :disabled="true"
                 class="flex-1 px-3 py-2 bg-purple-50 text-purple-700 rounded-lg font-bold text-sm hover:bg-purple-100 transition-colors flex items-center justify-center gap-2"
             >
               <i class="ti ti-layers"></i>
@@ -461,6 +466,7 @@
 
             <button
                 @click="viewProduct(product)"
+                :disabled="product.status === 'pending'"
                 class="flex-1 px-3 py-2 bg-blue-50 text-blue-700 rounded-lg font-bold text-sm hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
             >
               <i class="ti ti-eye"></i>
@@ -469,6 +475,7 @@
 
             <button
                 @click="editProduct(product)"
+                :disabled="product.status === 'pending'"
                 class="flex-1 px-3 py-2 bg-blue-50 text-blue-700 rounded-lg font-bold text-sm hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
             >
               <i class="ti ti-edit"></i>
@@ -477,6 +484,7 @@
 
             <button
                 @click="deleteProduct(product)"
+                :disabled="product.status === 'pending'"
                 class="px-3 py-2 bg-red-50 text-red-700 rounded-lg font-bold text-sm hover:bg-red-100 transition-colors"
             >
               <i class="ti ti-trash"></i>

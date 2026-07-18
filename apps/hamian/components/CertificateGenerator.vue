@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Supporter } from '@/types/supporter'
+import type { Supporter} from "~/types";
 
 interface Props {
   supporter: Supporter

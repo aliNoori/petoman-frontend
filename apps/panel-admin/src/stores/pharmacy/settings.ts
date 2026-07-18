@@ -243,6 +243,15 @@ export const usePharmacySettingsStore = defineStore('pharmacySettingsStore', () 
             saving.value = false;
         }
     };
+
+    const fetchShippingMethods=async ()=> {
+        try {
+            const res = await axios.get('/tenants/shipping-methods')
+            return res.data
+        } catch (e) {
+            console.warn('⚠️ Axios request failed, using mock data')
+        }
+    }
     // ────────────── Return ──────────────
     return {
         loading,
@@ -252,6 +261,7 @@ export const usePharmacySettingsStore = defineStore('pharmacySettingsStore', () 
         shipping,
         pharmacyInfo,
         fetchSettings,
+        fetchShippingMethods,
         savePharmacyInfo,
         saveShippingSettings,
     };

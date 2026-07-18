@@ -200,24 +200,53 @@ export const useSupporterStore = defineStore('supporterStore', () => {
         }
     }
 
-    const addSupporter = async (newSupporter: Supporter, avatar?: File,) => {
+    const addSupporter = async (newSupporter: any, avatar?: File) => {
         let avatarUrl = newSupporter.avatar ?? ''
+
         if (avatar) {
-            avatarUrl = await uploader.uploadImage(avatar)
+            try {
+                avatarUrl = await uploader.uploadImage(avatar)
+            } catch (e) {
+                console.error('❌ خطا در آپلود تصویر:', e)
+            }
         }
 
+        // ✅ ساخت name و fullName قبل از ارسال
         const payload = {
             ...newSupporter,
-            avatar: avatarUrl
+            //name: `${newSupporter.firstName} ${newSupporter.lastName}`.trim(),
+            //fullName: `${newSupporter.firstName} ${newSupporter.lastName}`.trim(),
+            avatar: avatarUrl,
+            socialLinks: {
+                instagram: newSupporter.socialLinks?.instagram ?? '',
+                telegram: newSupporter.socialLinks?.telegram ?? '',
+                linkedin: newSupporter.socialLinks?.linkedin ?? '',
+                twitter: newSupporter.socialLinks?.twitter ?? '',
+            }
         }
 
         try {
-            const {data} = await axios.post('/v1/request-supporters', payload)
-            supporter.value = data.data
+            const response = await axios.post('/v1/request-supporters', payload)
+
+
+            const body = response.data
+            const created = body?.data ?? body?.supporter ?? body?.result ?? body
+
+            if (created && typeof created === 'object') {
+                supporter.value = created
+                supporterCases.value = [created, ...supporterCases.value] // ⭐ به لیست هم اضافه کن
+            } else {
+                console.warn('⚠️ ساختار پاسخ API شناسایی نشد، supporter ست نشد')
+            }
+
             fetched.value = true
-        } catch (error) {
+            return created
+        } catch (error: any) {
             fetched.value = true
             console.error('❌ خطا در ثبت حامی:', error)
+            console.error('❌ Status:', error?.response?.status)
+            console.error('❌ Response data:', error?.response?.data)
+            throw error   // ⭐ پرتاب کن تا کامپوننت هم بفهمد
         }
     }
 

@@ -396,74 +396,8 @@
         </div>
       </div>
     </section>
-
-    <!-- Success Modal -->
-    <div v-if="showSuccess" class="fixed inset-0 z-50 overflow-y-auto">
-      <div class="flex items-center justify-center min-h-screen px-4">
-        <div class="fixed inset-0 bg-black bg-opacity-50"></div>
-        <div class="relative bg-white rounded-2xl max-w-lg w-full mx-auto p-8 text-center border border-rose-100">
-          <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-6">
-            <i class="ti ti-clock-check text-4xl text-blue-600"></i>
-          </div>
-          <h3 class="text-2xl font-bold text-gray-900 mb-4">
-            ✅ <span class="text-blue-700">درخواست شما با موفقیت ثبت شد</span>
-          </h3>
-          <p class="text-gray-600 mb-4 leading-relaxed">
-            <strong>{{ form.firstName }} {{ form.lastName }}</strong> عزیز، از ثبت درخواست عضویت شما در جمع حامیان پتومن سپاسگزاریم.
-          </p>
-          
-          <!-- Verification Notice -->
-          <div class="mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200">
-            <div class="flex items-start gap-3 text-right">
-              <i class="ti ti-message-check text-blue-600 text-2xl flex-shrink-0 mt-0.5"></i>
-              <div>
-                <h4 class="font-semibold text-blue-900 mb-2">مراحل بعدی:</h4>
-                <ul class="text-sm text-blue-800 space-y-2 text-right">
-                  <li class="flex items-start gap-2">
-                    <span class="text-blue-600">📱</span>
-                    <span><strong>پیامک تایید</strong> به شماره <strong class="text-rose-600">{{ form.phone }}</strong> ارسال خواهد شد</span>
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <span class="text-blue-600">✅</span>
-                    <span>پس از بررسی و تأیید اطلاعات، جزئیات کامل برای شما ارسال می‌گردد</span>
-                  </li>
-                  <li class="flex items-start gap-2">
-                    <span class="text-blue-600">⏱️</span>
-                    <span>زمان بررسی: حداکثر ۲-۳ روز کاری</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Display Status -->
-          <div class="mb-6 p-4 rounded-xl" :class="form.showInList ? 'bg-green-50 border border-green-200' : 'bg-gray-50 border border-gray-200'">
-            <div class="flex items-center justify-center gap-2">
-              <i :class="form.showInList ? 'ti ti-eye text-green-600' : 'ti ti-eye-off text-gray-500'" class="text-xl"></i>
-              <p class="text-sm font-medium" :class="form.showInList ? 'text-green-700' : 'text-gray-600'">
-                <span v-if="form.showInList">
-                  ✅ پس از تأیید، نام شما در صفحه حامیان نمایش داده خواهد شد
-                </span>
-                <span v-else>
-                  🔒 اطلاعات شما به صورت خصوصی ثبت شده است
-                </span>
-
-              </p>
-            </div>
-          </div>
-
-          <div class="flex gap-3">
-            <button
-              @click="closeSuccess"
-              class="flex-1 bg-gradient-to-r from-rose-600 to-rose-700 text-white py-3 px-6 rounded-xl font-semibold hover:from-rose-700 hover:to-rose-800 transition-all duration-300 transform hover:scale-105"
-            >
-              <i class="ti ti-home text-lg ml-2"></i>
-              بازگشت به خانه
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- کامپوننت گواهی‌نامه -->
+    <CertificateComponent ref="certRef" />
   </div>
 </template>
 
@@ -481,7 +415,8 @@ useSeoMeta({
 
 const isSubmitting = ref(false)
 const showSuccess = ref(false)
-
+const isGeneratingCertificate = ref(false)
+const showCertificatePreview = ref(false)
 // Profile image
 const profileImageFile = ref<File | null>(null)
 const profilePreview = ref<string | null>(null)
@@ -658,59 +593,32 @@ if (process.client) {
     }
   })
 }
+const certRef = ref()
 const supporterStore=useSupporterStore()
+const supporter=computed(()=>supporterStore.supporter)
 const submitForm = async () => {
   isSubmitting.value = true
-  
   try {
-    // Prepare form data (if profile image exists, we'd use FormData)
-    if (profileImageFile.value) {
-      console.log('✅ عکس پروفایل انتخاب شده:', profileImageFile.value.name, '-', (profileImageFile.value.size / 1024).toFixed(2), 'KB')
-      // In real app: create FormData and send to API
-      // const formData = new FormData()
-      // formData.append('profileImage', profileImageFile.value)
-      // ... append other fields
-    }
-    
-    console.log('📝 اطلاعات فرم:', { ...form, hasProfileImage: !!profileImageFile.value })
 
-    await supporterStore.addSupporter(form,profileImageFile.value)
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Show success modal
-    showSuccess.value = true
-    
-    // Reset form
-    Object.assign(form, {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      province: '',
-      city: '',
-      type: '',
-      experience: '',
-      motivation: '',
-      agreement: false,
-      showInList: false,
-      socialLinks: {
-        instagram: '',
-        telegram: '',
-        linkedin: ''
-      }
+    const result = await supporterStore.addSupporter(form, profileImageFile.value)
+
+    // ✅ ارسال اطلاعات به کامپوننت گواهی‌نامه
+    certRef.value?.setCertificateData({
+      firstName: form.firstName,
+      lastName: form.lastName,
+      type: form.type,
+      phone: form.phone,
+      email: form.email
     })
-    
-    // Reset search fields
-    provinceSearch.value = ''
-    citySearch.value = ''
-    filteredCities.value = []
-    
-    // Clear profile image
-    clearProfileImage()
+
+    // نمایش مودال موفقیت
+    certRef.value?.showSuccessModal()
+
+    //showSuccess.value = true
+
   } catch (error) {
     console.error('خطا در ارسال فرم:', error)
+    alert('ارسال فرم با مشکل مواجه شد. لطفاً دوباره تلاش کنید.')
   } finally {
     isSubmitting.value = false
   }
@@ -908,6 +816,177 @@ const downloadCertificate = async () => {
     alert('متاسفانه در تولید گواهینامه خطایی رخ داد. لطفاً دوباره تلاش کنید.')
   }
 }
+/*const downloadCertificate = async () => {
+  // بررسی فیلدهای ضروری
+  if (!form.firstName?.trim() || !form.lastName?.trim()) {
+    alert('⚠️ نام و نام خانوادگی الزامی است')
+    return
+  }
+
+  isGeneratingCertificate.value = true
+
+  try {
+    console.log('🎨 شروع تولید گواهی‌نامه...')
+
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+
+    if (!ctx) {
+      throw new Error('مرورگر شما از Canvas پشتیبانی نمی‌کند')
+    }
+
+    // اندازه استوری اینستاگرام
+    canvas.width = 1080
+    canvas.height = 1920
+    ctx.textAlign = 'center'
+
+    // پس‌زمینه گرادینت
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
+    gradient.addColorStop(0, '#fdf2f8')
+    gradient.addColorStop(0.3, '#fce7f3')
+    gradient.addColorStop(0.7, '#f3e8ff')
+    gradient.addColorStop(1, '#e0e7ff')
+
+    ctx.fillStyle = gradient
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // بخش بالایی
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(60, 60, canvas.width - 120, 300)
+    ctx.strokeStyle = '#ec4899'
+    ctx.lineWidth = 4
+    ctx.strokeRect(60, 60, canvas.width - 120, 300)
+
+    // لوگو
+    ctx.fillStyle = '#ec4899'
+    ctx.beginPath()
+    ctx.arc(canvas.width / 2, 180, 60, 0, 2 * Math.PI)
+    ctx.fill()
+
+    ctx.fillStyle = '#fce7f3'
+    ctx.beginPath()
+    ctx.arc(canvas.width / 2, 180, 45, 0, 2 * Math.PI)
+    ctx.fill()
+
+    // حیوانات دور لوگو
+    ctx.font = '36px Arial'
+    const animals = ['🐕', '🐱', '🐰', '🦔']
+    animals.forEach((animal, index) => {
+      const angle = (index * Math.PI * 2) / animals.length - Math.PI / 2
+      const x = canvas.width / 2 + Math.cos(angle) * 140
+      const y = 200 + Math.sin(angle) * 140
+      ctx.fillText(animal, x, y)
+    })
+
+    // قلب‌ها
+    ctx.fillText('❤️', canvas.width / 2 - 200, 200)
+    ctx.fillText('💛', canvas.width / 2 + 200, 200)
+
+    // عنوان
+    ctx.fillStyle = '#be185d'
+    ctx.font = 'bold 48px Arial'
+    ctx.fillText('گواهینامه عضویت', canvas.width / 2, 280)
+
+    ctx.fillStyle = '#ec4899'
+    ctx.font = 'bold 32px Arial'
+    ctx.fillText('پتومن', canvas.width / 2, 320)
+
+    // بخش محتوای اصلی
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(60, 400, canvas.width - 120, 600)
+    ctx.strokeStyle = '#f9a8d4'
+    ctx.lineWidth = 3
+    ctx.strokeRect(60, 400, canvas.width - 120, 600)
+
+    // نام عضو
+    ctx.fillStyle = '#831843'
+    ctx.font = 'bold 56px Arial'
+    ctx.fillText(form.firstName, canvas.width / 2, 520)
+    ctx.fillText(form.lastName, canvas.width / 2, 590)
+
+    // متن عضویت
+    ctx.fillStyle = '#be185d'
+    ctx.font = 'bold 42px Arial'
+    ctx.fillText('به جمع حامیان', canvas.width / 2, 680)
+    ctx.fillText('حیوانات پیوست', canvas.width / 2, 730)
+
+    // نوع حمایت
+    const supportTypeText = form.type === 'financial' ? 'حامی مالی' : 'داوطلب'
+    const supportIcon = form.type === 'financial' ? '💰' : '🤝'
+
+    ctx.fillStyle = '#fce7f3'
+    ctx.fillRect(120, 770, canvas.width - 240, 80)
+    ctx.strokeStyle = '#ec4899'
+    ctx.lineWidth = 2
+    ctx.strokeRect(120, 770, canvas.width - 240, 80)
+
+    ctx.fillStyle = '#831843'
+    ctx.font = 'bold 36px Arial'
+    ctx.fillText(`${supportIcon} ${supportTypeText}`, canvas.width / 2, 820)
+
+    // تاریخ
+    const today = new Date()
+    const persianDate = today.toLocaleDateString('fa-IR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+
+    ctx.fillStyle = '#be185d'
+    ctx.font = '28px Arial'
+    ctx.fillText(`📅 ${persianDate}`, canvas.width / 2, 900)
+
+    // بخش پایینی
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(60, 1050, canvas.width - 120, 400)
+    ctx.strokeStyle = '#ec4899'
+    ctx.lineWidth = 4
+    ctx.strokeRect(60, 1050, canvas.width - 120, 400)
+
+    // پیام تشکر
+    ctx.fillStyle = '#6b7280'
+    ctx.font = '24px Arial'
+    ctx.fillText('با تشکر از حمایت گرم شما', canvas.width / 2, 1150)
+    ctx.fillText('در نجات جان حیوانات', canvas.width / 2, 1190)
+
+    // ایموجی‌های حیوانات
+    ctx.font = '40px Arial'
+    ctx.fillText('🐕 🐱 🐰', canvas.width / 2, 1280)
+    ctx.fillText('🦔 🐦 🐹', canvas.width / 2, 1340)
+
+    // امضای سازمان
+    ctx.fillStyle = '#831843'
+    ctx.font = 'bold 24px Arial'
+    ctx.fillText('مدیریت سازمان پتومن', canvas.width / 2, 1400)
+
+    // شناسه گواهی‌نامه
+    const certificateId = `PET-${Date.now().toString().slice(-6)}`
+    ctx.fillStyle = '#9ca3af'
+    ctx.font = '18px Arial'
+    ctx.fillText(`شناسه: ${certificateId}`, canvas.width / 2, 1430)
+
+    // واترمارک
+    ctx.fillStyle = 'rgba(236, 72, 153, 0.4)'
+    ctx.font = '16px Arial'
+    ctx.fillText('📱 آماده اشتراک‌گذاری', canvas.width / 2, 1850)
+
+    // دانلود
+    const dataUrl = canvas.toDataURL('image/png', 1.0)
+    const link = document.createElement('a')
+    link.download = `گواهینامه-${form.firstName}-${form.lastName}.png`
+    link.href = dataUrl
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    console.log('✅ گواهی‌نامه با موفقیت دانلود شد')
+  } catch (error) {
+    console.error('❌ خطا در تولید گواهی‌نامه:', error)
+    alert('متاسفانه در تولید گواهی‌نامه خطایی رخ داد.')
+  } finally {
+    isGeneratingCertificate.value = false
+  }
+}*/
 
 const shareSuccess = () => {
   const supportTypeText = form.type === 'financial' ? 'حامی مالی' : 'داوطلب'
@@ -932,6 +1011,36 @@ ${supportIcon} نوع حمایت: ${supportTypeText}
     // Fallback for browsers that don't support Web Share API
     navigator.clipboard?.writeText(text + '\n\n' + window.location.origin)
     alert('متن برای اشتراک‌گذاری کپی شد! 📋✨')
+  }
+}
+
+const previewCertificate = () => {
+  // تولید گواهی‌نامه و نمایش در پنجره جدید
+  try {
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    canvas.width = 1080
+    canvas.height = 1920
+
+    // ... همان کد downloadCertificate بدون بخش دانلود ...
+
+    // باز کردن در تب جدید
+    const dataUrl = canvas.toDataURL('image/png', 1.0)
+    const newWindow = window.open()
+    if (newWindow) {
+      newWindow.document.write(`
+        <html>
+          <head><title>پیش‌نمایش گواهی‌نامه</title></head>
+          <body style="margin:0;display:flex;justify-content:center;background:#000;">
+            <img src="${dataUrl}" style="max-width:100%;height:auto;" />
+          </body>
+        </html>
+      `)
+    }
+  } catch (error) {
+    console.error('خطا در پیش‌نمایش:', error)
   }
 }
 </script>

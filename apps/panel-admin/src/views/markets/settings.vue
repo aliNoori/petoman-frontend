@@ -195,7 +195,7 @@
 
               <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">
-                  وبسایت (اختیاری)
+                  لینک صفحه پت مارکت
                 </label>
                 <input
                   v-model="shopInfo.website"
@@ -335,7 +335,6 @@
           </div>
         </div>
       </div>
-
       <!-- تنظیمات حمل و نقل -->
       <div class="bg-white rounded-xl shadow-sm border border-gray-200">
         <div class="border-b border-gray-200 px-6 py-4">
@@ -347,401 +346,116 @@
             انتخاب روش‌های ارسال که به مشتریان ارائه می‌دهید
           </p>
         </div>
+
         <div class="p-6 space-y-4">
-
-          <!-- ارسال با الوپیک -->
-          <div class="border-2 rounded-xl transition-all"
-               :class="localShipping.alopeyk ? 'bg-orange-50 border-orange-500' : 'bg-gray-50 border-gray-200'">
+          <!-- حلقه داینامیک روی روش‌های ارسال -->
+          <div
+              v-for="method in shippingMethods"
+              :key="method.key"
+              class="border-2 rounded-xl transition-all"
+              :style="getCardStyle(method)"
+          >
             <div class="flex items-start justify-between p-4">
               <div class="flex items-start gap-4 flex-1">
-                <div class="w-12 h-12 rounded-xl bg-linear-to-br from-orange-500 to-orange-600 flex items-center justify-center shrink-0">
-                  <i class="ti ti-package text-white text-2xl"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-sm font-bold text-gray-900 mb-1">ارسال با الوپیک</h3>
-                  <p class="text-xs text-gray-600 mb-2">ارسال به شهرستان‌ها و شهرهای اطراف</p>
-                  <div class="flex items-center gap-2 text-xs">
-              <span class="px-2 py-1 bg-white rounded-full text-orange-700 font-medium border border-orange-200">
-                <i class="ti ti-clock text-xs ml-1"></i>
-                24-48 ساعت
-              </span>
-                    <span class="px-2 py-1 bg-white rounded-full text-orange-700 font-medium border border-orange-200">
-                <i class="ti ti-map-2 text-xs ml-1"></i>
-                سراسر کشور
-              </span>
-                  </div>
-                </div>
-              </div>
-              <button
-                  @click="localShipping.alopeyk = !localShipping.alopeyk"
-                  type="button"
-                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-                  :class="localShipping.alopeyk ? 'bg-orange-600' : 'bg-gray-200'"
-                  dir="ltr"
-              >
-          <span
-              class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform"
-              :class="localShipping.alopeyk ? 'translate-x-5' : 'translate-x-0.5'"
-          ></span>
-              </button>
-            </div>
-            <Transition name="slide-down">
-              <div v-if="localShipping.alopeyk" class="px-4 pb-4 pt-2 border-t border-orange-200">
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-clock text-orange-600 ml-1"></i>
-                      زمان ارسال
-                    </label>
-                    <input
-                        v-model="localShipping.alopeykDeliveryTime"
-                        type="text"
-                        placeholder="مثال: 1 تا 2 روز کاری"
-                        class="w-full px-3 py-2 text-sm border border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-coin text-orange-600 ml-1"></i>
-                      هزینه ارسال (تومان)
-                    </label>
-                    <input
-                        v-model="localShipping.alopeykPrice"
-                        type="number"
-                        placeholder="مثال: 50000"
-                        class="w-full px-3 py-2 text-sm border border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    >
-                  </div>
-                </div>
-              </div>
-            </Transition>
-          </div>
-
-          <!-- حضور در محل -->
-          <div class="border-2 rounded-xl transition-all"
-               :class="localShipping.inPerson ? 'bg-teal-50 border-teal-500' : 'bg-gray-50 border-gray-200'">
-            <div class="flex items-start justify-between p-4">
-              <div class="flex items-start gap-4 flex-1">
-                <div class="w-12 h-12 rounded-xl bg-linear-to-br from-teal-500 to-teal-600 flex items-center justify-center shrink-0">
-                  <i class="ti ti-home text-white text-2xl"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-sm font-bold text-gray-900 mb-1">حضور در محل</h3>
-                  <p class="text-xs text-gray-600 mb-2">مشتری به مارکت مراجعه می‌کند</p>
-                  <div class="flex items-center gap-2 text-xs">
-              <span class="px-2 py-1 bg-white rounded-full text-teal-700 font-medium border border-teal-200">
-                <i class="ti ti-clock text-xs ml-1"></i>
-                تحویل فوری
-              </span>
-                    <span class="px-2 py-1 bg-white rounded-full text-teal-700 font-medium border border-teal-200">
-                <i class="ti ti-coin text-xs ml-1"></i>
-                رایگان
-              </span>
-                  </div>
-                </div>
-              </div>
-              <button
-                  @click="localShipping.inPerson = !localShipping.inPerson"
-                  type="button"
-                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-                  :class="localShipping.inPerson ? 'bg-teal-600' : 'bg-gray-200'"
-                  dir="ltr"
-              >
-          <span
-              class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform"
-              :class="localShipping.inPerson ? 'translate-x-5' : 'translate-x-0.5'"
-          ></span>
-              </button>
-            </div>
-            <Transition name="slide-down">
-              <div v-if="localShipping.inPerson" class="px-4 pb-4 pt-2 border-t border-teal-200">
-                <label class="block text-xs font-medium text-gray-700 mb-2">
-                  <i class="ti ti-clock text-teal-600 ml-1"></i>
-                  زمان ارسال
-                </label>
-                <input
-                    v-model="localShipping.inPersonDeliveryTime"
-                    type="text"
-                    placeholder="مثال: فوری، حداکثر 30 دقیقه"
-                    class="w-full px-3 py-2 text-sm border border-teal-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                <!-- آیکون -->
+                <div
+                    class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                    :style="{ background: `linear-gradient(135deg, ${method.color}, ${darkenColor(method.color, 0.85)})` }"
                 >
-              </div>
-            </Transition>
-          </div>
-
-          <!-- ارسال با پیک پتومن -->
-          <div class="border-2 rounded-xl transition-all"
-               :class="localShipping.petomanCourier ? 'bg-blue-50 border-blue-500' : 'bg-gray-50 border-gray-200'">
-            <div class="flex items-start justify-between p-4">
-              <div class="flex items-start gap-4 flex-1">
-                <div class="w-12 h-12 rounded-xl bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center shrink-0">
-                  <i class="ti ti-motorbike text-white text-2xl"></i>
+                  <i :class="method.icon" class="text-white text-2xl"></i>
                 </div>
+
+                <!-- اطلاعات -->
                 <div class="flex-1">
                   <div class="flex items-center gap-2 mb-1">
-                    <h3 class="text-sm font-bold text-gray-900">ارسال با پیک پتومن</h3>
-                    <span class="px-2 py-0.5 bg-blue-500 text-white text-xs rounded-full font-bold">پیشنهاد ویژه</span>
-                  </div>
-                  <p class="text-xs text-gray-600 mb-2">ارسال سریع در سطح شهر توسط پیک‌های پتومن</p>
-                  <div class="flex items-center gap-2 text-xs">
-              <span class="px-2 py-1 bg-white rounded-full text-blue-700 font-medium border border-blue-200">
-                <i class="ti ti-clock text-xs ml-1"></i>
-                تا 2 ساعت
-              </span>
-                    <span class="px-2 py-1 bg-white rounded-full text-blue-700 font-medium border border-blue-200">
-                <i class="ti ti-map-pin text-xs ml-1"></i>
-                داخل شهر
+                    <h3 class="text-sm font-bold text-gray-900">{{ method.name }}</h3>
+                    <span
+                        v-if="method.isDefault"
+                        class="px-2 py-0.5 text-white text-xs rounded-full font-bold"
+                        :style="{ backgroundColor: method.color }"
+                    >
+                پیش‌فرض
               </span>
                   </div>
+                  <p class="text-xs text-gray-600 mb-2">{{ method.description }}</p>
+                  <!--                  <div class="flex items-center gap-2 text-xs flex-wrap">
+                                <span
+                                    class="px-2 py-1 bg-white rounded-full font-medium border"
+                                    :style="{ color: method.color, borderColor: method.color + '40' }"
+                                >
+                                  <i class="ti ti-clock text-xs ml-1"></i>
+                                  {{ getDeliveryTimeLabel(method) }}
+                                </span>
+                                      <span
+                                          class="px-2 py-1 bg-white rounded-full font-medium border"
+                                          :style="{ color: method.color, borderColor: method.color + '40' }"
+                                      >
+                                  <i :class="getLocationIcon(method.key)" class="text-xs ml-1"></i>
+                                  {{ getLocationLabel(method.key) }}
+                                </span>
+                                    </div>-->
                 </div>
               </div>
-              <button
-                  @click="localShipping.petomanCourier = !localShipping.petomanCourier"
-                  type="button"
-                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  :class="localShipping.petomanCourier ? 'bg-blue-600' : 'bg-gray-200'"
-                  dir="ltr"
-              >
-          <span
-              class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform"
-              :class="localShipping.petomanCourier ? 'translate-x-5' : 'translate-x-0.5'"
-          ></span>
-              </button>
-            </div>
-            <Transition name="slide-down">
-              <div v-if="localShipping.petomanCourier" class="px-4 pb-4 pt-2 border-t border-blue-200">
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-clock text-blue-600 ml-1"></i>
-                      زمان ارسال
-                    </label>
-                    <input
-                        v-model="localShipping.petomanCourierDeliveryTime"
-                        type="text"
-                        placeholder="مثال: 1 تا 2 ساعت"
-                        class="w-full px-3 py-2 text-sm border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-coin text-blue-600 ml-1"></i>
-                      هزینه پیک (تومان)
-                    </label>
-                    <input
-                        v-model="localShipping.petomanCourierPrice"
-                        type="number"
-                        placeholder="مثال: 40000"
-                        class="w-full px-3 py-2 text-sm border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                  </div>
-                </div>
-              </div>
-            </Transition>
-          </div>
 
-          <!-- ارسال با پیک مارکت -->
-          <div class="border-2 rounded-xl transition-all"
-               :class="localShipping.shopCourier ? 'bg-purple-50 border-purple-500' : 'bg-gray-50 border-gray-200'">
-            <div class="flex items-start justify-between p-4">
-              <div class="flex items-start gap-4 flex-1">
-                <div class="w-12 h-12 rounded-xl bg-linear-to-br from-purple-500 to-purple-600 flex items-center justify-center shrink-0">
-                  <i class="ti ti-bike text-white text-2xl"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-sm font-bold text-gray-900 mb-1">ارسال با پیک مارکت</h3>
-                  <p class="text-xs text-gray-600 mb-2">ارسال با پیک اختصاصی مارکت در سطح شهر</p>
-                  <div class="flex items-center gap-2 text-xs">
-              <span class="px-2 py-1 bg-white rounded-full text-purple-700 font-medium border border-purple-200">
-                <i class="ti ti-clock text-xs ml-1"></i>
-                سفارشی
-              </span>
-                    <span class="px-2 py-1 bg-white rounded-full text-purple-700 font-medium border border-purple-200">
-                <i class="ti ti-map-pin text-xs ml-1"></i>
-                داخل شهر
-              </span>
-                  </div>
-                </div>
-              </div>
+              <!-- دکمه Toggle -->
               <button
-                  @click="localShipping.shopCourier = !localShipping.shopCourier"
+                  @click="toggleMethod(method)"
                   type="button"
-                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-                  :class="localShipping.shopCourier ? 'bg-purple-600' : 'bg-gray-200'"
+                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 shrink-0"
+                  :style="{
+            backgroundColor: method.enabled ? method.color : '#e5e7eb',
+            '--tw-ring-color': method.color
+          }"
                   dir="ltr"
               >
           <span
-              class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform"
-              :class="localShipping.shopCourier ? 'translate-x-5' : 'translate-x-0.5'"
+              class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform shadow-sm"
+              :class="method.enabled ? 'translate-x-5' : 'translate-x-0.5'"
           ></span>
               </button>
             </div>
-            <Transition name="slide-down">
-              <div v-if="localShipping.shopCourier" class="px-4 pb-4 pt-2 border-t border-purple-200">
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-clock text-purple-600 ml-1"></i>
-                      زمان ارسال
-                    </label>
-                    <input
-                        v-model="localShipping.shopCourierDeliveryTime"
-                        type="text"
-                        placeholder="مثال: 2 تا 4 ساعت"
-                        class="w-full px-3 py-2 text-sm border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-coin text-purple-600 ml-1"></i>
-                      هزینه پیک (تومان)
-                    </label>
-                    <input
-                        v-model="localShipping.shopCourierPrice"
-                        type="number"
-                        placeholder="مثال: 40000"
-                        class="w-full px-3 py-2 text-sm border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-                    >
-                  </div>
-                </div>
-              </div>
-            </Transition>
-          </div>
 
-          <!-- ارسال با تیپاکس -->
-          <div class="border-2 rounded-xl transition-all"
-               :class="localShipping.tipax ? 'bg-orange-50 border-orange-500' : 'bg-gray-50 border-gray-200'">
-            <div class="flex items-start justify-between p-4">
-              <div class="flex items-start gap-4 flex-1">
-                <div class="w-12 h-12 rounded-xl bg-linear-to-br from-orange-500 to-orange-600 flex items-center justify-center shrink-0">
-                  <i class="ti ti-package text-white text-2xl"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-sm font-bold text-gray-900 mb-1">ارسال با تیپاکس</h3>
-                  <p class="text-xs text-gray-600 mb-2">ارسال به شهرستان‌ها و شهرهای اطراف</p>
-                  <div class="flex items-center gap-2 text-xs">
-              <span class="px-2 py-1 bg-white rounded-full text-orange-700 font-medium border border-orange-200">
-                <i class="ti ti-clock text-xs ml-1"></i>
-                24-48 ساعت
-              </span>
-                    <span class="px-2 py-1 bg-white rounded-full text-orange-700 font-medium border border-orange-200">
-                <i class="ti ti-map-2 text-xs ml-1"></i>
-                سراسر کشور
-              </span>
-                  </div>
-                </div>
-              </div>
-              <button
-                  @click="localShipping.tipax = !localShipping.tipax"
-                  type="button"
-                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-                  :class="localShipping.tipax ? 'bg-orange-600' : 'bg-gray-200'"
-                  dir="ltr"
-              >
-          <span
-              class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform"
-              :class="localShipping.tipax ? 'translate-x-5' : 'translate-x-0.5'"
-          ></span>
-              </button>
-            </div>
-            <Transition name="slide-down">
-              <div v-if="localShipping.tipax" class="px-4 pb-4 pt-2 border-t border-orange-200">
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-clock text-orange-600 ml-1"></i>
-                      زمان ارسال
-                    </label>
-                    <input
-                        v-model="localShipping.tipaxDeliveryTime"
-                        type="text"
-                        placeholder="مثال: 1 تا 2 روز کاری"
-                        class="w-full px-3 py-2 text-sm border border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-coin text-orange-600 ml-1"></i>
-                      هزینه ارسال (تومان)
-                    </label>
-                    <input
-                        v-model="localShipping.tipaxPrice"
-                        type="number"
-                        placeholder="مثال: 50000"
-                        class="w-full px-3 py-2 text-sm border border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                    >
-                  </div>
-                </div>
-              </div>
-            </Transition>
-          </div>
+            <!--            &lt;!&ndash; فیلدهای زمان و هزینه &ndash;&gt;
+                        <Transition name="slide-down">
+                          <div
+                              v-if="method.enabled"
+                              class="px-4 pb-4 pt-2 border-t"
+                              :style="{ borderColor: method.color + '40' }"
+                          >
+                            <div class="grid gap-4" :class="hasPriceInput(method) ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'">
+                              &lt;!&ndash; زمان ارسال &ndash;&gt;
+                              <div v-if="hasTimeInput(method)">
+                                <label class="block text-xs font-medium text-gray-700 mb-2">
+                                  <i class="ti ti-clock ml-1" :style="{ color: method.color }"></i>
+                                  زمان ارسال
+                                </label>
+                                <input
+                                    v-model="method.deliveryTime"
+                                    type="text"
+                                    :placeholder="getDeliveryTimePlaceholder(method.key)"
+                                    class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all"
+                                    :style="{ borderColor: method.color + '60' }"
+                                >
+                              </div>
 
-          <!-- ارسال با پست -->
-          <div class="border-2 rounded-xl transition-all"
-               :class="localShipping.post ? 'bg-green-50 border-green-500' : 'bg-gray-50 border-gray-200'">
-            <div class="flex items-start justify-between p-4">
-              <div class="flex items-start gap-4 flex-1">
-                <div class="w-12 h-12 rounded-xl bg-linear-to-br from-green-500 to-green-600 flex items-center justify-center shrink-0">
-                  <i class="ti ti-mail text-white text-2xl"></i>
-                </div>
-                <div class="flex-1">
-                  <h3 class="text-sm font-bold text-gray-900 mb-1">ارسال با پست</h3>
-                  <p class="text-xs text-gray-600 mb-2">ارسال پستی به شهرستان‌ها و شهرهای اطراف</p>
-                  <div class="flex items-center gap-2 text-xs">
-              <span class="px-2 py-1 bg-white rounded-full text-green-700 font-medium border border-green-200">
-                <i class="ti ti-clock text-xs ml-1"></i>
-                3-5 روز کاری
-              </span>
-                    <span class="px-2 py-1 bg-white rounded-full text-green-700 font-medium border border-green-200">
-                <i class="ti ti-map-2 text-xs ml-1"></i>
-                سراسر کشور
-              </span>
-                  </div>
-                </div>
-              </div>
-              <button
-                  @click="localShipping.post = !localShipping.post"
-                  type="button"
-                  class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                  :class="localShipping.post ? 'bg-green-600' : 'bg-gray-200'"
-                  dir="ltr"
-              >
-          <span
-              class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform"
-              :class="localShipping.post ? 'translate-x-5' : 'translate-x-0.5'"
-          ></span>
-              </button>
-            </div>
-            <Transition name="slide-down">
-              <div v-if="localShipping.post" class="px-4 pb-4 pt-2 border-t border-green-200">
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-clock text-green-600 ml-1"></i>
-                      زمان ارسال
-                    </label>
-                    <input
-                        v-model="localShipping.postDeliveryTime"
-                        type="text"
-                        placeholder="مثال: 3 تا 5 روز کاری"
-                        class="w-full px-3 py-2 text-sm border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    >
-                  </div>
-                  <div>
-                    <label class="block text-xs font-medium text-gray-700 mb-2">
-                      <i class="ti ti-coin text-green-600 ml-1"></i>
-                      هزینه پست (تومان)
-                    </label>
-                    <input
-                        v-model="localShipping.postPrice"
-                        type="number"
-                        placeholder="مثال: 35000"
-                        class="w-full px-3 py-2 text-sm border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    >
-                  </div>
-                </div>
-              </div>
-            </Transition>
+                              &lt;!&ndash; هزینه ارسال (فقط اگر رایگان نباشد) &ndash;&gt;
+                              <div v-if="hasPriceInput(method)">
+                                <label class="block text-xs font-medium text-gray-700 mb-2">
+                                  <i class="ti ti-coin ml-1" :style="{ color: method.color }"></i>
+                                  هزینه ارسال (تومان)
+                                </label>
+                                <input
+                                    v-model.number="method.price"
+                                    type="number"
+                                    min="0"
+                                    :placeholder="getPricePlaceholder(method.key)"
+                                    class="w-full px-3 py-2 text-sm border rounded-lg focus:ring-2 focus:border-transparent outline-none transition-all"
+                                    :style="{ borderColor: method.color + '60' }"
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </Transition>-->
           </div>
 
           <!-- نکته مهم -->
@@ -755,31 +469,35 @@
                     <span class="text-blue-500">•</span>
                     <span><strong>حضور در محل و پیک‌ها:</strong> برای سفارشات داخل شهر مناسب است</span>
                   </li>
-                  <li class="flex items-start gap-2">
-                    <span class="text-blue-500">•</span>
-                    <span><strong>تیپاکس و پست:</strong> برای ارسال به شهرستان‌ها و شهرهای اطراف</span>
-                  </li>
+                  <!--                  <li class="flex items-start gap-2">
+                                      <span class="text-blue-500">•</span>
+                                      <span><strong>تیپاکس و پست:</strong> برای ارسال به شهرستان‌ها و شهرهای اطراف</span>
+                                    </li>-->
                   <li class="flex items-start gap-2">
                     <span class="text-blue-500">•</span>
                     <span>حداقل یک روش ارسال باید فعال باشد</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-blue-500">•</span>
-                    <span>هزینه ارسال بر اساس روش انتخابی و قیمت وارد شده محاسبه می‌شود</span>
+                    <span>هزینه ارسال بر اساس روش انتخابی محاسبه می‌شود</span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <!-- دکمه ذخیره تنظیمات حمل و نقل -->
+
+        <!-- دکمه ذخیره -->
         <div class="mt-2 flex justify-end">
           <button
               @click="saveShippingSettings"
-              class="mb-5 ml-5 px-6 py-2 bg-teal-600 text-white rounded-lg font-bold hover:bg-teal-700 transition-colors flex items-center gap-2"
+              :disabled="shippingSaving"
+              class="mb-5 ml-5 px-6 py-2 bg-teal-600 text-white rounded-lg font-bold hover:bg-teal-700 transition-colors flex items-center gap-2 disabled:opacity-50"
           >
-            <i class="ti ti-device-floppy"></i>
-            ذخیره تغییرات حمل و نقل
+            <i v-if="!shippingSaving" class="ti ti-device-floppy"></i>
+            <i v-else class="ti ti-loader-2 animate-spin"></i>
+            <span v-if="shippingSaving">در حال ذخیره...</span>
+            <span v-else>ذخیره تغییرات حمل و نقل</span>
           </button>
         </div>
       </div>
@@ -1015,6 +733,7 @@ watch(
     () => shopInfo.value,
     (t) => {
       localAddressText.value = shopInfo?.value.address?.display_name || ''
+      shopInfo.value.website=`https://petoman.com/market/${tenant.value.id}`
     },
     { immediate: true }
 )
@@ -1267,20 +986,25 @@ const changePassword = async () => {
 }
 
 // Load settings on mount
-onMounted(() => {
+onMounted(async () => {
   fetchSettings()
+
+  await loadShippingMethods()
 
 })
 
 // کپی کردن تنظیمات ارسال در یک متغیر محلی برای جلوگیری از لوپ
-const localShipping = ref({ ...shipping.value })
+/*const localShipping = ref({ ...shipping.value })
 
 // همگام‌سازی زمانی که تنظیمات از سرور لود می‌شود
 watch(() => shipping.value, (newVal) => {
   localShipping.value = { ...newVal }
-}, { deep: true })
+}, { deep: true })*/
+// ✅ متغیرهای جدید برای روش‌های ارسال داینامیک
+const shippingMethods = ref([])
+const shippingSaving = ref(false)
 
-const saveShippingSettings = async () => {
+/*const saveShippingSettings = async () => {
   const errors = []
 
   // بررسی پیک پتومن
@@ -1341,7 +1065,211 @@ const saveShippingSettings = async () => {
     console.error('❌ خطا در ذخیره تنظیمات:', error)
     alert('❌ خطا در ذخیره تنظیمات')
   }
+}*/
+const saveShippingSettings = async () => {
+  const errors = validateShippingSettings()
+  if (errors.length > 0) {
+    if (typeof window.showToast === 'function') {
+      window.showToast('لطفاً خطاهای زیر را برطرف کنید:\n' + errors.join('\n'), 'error', 5000)
+    } else {
+      alert('لطفاً خطاهای زیر را برطرف کنید:\n' + errors.join('\n'))
+    }
+    return
+  }
+
+  shippingSaving.value = true
+  try {
+    // ساخت آبجکت flat برای سازگاری با ساختار قبلی
+    const shippingData = {}
+    shippingMethods.value.forEach(method => {
+      const camelKey = toCamelCase(method.key)
+      shippingData[camelKey] = method.enabled
+      shippingData[`${camelKey}DeliveryTime`] = method.deliveryTime || ''
+      if (hasPriceInput(method)) {
+        shippingData[`${camelKey}Price`] = method.price || 0
+      }
+    })
+
+    // ذخیره در استور
+    await apiSaveShipping(shippingData)
+
+    // ذخیره در LocalStorage
+    const currentData = JSON.parse(localStorage.getItem('shopSettings') || '{}')
+    localStorage.setItem('shopSettings', JSON.stringify({
+      ...currentData,
+      shipping: shippingData,
+      shippingMethods: shippingMethods.value,
+      lastUpdated: new Date().toISOString()
+    }))
+
+    if (typeof window.showToast === 'function') {
+      window.showToast('✅ تنظیمات حمل و نقل با موفقیت ذخیره شد', 'success', 3000)
+    } else {
+      alert('✅ تنظیمات حمل و نقل با موفقیت ذخیره شد')
+    }
+  } catch (error) {
+    console.error('❌ خطا در ذخیره تنظیمات:', error)
+    if (typeof window.showToast === 'function') {
+      window.showToast(error.response?.data?.message || '❌ خطا در ذخیره تنظیمات', 'error', 5000)
+    } else {
+      alert('❌ خطا در ذخیره تنظیمات')
+    }
+  } finally {
+    shippingSaving.value = false
+  }
 }
+
+// ✅ بارگذاری روش‌های ارسال از API
+const loadShippingMethods = async () => {
+  try {
+    const result = await marketSettingsStore.fetchShippingMethods()
+    if (result.value.methods && Array.isArray(result.value.methods)) {
+      const savedShipping = JSON.parse(localStorage.getItem('shopSettings') || '{}')?.shipping || {}
+
+      shippingMethods.value = result.value.methods.map(method => {
+        const camelKey = toCamelCase(method.key)
+        return {
+          ...method,
+          deliveryTime: savedShipping[`${camelKey}DeliveryTime`] || '',
+          price: savedShipping[`${camelKey}Price`] ?? method.price ?? 0
+        }
+      })
+    }
+  } catch (error) {
+    console.error('خطا در دریافت روش‌های ارسال:', error)
+    if (typeof window.showToast === 'function') {
+      window.showToast('خطا در دریافت روش‌های ارسال', 'error', 5000)
+    }
+  }
+}
+
+// ✅ تبدیل kebab-case به camelCase
+const toCamelCase = (key) => {
+  return key.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+}
+
+// ✅ Toggle کردن روش ارسال
+const toggleMethod = (method) => {
+  method.enabled = !method.enabled
+}
+
+// ✅ بررسی نمایش فیلد هزینه
+const hasPriceInput = (method) => {
+  return method.key !== 'in-person' && method.key !== 'in_person'
+}
+
+// ✅ استایل کارت بر اساس فعال بودن و رنگ روش
+const getCardStyle = (method) => {
+  if (!method.enabled) {
+    return { backgroundColor: '#f9fafb', borderColor: '#e5e7eb' }
+  }
+  return {
+    backgroundColor: method.color + '14',
+    borderColor: method.color
+  }
+}
+
+// ✅ محاسبه رنگ تیره‌تر برای گرادینت
+const darkenColor = (hex, factor = 0.85) => {
+  if (!hex) return '#000000'
+  const r = parseInt(hex.slice(1, 3), 16)
+  const g = parseInt(hex.slice(3, 5), 16)
+  const b = parseInt(hex.slice(5, 7), 16)
+  return `rgb(${Math.floor(r * factor)}, ${Math.floor(g * factor)}, ${Math.floor(b * factor)})`
+}
+
+// ✅ متن زمان ارسال
+const getDeliveryTimeLabel = (method) => {
+  if (method.deliveryTime) return method.deliveryTime
+  if (method.estimatedDays === 0) return 'تحویل فوری'
+  if (method.estimatedDays === 1) return '۲۴ ساعت'
+  return `${method.estimatedDays} روز`
+}
+
+// ✅ آیکون لوکیشن
+const getLocationIcon = (key) => {
+  const iconMap = {
+    'alopeyk': 'ti ti-map-2',
+    'tipax': 'ti ti-map-2',
+    'post': 'ti ti-map-2',
+    'in-person': 'ti ti-building-store',
+    'in_person': 'ti ti-building-store',
+    'petomanCourier': 'ti ti-map-pin',
+    'shopCourier': 'ti ti-map-pin',
+    'pharmacyCourier': 'ti ti-map-pin'
+  }
+  return iconMap[key] || 'ti ti-map-pin'
+}
+
+// ✅ متن لوکیشن
+const getLocationLabel = (key) => {
+  const locationMap = {
+    'alopeyk': 'سراسر کشور',
+    'tipax': 'سراسر کشور',
+    'post': 'سراسر کشور',
+    'in-person': 'محل فروشگاه',
+    'in_person': 'محل فروشگاه',
+    'petomanCourier': 'داخل شهر',
+    'shopCourier': 'داخل شهر',
+    'pharmacyCourier': 'داخل شهر'
+  }
+  return locationMap[key] || 'سراسر کشور'
+}
+
+// ✅ Placeholder زمان ارسال
+const getDeliveryTimePlaceholder = (key) => {
+  const placeholders = {
+    'alopeyk': 'مثال: 1 تا 2 روز کاری',
+    'in-person': 'مثال: فوری، حداکثر ۳۰ دقیقه',
+    'in_person': 'مثال: فوری، حداکثر ۳۰ دقیقه',
+    'petomanCourier': 'مثال: ۱ تا ۲ ساعت',
+    'shopCourier': 'مثال: ۲ تا ۴ ساعت',
+    'pharmacyCourier': 'مثال: ۲ تا ۴ ساعت',
+    'tipax': 'مثال: ۱ تا ۲ روز کاری',
+    'post': 'مثال: ۳ تا ۵ روز کاری'
+  }
+  return placeholders[key] || 'زمان ارسال'
+}
+
+// ✅ Placeholder هزینه
+const getPricePlaceholder = (key) => {
+  const priceMap = {
+    'alopeyk': 'مثال: ۵۰۰۰۰',
+    'petomanCourier': 'مثال: ۴۰۰۰۰',
+    'shopCourier': 'مثال: ۴۰۰۰۰',
+    'pharmacyCourier': 'مثال: ۴۰۰۰۰',
+    'tipax': 'مثال: ۵۰۰۰۰',
+    'post': 'مثال: ۳۵۰۰۰'
+  }
+  return priceMap[key] || 'مثال: ۰'
+}
+
+// ✅ اعتبارسنجی
+const validateShippingSettings = () => {
+  const errors = []
+
+  /*shippingMethods.value.forEach(method => {
+    if (method.enabled) {
+      if (!method.deliveryTime || !method.deliveryTime.trim()) {
+        errors.push(`برای "${method.name}" زمان ارسال الزامی است`)
+      }
+      if (hasPriceInput(method)) {
+        if (method.price === null || method.price === undefined || method.price < 0) {
+          errors.push(`برای "${method.name}" هزینه ارسال معتبر نیست`)
+        }
+      }
+    }
+  })*/
+
+  const enabledCount = shippingMethods.value.filter(m => m.enabled).length
+  if (enabledCount === 0) {
+    errors.push('حداقل یک روش ارسال باید فعال باشد')
+  }
+
+  return errors
+}
+
+
 const timeSlotsSaving=ref(false)
 
 const saveTimeSlots = async () => {

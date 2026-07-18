@@ -169,8 +169,8 @@ const authRoutes = [
 ]
 
 const router = createRouter({
-  //history: createWebHistory('/admin/'),
-  history: createWebHistory(),
+  history: createWebHistory('/admin/'),
+  //history: createWebHistory(),
   routes: [
     {
       path: '/',

@@ -441,7 +441,7 @@
               (عکس‌های محصول اصلی - قابل ویرایش نیست)
             </span>
             <span v-else class="text-xs text-gray-500 font-normal mr-2">
-              (حداکثر 5 تصویر - روی تصویر کلیک کنید تا به عنوان تصویر اصلی انتخاب شود)
+              (حداکثر 3 تصویر - روی تصویر کلیک کنید تا به عنوان تصویر اصلی انتخاب شود)
             </span>
           </label>
           <div class="flex flex-wrap gap-3">
@@ -1261,7 +1261,7 @@ const resetMode = () => {
 
 const handleGalleryUpload = (event) => {
   const files = Array.from(event.target.files)
-  const remainingSlots = 5 - galleryImages.value.length
+  const remainingSlots = 3 - galleryImages.value.length
   files.slice(0, remainingSlots).forEach((file) => {
     const reader = new FileReader()
     reader.onload = (e) => {

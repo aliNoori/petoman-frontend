@@ -411,10 +411,10 @@
           <span class="font-bold text-gray-900">
             {{ getMethodLabel(method.type) }}
           </span>
-                      <span v-if="method.deliveryTime"
+<!--                      <span v-if="method.deliveryTime"
                             class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
             {{ method.deliveryTime }} دقیقه
-          </span>
+          </span>-->
                     </div>
                     <p class="text-sm text-gray-600 mt-1">
                       {{ getMethodDescription(method.type) }}
@@ -847,7 +847,7 @@ const pharmacyShippingMethods = computed(() => {
   const shippingSetting = pharmacyData.value.settings.find(s => s.key === 'shipping_methods');
   if (!shippingSetting?.value?.methods) return [];
   // فیلتر کردن متدهای فعال
-  return shippingSetting.value.methods.filter(method => method.isActive !== false);
+  return shippingSetting.value.methods.filter(method => method.isActive&&method.isActive !== false);
 });
 
 // سبد خرید قبلی (از LocalStorage)
@@ -984,7 +984,7 @@ const getMethodLabel = (type) => {
     'scheduled': 'تحویل زمان‌بندی شده',
     'post': 'پست پیشتاز',
     'tipax': 'تیپاکس',
-    'alopeyk': 'الوپیک',
+    'alopeyk': 'پیک پتومن',
     'shopCourier': 'پیک فروشگاه',
     'inPerson': 'دریافت حضوری'
   }
@@ -997,7 +997,7 @@ const getMethodDescription = (type) => {
     'scheduled': 'انتخاب زمان تحویل توسط شما',
     'post': 'ارسال با پست جمهوری اسلامی',
     'tipax': 'ارسال سریع با تیپاکس',
-    'alopeyk': 'ارسال سریع با الوپیک',
+    'alopeyk': 'ارسال سریع با پیک پتومن',
     'shopCourier': 'ارسال توسط پیک خود داروخانه',
     'inPerson': 'مراجعه به داروخانه و دریافت سفارش'
   }

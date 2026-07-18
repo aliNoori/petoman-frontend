@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <form class="space-y-6">
+      <div class="space-y-6">
         <!-- 1. دسته‌بندی (اول همه) -->
         <div v-if="mode === 'create'">
           <CategorySelector
@@ -374,7 +374,7 @@
           </div>
         </div>
 
-        <!-- Description Section -->
+<!--        &lt;!&ndash; Description Section &ndash;&gt;
         <div class="pt-4 border-t-2 border-gray-100">
           <label class="block text-sm font-bold text-gray-700 mb-2">
             <i class="ti ti-align-left text-blue-600"></i>
@@ -386,7 +386,7 @@
               placeholder="توضیحات کامل محصول را وارد کنید..."
               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none resize-none"
           ></textarea>
-        </div>
+        </div>-->
 
         <!-- 7. تصاویر محصول (در پایین همه فیلدها) -->
         <div class="pt-4 border-t-2 border-gray-100">
@@ -397,7 +397,7 @@
               (عکس‌های محصول اصلی - قابل ویرایش نیست)
             </span>
             <span v-else class="text-xs text-gray-500 font-normal mr-2">
-              (حداکثر 5 تصویر - روی تصویر کلیک کنید تا به عنوان تصویر اصلی انتخاب شود)
+              (حداکثر 3 تصویر - روی تصویر کلیک کنید تا به عنوان تصویر اصلی انتخاب شود)
             </span>
           </label>
           <div class="flex flex-wrap gap-3">
@@ -468,60 +468,90 @@
           </div>
         </div>
 
-        <!-- تاریخ انقضا -->
-        <div class="p-4 bg-gray-50 rounded-xl space-y-4">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="font-bold text-gray-900">تاریخ انقضا دارد</p>
-              <p class="text-sm text-gray-500">محصول تاریخ انقضا دارد؟</p>
-            </div>
-            <button
-                @click="formData.hasExpiryDate = !formData.hasExpiryDate"
-                type="button"
-                :class="[
-                   'relative inline-flex h-8 w-14 items-center rounded-full transition-colors',
-                   formData.hasExpiryDate ? 'bg-amber-600' : 'bg-gray-300'
-                 ]"
-            >
-               <span
-                   :class="[
-                     'inline-block h-6 w-6 transform rounded-full bg-white transition-transform',
-                     formData.hasExpiryDate ? 'translate-x-7 rtl:-translate-x-7' : 'translate-x-1 rtl:translate-x-1'
-                   ]"
-               ></span>
-            </button>
-          </div>
+        <!-- Expiry Date Section -->
+        <div class="p-4 bg-gray-50/50 rounded-xl border border-gray-100 space-y-5">
 
-          <!-- فیلد تاریخ انقضا با تقویم -->
-          <div v-if="formData.hasExpiryDate" class="animate-fadeIn">
-            <label class="block text-sm font-bold text-gray-700 mb-2">
-              <i class="ti ti-calendar-due text-amber-600"></i>
-              تاریخ انقضا
-            </label>
-            <div class="relative">
-              <input
-                  v-model="formData.expiryDate"
-                  @input="clearError('expiryDate')"
-                  type="text"
-                  placeholder="انتخاب تاریخ"
-                  @click.prevent="openExpiryDatePicker"
-                  readonly
-                  class="w-full px-4 py-3 border-2 border-amber-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none text-right cursor-pointer bg-white"
-                  dir="rtl"
-              />
-              <!-- آیکون تقویم داخل اینپوت -->
-              <div class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-400 pointer-events-none">
-                <i class="ti ti-calendar"></i>
+          <!-- Toggle Section -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                <i class="ti ti-clock"></i>
+              </div>
+              <div>
+                <p class="font-bold text-gray-800 text-sm">تاریخ انقضا دارد</p>
+                <p class="text-xs text-gray-500">فعال‌سازی برای محصولات فاسدشدنی</p>
               </div>
             </div>
 
-            <!-- *** VALIDATION ***: نمایش خطای تاریخ انقضا -->
-            <p v-if="errors.expiryDate" class="mt-1 text-xs text-red-600 font-bold">{{ errors.expiryDate }}</p>
+            <!-- Main Toggle -->
+            <button
+                @click="formData.hasExpiryDate = !formData.hasExpiryDate"
+                type="button"
+                class="relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                :class="formData.hasExpiryDate ? 'bg-amber-500' : 'bg-gray-300'"
+            >
+            <span
+                class="inline-block h-5 w-5 transform rounded-full bg-white shadow-sm transition-transform duration-200 ease-out"
+                :class="formData.hasExpiryDate ? 'translate-x-6 rtl:-translate-x-6' : 'translate-x-0.5'"
+            ></span>
+            </button>
+          </div>
 
-            <p class="text-xs text-gray-500 mt-2">
-              <i class="ti ti-info-circle"></i>
-              تاریخ را به صورت شمسی انتخاب کنید
-            </p>
+          <!-- Date Input Area -->
+          <div v-if="formData.hasExpiryDate" class="animate-fadeIn">
+
+            <!-- Format Switcher (Shamsi/Gregorian) -->
+            <div class="flex items-center justify-between mb-3 bg-white p-2 rounded-lg border border-gray-200">
+              <span class="text-xs font-medium text-gray-600 mr-2">فرمت تاریخ:</span>
+              <div class="flex items-center bg-gray-100 rounded-md p-0.5">
+                <button
+                    @click="useGregorianExpiry = false"
+                    :class="[
+            'px-3 py-1 text-xs font-bold rounded-md transition-all',
+            !useGregorianExpiry ? 'bg-white text-amber-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          ]"
+                >
+                  شمسی
+                </button>
+                <button
+                    @click="useGregorianExpiry = true"
+                    :class="[
+            'px-3 py-1 text-xs font-bold rounded-md transition-all',
+            useGregorianExpiry ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          ]"
+                >
+                  میلادی
+                </button>
+              </div>
+            </div>
+
+            <!-- Input Wrapper -->
+            <div class="relative group">
+              <input
+                  v-model="formData.expiryDate"
+                  @input="clearError('expiryDate')"
+                  :type="useGregorianExpiry ? 'date' : 'text'"
+                  :placeholder="formData.expiryDate ? '' : (useGregorianExpiry ? 'Select Date' : 'انتخاب تاریخ انقضا')"
+                  @click="useGregorianExpiry ? null : openExpiryDatePicker()"
+                  :readonly="!useGregorianExpiry"
+                  class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all outline-none text-right shadow-sm"
+                  dir="ltr"
+              />
+
+              <!-- Helper Text / Error -->
+              <div class="mt-2 flex items-start gap-1.5">
+                <i class="ti ti-info-circle text-gray-400 mt-0.5 text-xs"></i>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                  {{ useGregorianExpiry ? 'فرمت YYYY-MM-DD' : 'تاریخ را از تقویم انتخاب کنید' }}
+                </p>
+              </div>
+
+              <!-- Error Message -->
+              <p v-if="errors.expiryDate" class="mt-1 text-xs text-red-600 font-bold flex items-center gap-1">
+                <i class="ti ti-alert-circle"></i>
+                {{ errors.expiryDate }}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -659,7 +689,7 @@
             </div>
           </div>
         </div>
-      </form>
+      </div>
 
     </div>
   </div>
@@ -677,7 +707,7 @@ import {useNotification} from "@/composables/useNotification.js";
 import {toJalali, toGregorian} from "@/utils/dateHelpers.js";
 
 moment.loadPersian({ usePersianDigits: false })
-
+const useGregorianExpiry = ref(false)
 const productStore = useMarketProductStore()
 const route = useRoute()
 const router = useRouter()
@@ -1088,7 +1118,7 @@ const removeGalleryImage = (index) => {
 }
 
 const handleTitleUpdate = (title) => {
-  console.log('title', title)
+
   formData.value.name = title
 }
 
@@ -1243,7 +1273,7 @@ const resetMode = () => {
 // 1. اصلاح تابع handleGalleryUpload برای پشتیبانی از حالت ویرایش
 const handleGalleryUpload = (event) => {
   const files = Array.from(event.target.files)
-  const remainingSlots = 5 - galleryImages.value.length
+  const remainingSlots = 3 - galleryImages.value.length
   files.slice(0, remainingSlots).forEach((file) => {
     const reader = new FileReader()
     reader.onload = (e) => {
@@ -1423,21 +1453,22 @@ const loadProductForEdit = (productId, productsList) => {
   editingProductId.value = productId
 
   const product = productsList.find(p => p.id === productId)
+
   if (!product) {
     console.error('Product not found:', productId)
     return
   }
-  // بررسی امن برای category
-  if (!product.category) {
+  /*// بررسی امن برای category
+  if (!product.category||product.categoryId) {
     console.error('Product category is missing:', productId)
     return
-  }
+  }*/
 
   mode.value = 'create'
   formData.value = {
     name: product.name,
     code: product.code,
-    category: product.category?.id,
+    category: product.category?.id??product.categoryId,
     categoryBreadcrumb: product.categoryBreadcrumb,
     categoryId: product.categoryId,
     price: new Intl.NumberFormat('fa-IR').format(product.price),

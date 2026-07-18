@@ -547,30 +547,25 @@ const generatedTitle = computed(() => {
   if (selectedAnimal.value) {
     parts.push(selectedAnimal.value.name)
   }
-  
-  // 3. وزن (از فیلد جداگانه)
-  if (selectedWeight.value) {
-    parts.push(selectedWeight.value.name)
+
+  // 6. محدوده سنی
+  if (selectedAge.value) {
+    parts.push(selectedAge.value.name)
+  }
+
+  // 7. سایز نژاد
+  if (selectedSize.value) {
+    parts.push(selectedSize.value.name)
   }
   
   // 4. برند با پیشوند "برند" (مثال: برند رویال کنین)
   if (selectedBrand.value) {
-    parts.push(`برند ${selectedBrand.value.name}`)
+    parts.push(`${selectedBrand.value.name}`)
   }
   
   // 5. طعم
   if (selectedTaste.value) {
     parts.push(selectedTaste.value.name)
-  }
-  
-  // 6. محدوده سنی
-  if (selectedAge.value) {
-    parts.push(selectedAge.value.name)
-  }
-  
-  // 7. سایز نژاد
-  if (selectedSize.value) {
-    parts.push(selectedSize.value.name)
   }
   
   // 8. بسته‌بندی
@@ -582,6 +577,11 @@ const generatedTitle = computed(() => {
   selectedSpecialAttributes.value.forEach(attr => {
     parts.push(attr.name)
   })
+
+  // 3. وزن (از فیلد جداگانه)
+  if (selectedWeight.value) {
+    parts.push(selectedWeight.value.name)
+  }
   
   return parts.join(' ')
 })

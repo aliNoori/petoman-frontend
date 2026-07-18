@@ -820,15 +820,16 @@ const shippingMethods = ref([])
 
 
 const updateShippingMethods = () => {
+
   if (!shipping.value) return
 
   const methods = [
     {
       id: 'alopeyk',
-      name: 'الوپیک',
-      description: shipping.value.alopeykDeliveryTime || 'ارسال سریع الوپیک',
+      name: 'پیک پتومن',
+      description: shipping.value.alopeykDeliveryTime || 'ارسال سریع پیک پتومن',
       icon: 'ti ti-package',
-      price: parseInt(shipping.value.alopeykPrice),
+      price: parseInt(shipping.value.alopeykPrice)||0,
       tag: null,
       active: shipping.value.alopeyk
     },

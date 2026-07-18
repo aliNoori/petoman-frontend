@@ -127,7 +127,7 @@
             </div>
             <div>
               <h2 class="text-lg font-bold text-gray-900">
-                {{ tenant?.type === 'VET' ? 'پنل دامپزشک' : 'پنل کلینیک' }}</h2>
+                {{ isVet ? 'پنل کلینیک' : 'پنل دامپزشک' }}</h2>
               <p class="text-xs text-gray-500">{{ tenant?.ownerName || tenant?.name }}</p>
             </div>
           </div>
@@ -394,7 +394,7 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted, onUnmounted, watch} from 'vue'
+import {ref, computed, onMounted, onUnmounted, watch, reactive} from 'vue'
 import {useTenantReviewsStore} from "@/stores/tenant-reviews.js";
 import {useAuthStore} from "@/stores/auth.ts";
 import {useVetClinicServicesStore} from "@/stores/vet-clinic/service.ts";
@@ -424,6 +424,10 @@ const router = useRouter()
 const {tenant} = storeToRefs(authStore)
 const tenantInfoSetting = computed(() => (tenant.value?.tenantSettings || []).find(item => item.key === 'clinic_info')?.value || {})
 
+let isVet = reactive()
+watch(tenant, (newVal) => {
+  isVet = tenant.value?.type === 'VET' ;
+},{immediate: true});
 // Push Notifications
 const {
   requestPermission,

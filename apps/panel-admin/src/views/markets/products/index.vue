@@ -1,5 +1,10 @@
 <template>
   <div class="space-y-4 pb-20 lg:pb-6">
+    <NotificationSystem
+        :products="products"
+        @view-product="viewProduct"
+    >
+    </NotificationSystem>
     <!-- Stats Cards -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
       <!-- کارت کل محصولات -->
@@ -289,6 +294,7 @@
               <div class="flex items-center justify-center gap-2">
                 <button
                     @click="openVariantModal(product)"
+                    :disabled="true"
                     class="p-2 text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
                     title="مدیریت واریانت‌ها"
                 >
@@ -296,6 +302,7 @@
                 </button>
                 <button
                     @click="viewProduct(product)"
+                    :disabled="product.status === 'pending'"
                     class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                     title="مشاهده جزئیات"
                 >
@@ -303,6 +310,7 @@
                 </button>
                 <button
                     @click="editProduct(product)"
+                    :disabled="product.status === 'pending'"
                     class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                     title="ویرایش"
                 >
@@ -310,6 +318,7 @@
                 </button>
                 <button
                     @click="deleteProduct(product)"
+                    :disabled="product.status === 'pending'"
                     class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     title="حذف"
                 >
@@ -355,6 +364,7 @@
             v-for="product in paginatedProducts"
             :key="product.id"
             class="p-4 hover:bg-gray-50 transition-colors"
+            :class="{ 'pointer-events-none opacity-50 bg-orange-50/50': product.status === 'pending'}"
         >
           <div class="flex gap-3 mb-3">
             <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
@@ -425,6 +435,7 @@
           <div class="flex gap-2">
             <button
                 @click="openVariantModal(product)"
+                :disabled="true"
                 class="flex-1 px-3 py-2 bg-purple-50 text-purple-700 rounded-lg font-bold text-sm hover:bg-purple-100 transition-colors flex items-center justify-center gap-2"
             >
               <i class="ti ti-layers"></i>
@@ -432,6 +443,7 @@
             </button>
             <button
                 @click="viewProduct(product)"
+                :disabled="product.status === 'pending'"
                 class="flex-1 px-3 py-2 bg-blue-50 text-blue-700 rounded-lg font-bold text-sm hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
             >
               <i class="ti ti-eye"></i>
@@ -439,6 +451,7 @@
             </button>
             <button
                 @click="editProduct(product)"
+                :disabled="product.status === 'pending'"
                 class="flex-1 px-3 py-2 bg-blue-50 text-blue-700 rounded-lg font-bold text-sm hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
             >
               <i class="ti ti-edit"></i>
@@ -446,6 +459,7 @@
             </button>
             <button
                 @click="deleteProduct(product)"
+                :disabled="product.status === 'pending'"
                 class="px-3 py-2 bg-red-50 text-red-700 rounded-lg font-bold text-sm hover:bg-red-100 transition-colors"
             >
               <i class="ti ti-trash"></i>
@@ -866,16 +880,16 @@
         </div>
       </transition>
     </Teleport>
+
   </div>
+
 </template>
 
 <script setup>
 import {ref, computed, watch, onMounted} from 'vue'
 import {useRouter} from 'vue-router'
-import medicineCategories from '@/data/medicine-categories.json'
-import categories from '@/data/categories.json'
 import {useMarketProductStore} from "@/stores/market/product.ts";
-
+import NotificationSystem from "@/components/NotificationSystem.vue";
 const router = useRouter()
 const productStore = useMarketProductStore()
 

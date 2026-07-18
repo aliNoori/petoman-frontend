@@ -197,7 +197,7 @@
 
               <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2">
-                  وبسایت (اختیاری)
+                  لینک صفحه دامپزشکی
                 </label>
                 <input
                     v-model="rawSettings.clinicInfo.website"
@@ -904,7 +904,19 @@ const {tenant} = storeToRefs(authStore)
 let isVet = reactive()
 watch(tenant, (newVal) => {
   isVet = tenant.value?.type === 'VET' ;
-});
+},{immediate: true});
+
+watch(
+    () => rawSettings.value,
+    (t) => {
+      if(isVet){
+        rawSettings.value.clinicInfo.website=`https://petoman.com/dampezeshki/vet/${tenant.value.id}`
+      }
+      rawSettings.value.clinicInfo.website=`https://petoman.com/dampezeshki/clinic/${tenant.value.id}`
+
+    },
+    { immediate: true }
+)
 const localAddressText = ref(rawSettings.value?.clinicInfo.address.display_name || null)
 const onChangeLocation = (data) => {
 
@@ -1167,7 +1179,6 @@ const changePassword = async () => {
 }
 onMounted(async () => {
   await vetClinicStore.fetchSettings()
-
   if (vetClinicStore.specialities && vetClinicStore.specialities.length > 0) {
     console.log('Specialities count:', vetClinicStore.specialities.length)
   } else {

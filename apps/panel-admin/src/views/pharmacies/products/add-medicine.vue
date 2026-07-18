@@ -426,7 +426,7 @@
               </div>
               <div class="text-right">
                 <h3 class="font-bold text-gray-900">تصاویر دارو</h3>
-                <p class="text-sm text-gray-500">آپلود تصاویر دارو (حداکثر 5 تصویر)</p>
+                <p class="text-sm text-gray-500">آپلود تصاویر دارو (حداکثر 3 تصویر)</p>
               </div>
             </div>
             <i class="ti text-xl text-gray-400 transition-transform"
@@ -828,7 +828,7 @@ const formatPrice = (event) => {
 
 const handleGalleryUpload = (event) => {
   const files = Array.from(event.target.files)
-  const remainingSlots = 5 - galleryImages.value.length
+  const remainingSlots = 3 - galleryImages.value.length
   files.slice(0, remainingSlots).forEach((file) => {
     const reader = new FileReader()
     reader.onload = (e) => {

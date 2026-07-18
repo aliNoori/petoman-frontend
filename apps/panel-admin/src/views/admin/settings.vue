@@ -838,49 +838,133 @@
             افزودن روش جدید
           </button>
         </div>
-        
+
+        <div v-if="settings.shipping.methods.length === 0" class="text-center py-12 text-gray-400">
+          <i class="ti ti-truck-off text-4xl mb-2"></i>
+          <p>هنوز روش حمل‌ونقلی اضافه نشده است</p>
+        </div>
+
         <div class="space-y-4">
-          <div 
-            v-for="method in settings.shipping.methods" 
-            :key="method.id"
-            class="flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:bg-gray-50"
+          <div
+              v-for="method in settings.shipping.methods"
+              :key="method.id"
+              class="flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors"
           >
             <div class="flex items-center gap-4">
-              <div 
-                class="w-12 h-12 rounded-xl flex items-center justify-center"
-                :style="{ backgroundColor: method.color + '20', color: method.color }"
+              <div
+                  class="w-12 h-12 rounded-xl flex items-center justify-center"
+                  :style="{ backgroundColor: method.color + '20', color: method.color }"
               >
                 <i :class="method.icon" class="text-xl"></i>
               </div>
               <div>
-                <p class="font-bold text-gray-900">{{ method.name }}</p>
+                <div class="flex items-center gap-2">
+                  <p class="font-bold text-gray-900">{{ method.name }}</p>
+                  <span v-if="method.isDefault" class="px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
+                پیش‌فرض
+              </span>
+                </div>
                 <p class="text-sm text-gray-500">{{ method.description }}</p>
               </div>
             </div>
+
             <div class="flex items-center gap-4">
               <div class="text-left">
                 <p class="font-bold text-gray-900">{{ formatPrice(method.price) }} تومان</p>
                 <p class="text-xs text-gray-500">{{ method.estimatedDays }} روز کاری</p>
               </div>
+
               <div class="flex items-center gap-2">
-                <button 
-                  @click="toggleShippingMethod(method)"
-                  class="p-2 rounded-lg transition-colors"
-                  :class="method.enabled ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'"
+                <!-- دکمه فعال/غیرفعال -->
+                <button
+                    @click="toggleShippingMethod(method)"
+                    class="p-2 rounded-lg transition-colors"
+                    :class="method.enabled ? 'bg-green-100 text-green-600 hover:bg-green-200' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'"
+                    :title="method.enabled ? 'غیرفعال کردن' : 'فعال کردن'"
                 >
                   <i :class="method.enabled ? 'ti ti-check' : 'ti ti-x'"></i>
                 </button>
-                <button @click="editShippingMethod(method)" class="p-2 hover:bg-gray-100 rounded-lg">
+
+                <!-- دکمه ویرایش -->
+                <button
+                    @click="editShippingMethod(method)"
+                    class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    title="ویرایش"
+                >
                   <i class="ti ti-edit text-gray-500"></i>
                 </button>
-                <button v-if="!method.isDefault" @click="deleteShippingMethod(method)" class="p-2 hover:bg-red-50 rounded-lg">
-                  <i class="ti ti-trash text-red-500"></i>
+
+                <!-- دکمه حذف (برای همه روش‌ها) -->
+                <button
+                    @click="confirmDeleteShipping(method)"
+                    class="p-2 hover:bg-red-50 rounded-lg transition-colors group"
+                    title="حذف"
+                >
+                  <i class="ti ti-trash text-red-500 group-hover:scale-110 transition-transform"></i>
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- مودال تأیید حذف -->
+      <Teleport to="body">
+        <Transition name="modal">
+          <div
+              v-if="showDeleteShippingModal"
+              class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+              @click.self="showDeleteShippingModal = false"
+          >
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all">
+              <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full">
+                <i class="ti ti-alert-triangle text-3xl text-red-600"></i>
+              </div>
+
+              <h3 class="text-xl font-bold text-center text-gray-900 mb-2">
+                حذف روش حمل‌ونقل
+              </h3>
+
+              <p class="text-center text-gray-600 mb-6">
+                آیا از حذف روش
+                <span class="font-bold text-gray-900">"{{ methodToDelete?.name }}"</span>
+                مطمئن هستید؟ این عملیات قابل بازگشت نیست.
+              </p>
+
+              <div v-if="methodToDelete?.isDefault" class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start gap-2">
+                <i class="ti ti-info-circle text-yellow-600 mt-0.5"></i>
+                <p class="text-sm text-yellow-800">
+                  این روش پیش‌فرض است. پس از حذف، اولین روش فعال به عنوان پیش‌فرض جدید تنظیم می‌شود.
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button
+                    @click="showDeleteShippingModal = false"
+                    class="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  انصراف
+                </button>
+                <button
+                    v-if="!methodToDelete?.isDefault"
+                    @click="deleteShippingMethod"
+                    class="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg..."
+                >
+                  حذف
+                </button>
+
+                <button
+                    v-else
+                    disabled
+                    class="flex-1 px-4 py-2.5 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed"
+                >
+                  قابل حذف نیست (پیش‌فرض)
+                </button>
+              </div>
+            </div>
+          </div>
+        </Transition>
+      </Teleport>
 
       <!-- AloPeyk API Settings -->
       <div class="bg-white rounded-xl border border-gray-200 p-6">
@@ -889,7 +973,7 @@
             <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
               <i class="ti ti-motorbike text-green-600"></i>
             </div>
-            تنظیمات الوپیک (AloPeyk)
+            تنظیمات الوپیک (Alopeyk)
           </h3>
           <span 
             class="px-3 py-1 rounded-full text-xs font-medium"
@@ -1110,6 +1194,42 @@ const activeSmsCategory = ref('general')
 const showAddShippingModal = ref(false)
 const editingShippingMethod = ref(null)
 const toast = ref({ show: false, message: '', type: 'success' })
+const showDeleteShippingModal = ref(false);
+const methodToDelete = ref(null);
+
+function confirmDeleteShipping(method) {
+  methodToDelete.value = method;
+  showDeleteShippingModal.value = true;
+}
+
+function deleteShippingMethod() {
+  if (!methodToDelete.value) return;
+
+  const method = methodToDelete.value;
+  const wasDefault = method.isDefault;
+
+  // حذف از لیست
+  settings.value.shipping.methods = settings.value.shipping.methods.filter(
+      m => m.id !== method.id
+  );
+
+  // اگه روش حذف‌شده پیش‌فرض بود، اولین روش فعال باقی‌مونده به عنوان پیش‌فرض جدید انتخاب بشه
+  if (wasDefault) {
+    const firstActiveMethod = settings.value.shipping.methods.find(
+        m => m.enabled
+    );
+    if (firstActiveMethod) {
+      firstActiveMethod.isDefault = true;
+    }
+  }
+
+  // بستن مودال
+  showDeleteShippingModal.value = false;
+  methodToDelete.value = null;
+
+  // نمایش پیام موفقیت
+  showToast('روش حمل‌ونقل با موفقیت حذف شد', 'success');
+}
 
 const tabs = [
   { key: 'general', label: 'عمومی', icon: 'ti ti-settings', color: '#6b7280' },
@@ -1232,10 +1352,10 @@ const defaultSettings = {
     freeShippingEnabled: true,
     freeShippingMin: 500000,
     methods: [
-      { id: 1, name: 'پست پیشتاز', description: 'ارسال با پست پیشتاز', price: 35000, estimatedDays: 3, icon: 'ti ti-truck', color: '#f97316', enabled: true, isDefault: true },
-      { id: 2, name: 'پست سفارشی', description: 'ارسال با پست معمولی', price: 25000, estimatedDays: 5, icon: 'ti ti-package', color: '#6b7280', enabled: true, isDefault: true },
-      { id: 3, name: 'الوپیک', description: 'ارسال فوری با پیک موتوری', price: 0, estimatedDays: 1, icon: 'ti ti-motorbike', color: '#10b981', enabled: true, isDefault: true },
-      { id: 4, name: 'تحویل حضوری', description: 'دریافت از فروشگاه', price: 0, estimatedDays: 0, icon: 'ti ti-building-store', color: '#8b5cf6', enabled: true, isDefault: true },
+      { id:1,key: 'alopeyk', name: 'الوپیک', description: 'ارسال فوری با پیک موتوری', price: 0, estimatedDays: 1, icon: 'ti ti-motorbike', color: '#10b981', enabled: true, isDefault: true },
+      { id:2,key: 'in-person', name: 'تحویل حضوری', description: 'دریافت از فروشگاه', price: 0, estimatedDays: 0, icon: 'ti ti-building-store', color: '#8b5cf6', enabled: true, isDefault: false },
+      { id:3,key: 'post', name: 'پست پیشتاز', description: 'ارسال با پست پیشتاز', price: 35000, estimatedDays: 3, icon: 'ti ti-truck', color: '#f97316', enabled: true, isDefault: false },
+      { id:4,key: 'custom-post', name: 'پست سفارشی', description: 'ارسال با پست معمولی', price: 25000, estimatedDays: 5, icon: 'ti ti-package', color: '#6b7280', enabled: true, isDefault: false },
     ],
     alopeyk: {
       enabled: true,
@@ -1273,12 +1393,12 @@ const editShippingMethod = (method) => {
   showAddShippingModal.value = true
 }
 
-const deleteShippingMethod = (method) => {
+/*const deleteShippingMethod = (method) => {
   if (confirm(`آیا از حذف روش "${method.name}" اطمینان دارید؟`)) {
     settings.value.shipping.methods = settings.value.shipping.methods.filter(m => m.id !== method.id)
     showToast('روش ارسال حذف شد')
   }
-}
+}*/
 
 const closeShippingModal = () => {
   showAddShippingModal.value = false
@@ -1389,5 +1509,26 @@ onMounted(async () => {
 .toast-leave-to {
   opacity: 0;
   transform: translateX(-50%) translateY(20px);
+}
+
+/* انیمیشن مودال */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active > div,
+.modal-leave-active > div {
+  transition: transform 0.2s ease;
+}
+
+.modal-enter-from > div,
+.modal-leave-to > div {
+  transform: scale(0.95);
 }
 </style>

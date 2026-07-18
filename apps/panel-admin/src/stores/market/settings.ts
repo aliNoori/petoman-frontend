@@ -389,6 +389,15 @@ export const useMarketSettingsStore = defineStore('marketSettingsStore', () => {
         }
     };
 
+    const fetchShippingMethods=async ()=> {
+        try {
+            const res = await axios.get('/tenants/shipping-methods')
+            return res.data
+        } catch (e) {
+            console.warn('⚠️ Axios request failed, using mock data')
+        }
+    }
+
     // ────────────── Return ──────────────
     return {
         loading,
@@ -399,6 +408,7 @@ export const useMarketSettingsStore = defineStore('marketSettingsStore', () => {
         shipping,
         shopInfo,
         fetchSettings,
+        fetchShippingMethods,
         saveShopInfo,
         saveShippingSettings,
         // موارد جدید مربوط به مدیریت

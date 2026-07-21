@@ -130,20 +130,47 @@ export const useAuthStore = defineStore('auth', () => {
 
             token.value = response.data.token
             user.value = response.data.user
-            tenantId.value = response.data.tenantId
-            adminPanelType.value = response.data.adminPanelType
-            isAuthenticated.value = true
-
             localStorage.setItem('auth_token', token.value)
-            localStorage.setItem('tenant_id', tenantId.value)
-            localStorage.setItem('admin_panel_type', adminPanelType.value)
             localStorage.setItem('auth_user', JSON.stringify(user.value))
+
+            // اگر همین شماره چند فروشگاه دارد، هنوز tenant/panelType مشخص نیست -
+            // منتظر انتخاب کاربر می‌مانیم (selectTenant) و اینجا authenticated نمی‌کنیم
+            if (!response.data.needsShopSelection) {
+                tenantId.value = response.data.tenantId
+                adminPanelType.value = response.data.adminPanelType
+                isAuthenticated.value = true
+
+                localStorage.setItem('tenant_id', tenantId.value)
+                localStorage.setItem('admin_panel_type', adminPanelType.value)
+            }
 
             return response
         } catch (error) {
             return {
                 success: false,
                 error: error.response?.data?.message || error.message || 'خطا در ورود'
+            }
+        }
+    }
+    const selectTenant = async (shopId: string) => {
+        try {
+            const response = await axios.post('/v1/auth/select-tenant',
+                {shopId},
+                {headers: {Authorization: `Bearer ${token.value}`}}
+            )
+
+            tenantId.value = response.data.tenantId
+            adminPanelType.value = response.data.adminPanelType
+            isAuthenticated.value = true
+
+            localStorage.setItem('tenant_id', tenantId.value)
+            localStorage.setItem('admin_panel_type', adminPanelType.value)
+
+            return response
+        } catch (error) {
+            return {
+                success: false,
+                error: error.response?.data?.message || error.message || 'خطا در انتخاب فروشگاه'
             }
         }
     }
@@ -407,6 +434,7 @@ export const useAuthStore = defineStore('auth', () => {
         calculateOnlineStatus,
         sendOtpCode,
         loginWithPhone,
+        selectTenant,
         login,
         register,
         logout,

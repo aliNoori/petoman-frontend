@@ -17,7 +17,6 @@ if (!import.meta.env.CLIENT) { // در Vite معادل process.client است
     let tenantId = params.get("tenantId")
     let ownerId = params.get("ownerId")
     let admin_panel_type=params.get("admin_panel_type")
-    console.log('tenantId','tenantId')
     //const auth = useAuthStore()
 
     if (token) {

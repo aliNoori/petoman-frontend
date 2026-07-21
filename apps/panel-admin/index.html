@@ -16,7 +16,7 @@
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="/admin/manifest.json" />
     
     <title>پنل مدیریت - پت اومن</title>
     
@@ -34,7 +34,7 @@
     <script>
       if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
+          navigator.serviceWorker.register('/admin/sw.js', { scope: '/admin/' })
             .then(registration => {
               console.log('✅ SW registered:', registration.scope)
             })

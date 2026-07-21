@@ -220,9 +220,9 @@ router.beforeEach((to, from, next) => {
 
   // ۳. اگر کاربر لاگین است و می‌خواهد به صفحه لاگین برود
   if (isGuestRoute && isAuthenticated && adminPanelType) {
-    if (adminPanelType === 'ADMIN') next({ name: 'admin' })
-    else if (adminPanelType === 'PHARMACY') next({ name: 'pharmacies' })
-    else if (adminPanelType === 'MARKET') next({ name: 'markets' })
+    if (adminPanelType === 'ADMIN') next('/admin')
+    else if (adminPanelType === 'PHARMACY') next('/pharmacies')
+    else if (adminPanelType === 'MARKET') next('/markets')
     else if (adminPanelType === 'VET' || adminPanelType === 'CLINIC') next({ name: 'clinic-dashboard' })
     else next('/')
     return
@@ -231,7 +231,6 @@ router.beforeEach((to, from, next) => {
   // ۴. بررسی دسترسی به پنل‌ها
   if (isAuthenticated && adminPanelType && to.meta.panelType) {
     const routePanelType = to.meta.panelType
-
 
     // اگر panelType یک آرایه است (مثل ['VET', 'CLINIC'])
     if (Array.isArray(routePanelType)) {
@@ -243,12 +242,10 @@ router.beforeEach((to, from, next) => {
     }
 
     if (!hasAccess) {
-      console.warn(`Access Denied: User is ${adminPanelType} but route requires ${JSON.stringify(routePanelType)}`)
-
       // ریدایرکت به صفحه اصلی خودش
-      if (adminPanelType === 'ADMIN') next({ name: 'admin' })
-      else if (adminPanelType === 'PHARMACY') next({ name: 'pharmacies' })
-      else if (adminPanelType === 'MARKET') next({ name: 'markets' })
+      if (adminPanelType === 'ADMIN') next('/admin')
+      else if (adminPanelType === 'PHARMACY') next('/pharmacies')
+      else if (adminPanelType === 'MARKET') next('/markets')
       else if (adminPanelType === 'VET' || adminPanelType === 'CLINIC') next({ name: 'clinic-dashboard' })
       else next({ name: 'login' })
       return
